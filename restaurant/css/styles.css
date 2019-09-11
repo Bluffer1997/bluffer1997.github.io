@@ -68,7 +68,7 @@ header::before {
     right: 0;
     content: '';
     background: linear-gradient(360deg, rgba(18, 18, 18, 0.6) 0.91%, rgba(18, 18, 18, 0.28) 47.77%, rgba(39, 42, 55, 0.75) 99.52%);
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 header {
@@ -189,18 +189,28 @@ nav .right-nav .booknow {
 
 .welcome {
 	margin: 0 auto;
-	width: 75%;
-	border: 5px solid blue;
 	color: #fff !important;
 	text-align: center;
-	
-	transform: translateY(-150%);
+	/*transform: translateY(-200%);*/
+	position: relative;
+	bottom: 500px;
 }
 
 .welcome .container {
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: space-between;
+}
+
+.welcome .container h1 {
+	color: #fff;
+	letter-spacing: 0.01em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	font-size: 80px;
+	line-height: 1.075;
+	text-transform: uppercase;
+	font-family: "PT Serif", "Times New Roman", Times, serif;
+	font-weight: 700;
 }
 
 .welcome .container #decor::before {
@@ -226,7 +236,15 @@ nav .right-nav .booknow {
     align-self: center;
 }
 
+.reserve {
 
+}
+
+.reserve .container {
+	/*transform: translateY(50%);*/
+}
+.reserve .container h1 {
+}
 
 
 
