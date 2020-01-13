@@ -1,0 +1,120 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+
+.container {
+	display: grid;
+}
+
+.header {
+	text-align: center;
+	/*grid-area: header;*/
+	/*justify-self: center;*/
+}
+
+.welcome {
+	min-height: 500px;
+	background: url("scrubby-desert-hillside.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	margin: 10px 0;
+	display: grid;
+	grid-template-columns: 1fr;
+	/*grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));*/
+	align-content: start;
+
+}
+.welcome > h1 {
+	padding-top: 30px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+.welcome > p {
+	padding-top: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+	color: #eee;
+}
+
+.welcome > p:nth-of-type(1) {
+	text-align: center;
+}
+
+.posts {
+	display: grid;
+	grid-gap: 10px;
+	/*grid-template-columns: repeat(3, 1fr);*/
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	margin: 0 25px;
+}
+
+.posts a {
+	text-decoration: none;
+}
+
+.content > h2 {
+	text-align: center;
+}
+
+.content > p {
+	margin-top: 10px;
+}
+
+footer {
+	margin-top: 30px;
+	padding: 10px 0;
+	background: #333;
+	color: #fff;
+	display: grid;
+	text-align: center;
+	max-width: 100%;
+}
+
+nav ul {
+	margin: 0 1.5rem;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(3, 1fr);
+	margin-bottom: 10px;
+}
+nav li {
+	list-style: none;
+}
+nav a {
+	text-align: center;
+	text-decoration: none;
+	padding: 10px 0;
+	display: block;
+	background: #eee;
+	color: #000;
+}
+
+
+@media (max-width: 500px) {
+ 	nav ul {
+ 		display: grid;
+ 		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ 	}
+
+ 	img {
+ 		max-width: 100%;
+ 	}
+
+ 	.welcome {
+ 		display: grid;
+ 		grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr));
+ 	}
+}
