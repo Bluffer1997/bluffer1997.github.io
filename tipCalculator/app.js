@@ -13,7 +13,7 @@ let total;
 
 // Event Listener
 calculateTip.addEventListener('click', function(e) {
-    if (isNaN(billAmount.value) || billAmount.value == null || billAmount.value == "") {
+    if (isNaN(billAmount.value) || billAmount.value == null || billAmount.value == "" || billAmount.value == " ") {
         alert('You must enter a number!');
     } else {
         calculate();
