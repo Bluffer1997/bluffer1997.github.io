@@ -1,0 +1,13 @@
+h1 {
+    background: #A4DE1F;
+    color: #fff;
+}
+
+h2 {
+    background: #f3f3f3;
+    color: #000;
+}
+
+.showthenumbers {
+    display: none;
+}
