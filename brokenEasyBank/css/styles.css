@@ -1,0 +1,160 @@
+/* ## Colors
+
+### Primary
+
+- Dark Blue: hsl(233, 26%, 24%)
+- Lime Green: hsl(136, 65%, 51%)
+- Bright Cyan: hsl(192, 70%, 51%)
+
+### Neutral
+
+- Grayish Blue: hsl(233, 8%, 62%)
+- Light Grayish Blue: hsl(220, 16%, 96%)
+- Very Light Gray: hsl(0, 0%, 98%)
+- White: hsl(0, 0%, 100%)
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.15;
+}
+
+body {
+    font-size: 18px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 300;
+    background: hsl(0, 0%, 98%);    
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Start with the nav */
+header {
+    font-size: .9rem;
+    max-width: 100%;
+}
+header ul {
+    background: hsl(0, 0%, 100%);
+    padding: 1.5rem 0;
+    /* border: 2px solid coral; */
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+header ul #logo {
+    margin-left: 8rem;
+}
+
+header ul #invite {
+    margin-right: 8rem;
+}
+header ul nav {
+    display: flex;
+}
+
+header ul nav li {
+    padding: 0 .5rem;
+}
+
+header ul li a {
+    color: hsl(233, 8%, 62%);
+    text-decoration: none;
+}
+
+/* Main Sections */
+
+/* About */
+.about {
+    display: flex;
+    justify-content: space-between;
+    min-height: 632px;
+
+}
+
+.about .left {
+    border: 4px solid #f3f3f3;
+    flex-basis: 45%;
+}
+
+.about .right {
+    background-color: transparent;
+    background-image: url("../images/bg-intro-mobile.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 32px;
+    display: flex;
+    justify-content: center;
+    padding: 0 27px;
+
+    /* flex-basis: 55%;  */
+    width: 55%;
+    max-width: 100%;
+
+
+    /* min-height: 650px;
+    background-image: url(../images/bg-intro-desktop.svg);
+    background-position-y: -245px;
+    background-position-x: -66px;
+    background-size: 180%;
+    padding: 0;
+    position: relative;
+
+    border: 4px solid #f3f3f3;
+    flex-basis: 55%; 
+    max-width: 100%; */
+}
+.about .right img {
+    max-width: 100%;
+}
+.about .right #phones {
+    max-width: 105%;
+    position: absolute;
+    top: -120px;
+    right: -120px;
+}
+
+/* Mobile */
+@media only screen and (max-width: 700px) {
+
+    /* Start with the nav */
+    header {
+        max-width: 100%;
+    }
+    header ul {
+        background: hsl(0, 0%, 100%);
+        padding: 1.5rem 0;
+        /* border: 2px solid coral; */
+        list-style-type: none;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: space-between;
+        max-height: 25vh;
+        border: 2px solid crimson;
+    }
+    header ul #logo {
+        margin-left: 8rem;
+    }
+
+    header ul #invite {
+        /* margin-right: 8rem; */
+        margin-left: 8rem;
+    }
+    header ul nav {
+        display: flex;
+        justify-content: center;
+    }
+
+    header ul nav li {
+
+        padding: 0 .5rem;
+    }
+
+    header ul li a {
+        color: hsl(233, 8%, 62%);
+        text-decoration: none;
+    }
+
+}
+/* Tablet */
