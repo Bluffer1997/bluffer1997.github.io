@@ -388,14 +388,14 @@ footer .container .socialsAndCopy .copy {
         margin-top: 50px;
     }
     header nav ul li:first-child {
-        /* border: lightseagreen 2px solid; */
+        border: lightseagreen 2px solid;
         padding: 0;
         margin-left: 25px;
     }
     header nav ul li:nth-of-type(2) {
         padding: 0;
         margin-right: 25px;
-       /* border: limegreen 2px solid; */
+       border: limegreen 2px solid;
     }
 
     header .navButton {
