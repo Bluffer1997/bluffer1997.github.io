@@ -29,6 +29,7 @@ The designs were created to the following widths:
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    /* overflow-x: hidden; */
  }
 
  img {
@@ -38,6 +39,8 @@ The designs were created to the following widths:
 
 a {
     text-decoration: none;
+    padding: 0;
+    margin: 0;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
@@ -398,12 +401,16 @@ footer .container .socialsAndCopy .copy {
        border: limegreen 2px solid;
     }
 
+    /* header nav ul img {
+        max-width: 100%;
+    } */
+
     header .navButton {
         padding: 5px 25px;
     }
     header .logo {
         /* border: maroon solid 2px; */
-        width: 50%;
+        /* width: 50%; */
         /* Flex shrink? */
     }
 }
