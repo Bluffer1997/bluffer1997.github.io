@@ -1,0 +1,431 @@
+/* ## Layout
+
+The designs were created to the following widths:
+
+- Mobile: 375px
+- Desktop: 1440px
+
+## Colors
+
+### Primary
+
+- Pink: hsl(322, 100%, 66%)
+
+### Neutral
+
+- Very Pale Cyan: hsl(193, 100%, 96%)
+- Very Dark Cyan: hsl(192, 100%, 9%)
+- Grayish Blue: hsl(208, 11%, 55%)
+ */
+:root {
+    --primaryPink: hsl(322, 100%, 66%);
+    --veryPaleCyan: hsl(193, 100%, 96%);
+    --veryDarkCyan: hsl(192, 100%, 9%);
+    --grayishBlue: hsl(208, 11%, 55%);
+    --white: #fff;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* overflow-x: hidden; */
+ }
+
+ img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+li {
+    list-style-type: none;
+}
+
+body {
+     font-family: 'Roboto', sans-serif;
+     font-size: 18px;
+}
+
+header {
+    background-color: var(--veryPaleCyan);
+    background-image: url('../images/bg-hero-desktop.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 100px;
+}
+
+header nav ul {
+    /* Flex Properties */
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+header nav ul li:nth-of-type(1) {
+    padding: 50px 0 0 50px;
+}
+
+header nav ul li:nth-of-type(2) {
+    padding: 50px 50px 0 0;
+}
+
+header #logo {
+}
+
+.navButton {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: var(--veryDarkCyan);
+    background: var(--white);
+    padding: 10px 50px;
+    border-radius: 25px;
+}
+
+header .container {
+    margin: 0 50px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+header .container .left {
+    margin: 140px 0;
+    flex-basis: 50%;
+}
+
+header .container .left h1 {
+    margin-bottom: 30px;
+}
+header .container .left p { 
+    margin-bottom: 40px;
+}
+
+header .container .left .getStartedButton {
+    border-radius: 25px;
+    background: var(--primaryPink);
+    color: var(--veryPaleCyan);
+    padding: 15px 75px;
+    font-size: 13px;
+}
+
+header .container .right {
+    margin: 55px 0;
+    flex-basis: 50%;
+}
+
+
+.content {
+    /* margin: 0 150px 175px; */
+    margin: 0 150px;
+} 
+
+.content .growTogether {
+    border: 1px solid #eee;
+    border-radius: 15px;
+    box-shadow: 0px 0px 12px -8px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 30px;
+}
+
+.content .growTogether .left {
+    flex-basis: 50%;
+    padding-top: 115px;
+    padding-left: 80px;
+    
+}
+
+.content .growTogether .left h3 {
+    margin-bottom: 15px;
+}
+
+.content .growTogether p {
+    color: var(--grayishBlue);
+    font-size: .8em;
+}
+
+.content .growTogether .right {
+    flex-basis: 50%;
+    padding: 45px 0;
+}
+
+.content .growTogether .right img {
+    padding-left: 150px;
+    width: 90%;
+}
+
+.content .flowingConversations{
+    display: flex;
+    flex-flow: row wrap;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    box-shadow: 0px 0px 12px -8px rgba(0, 0, 0, 0.75);
+    margin-bottom: 30px;
+}
+
+.content .flowingConversations .left {
+    flex-basis: 50%;
+    padding: 50px 100px;
+} 
+
+.content .flowingConversations .left img {
+    /* width: 90%; */
+}
+
+.content .flowingConversations .right {
+    flex-basis: 50%;
+    padding-top: 115px;
+    padding-left: 100px;
+}
+
+.content .flowingConversations .right h3 {
+    margin-bottom: 15px;
+}
+
+.content .flowingConversations p {
+    color: var(--grayishBlue);
+    font-size: .8em;
+}
+
+.content .yourUsers {
+    min-height: 250px;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    box-shadow: 0px 0px 12px -8px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 30px;
+}
+
+.content .yourUsers .left {
+    flex-basis: 50%;
+    padding-top: 115px;
+    padding-left: 80px;
+}
+
+.content .yourUsers h3 {
+    margin-bottom: 15px;
+}
+
+.content .yourUsers p {
+    color: var(--grayishBlue);
+    font-size: .8em;
+}
+
+.content .yourUsers .right {
+    flex-basis: 50%;
+    padding: 45px 0;
+
+}
+
+.content .yourUsers .right img {
+    padding-left: 150px;
+    width: 90%;
+}
+.content .readyToBuild {
+    transform: translateY(100px);
+    box-shadow: 0px 0px 12px -8px rgba(0, 0, 0, 0.75);
+    background: var(--white);
+    border: 1px solid #eee;
+    border-radius: 25px;
+    padding: 60px 0;
+    margin: 0 150px;
+    /* margin-bottom: 50px; */
+    text-align: center;
+    font-size: 13.33px;
+    font-weight: 700;
+    /* max-width: 500px; */
+}
+.content .readyToBuild h2 {
+    margin-bottom: 40px;
+}
+
+.content .readyToBuild .getStartedButton{
+    border-radius: 25px;
+    background: var(--primaryPink);
+    color: var(--veryPaleCyan);
+    padding: 15px 75px;
+    font-size: 13px;
+}
+
+footer {
+    min-height: 250px;
+    background: var(--veryDarkCyan);
+    color: var(--grayishBlue);
+}
+
+footer .container {
+    padding: 150px 0 75px;
+    display: flex;
+    flex-flow: row wrap;
+    /* justify-content: space-between; */ 
+} 
+
+footer .container .contact {
+    /* margin: 0 80px; */
+    margin-left: 80px;
+    filter: brightness(0) invert(1);
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+footer .container .contact .icon {
+    padding-right: 20px;
+} 
+
+footer .container .contact #logo {
+    margin-bottom: 25px;
+}
+
+footer .container .contact #location {
+    margin-bottom: 25px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+footer .container .contact #phone {
+    margin-bottom: 25px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+footer .container .contact #email {
+    margin-bottom: 25px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+footer .container .footerNav {
+    margin-left: 100px;
+    margin-top: 50px;
+    display: flex;
+    flex-flow: row wrap;
+    filter: brightness(0) invert(1);
+
+}
+
+footer .container .footerNav a {
+    color: inherit;
+    font-size: 15px;
+}
+
+footer .container .footerNav .links1 {
+    padding-right: 150px;
+}
+
+footer .container .footerNav .links1 li {
+    padding-top: 15px;
+}
+
+
+footer .container .footerNav .links2 {
+    padding-right: 150px;
+}
+
+footer .container .footerNav .links2 li {
+    padding-top: 15px;
+}
+
+footer .container .socialsAndCopy {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+}
+
+footer .container .socials {
+    filter: brightness(0) invert(1);
+    margin-top: 70px;
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 0;
+}
+
+footer .container .socials .facebook span {
+    border-radius: 25px;
+    padding: 8px 10px;
+    margin: 0 5px;
+    border: 1px solid #fff;
+}
+
+
+footer .container .socials .twitter span{
+    border-radius: 25px;
+    padding: 8px;
+    margin: 0 5px;
+    border: 1px solid #fff;
+}
+
+footer .container .socials .instagram span{
+    border-radius: 25px;
+    padding: 8px;
+    margin: 0 5px;
+    border: 1px solid #fff;
+}
+
+footer .container .socialsAndCopy .copy {
+    font-size: 0.7em;
+    padding-top: 150px;
+    filter: brightness(0) invert(1);
+}
+
+/* Responsive - 320px, 768px, and 1200px */
+/* Responsive - 500px, xxxpx, and xxxxpx */
+    /* Mobile */
+/* @media only screen and (max-width: 500px) { */
+   @media only screen and (max-width: 767px) {
+    header nav ul {
+        /* border: 2px solid #000; */
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+    header nav ul li {
+        margin-top: 50px;
+    }
+    header nav ul li:first-child {
+        /* border: lightseagreen 2px solid; */
+        max-width: 40%;
+        padding: 0;
+        margin-left: 25px;
+    }
+    header nav ul li:nth-of-type(2) {
+        padding: 0;
+        margin-right: 25px;
+        margin-left: 25px;
+       /* border: limegreen 2px solid; */
+    }
+    header .navButton {
+        padding: 5px 25px;
+    }
+
+    /* content of header */
+
+    header .container {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    header .container .left {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    header .container .left .getStartedButton {
+        padding: 15px 37.5px;
+    }
+
+    br {
+        display: none;
+    }
+}
