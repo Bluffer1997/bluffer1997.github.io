@@ -395,6 +395,7 @@ footer .container .socialsAndCopy .copy {
     }
     header nav ul li:first-child {
         /* border: lightseagreen 2px solid; */
+        max-width: 40%;
         padding: 0;
         margin-left: 25px;
     }
