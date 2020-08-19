@@ -79,6 +79,9 @@ header nav ul li:nth-of-type(2) {
     padding: 50px 50px 0 0;
 }
 
+header #logo {
+}
+
 .navButton {
     font-family: 'Open Sans', sans-serif;
     font-size: 13px;
@@ -401,17 +404,27 @@ footer .container .socialsAndCopy .copy {
         margin-left: 25px;
        /* border: limegreen 2px solid; */
     }
-
-    /* header nav ul img {
-        max-width: 100%;
-    } */
+    header #logo {
+     
+    }
 
     header .navButton {
         padding: 5px 25px;
     }
-    header .logo {
-        /* border: maroon solid 2px; */
-        /* width: 50%; */
-        /* Flex shrink? */
+
+    /* content of header */
+
+    header .container {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    header .container .left {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    br {
+        display: none;
     }
 }
