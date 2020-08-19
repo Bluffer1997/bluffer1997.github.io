@@ -434,8 +434,8 @@ footer .container .socialsAndCopy .copy {
         padding: 0;
         margin: 0;
     }
-    .content .growTogether {
-        /* border: 2px solid slateblue; */
+    .content .growTogether, .content .flowingConversations, .content .yourUsers {
+        border: 2px solid slateblue;
         display: flex;
         flex-flow: column-reverse wrap;       
     }
