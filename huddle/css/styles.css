@@ -405,10 +405,6 @@ footer .container .socialsAndCopy .copy {
         margin-left: 25px;
        /* border: limegreen 2px solid; */
     }
-    header #logo {
-     
-    }
-
     header .navButton {
         padding: 5px 25px;
     }
@@ -423,6 +419,10 @@ footer .container .socialsAndCopy .copy {
     header .container .left {
         display: flex;
         flex-flow: column wrap;
+    }
+
+    header .container .left .getStartedButton {
+        padding: 15px 37.5px;
     }
 
     br {
