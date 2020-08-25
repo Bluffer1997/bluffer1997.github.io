@@ -432,15 +432,74 @@ footer .container .socialsAndCopy .copy {
     /* main content */
     .content {
         padding: 0;
-        margin: 0;
+        margin: 0 37.5px;
     }
-    .content .growTogether, .content .flowingConversations, .content .yourUsers {
+    .content .growTogether, .content .yourUsers {
         /* border: 2px solid slateblue; */
         display: flex;
         flex-flow: column-reverse wrap;       
     }
 
-    .content .growTogether .right {
-
+    .content .growTogether .left {
+        padding: 0 50px 50px;
     }
+
+    
+    .content .growTogether .right {
+        padding: 0;
+    }
+    
+    .content .growTogether .right img {
+        padding: 50px;
+        width: 100%;
+    }
+
+    .content .flowingConversations {
+        display: flex;
+        flex-flow: column wrap;
+    }
+    .content .flowingConversations .right {
+        padding: 0 50px 50px;
+    }
+    .content .flowingConversations .left {
+        padding: 0;
+    }
+
+    .content .flowingConversations .left img {
+        padding: 50px;
+        width: 100%;
+    }
+
+
+    .content .yourUsers .left {
+        padding: 0 50px 50px;
+    }
+
+    
+    .content .yourUsers .right {
+        padding: 0;
+    }
+    
+    .content .yourUsers .right img {
+        padding: 50px;
+        width: 100%;
+    }
+
+/* End of main content */
+
+.content .readyToBuild {
+    /* padding: 0; */
+    margin: 0;
+    transform: translateY(100px);
+    box-shadow: 0px 0px 12px -8px rgba(0, 0, 0, 0.75);
+    background: var(--white);
+    border: 1px solid #eee;
+    border-radius: 25px;
+    /* padding: 60px 0; */
+    /* margin: 0 150px; */
+    text-align: center;
+    font-size: 13.33px;
+    font-weight: 700;
+}
+
 }
