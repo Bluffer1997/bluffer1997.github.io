@@ -379,11 +379,25 @@ footer .container .socialsAndCopy .copy {
     filter: brightness(0) invert(1);
 }
 
+
 /* Responsive - 320px, 768px, and 1200px */
+
+/* Very Small Mobile Sized Devices */
+
+    @media only screen and (max-width: 356px) {
+        .readyToBuild {
+            margin: 0 -1.2rem !important;
+        }        
+        .readyToBuild .getStartedButton {
+            /* padding: 7.5px 18.75px !important; */
+            padding: 15px 50px !important;
+        }
+    }
+
 /* Responsive - 500px, xxxpx, and xxxxpx */
     /* Mobile */
-   /* @media only screen and (max-width: 767px) { */
-    @media only screen and (max-width: 900px) {
+
+    @media only screen and (max-width: 920px) {
     header nav ul {
         /* border: 2px solid #000; */
         display: flex;
@@ -528,3 +542,17 @@ footer .container .socialsAndCopy .copy {
         justify-content: center;
     }
 }
+
+/* Large Mobile - Tablet/Medium Sized Devices */
+@media only screen and (min-width: 921px) and (max-width: 1210px) {
+    .content {
+        /* border:  2px solid pink; */
+        margin: 50px;
+    }
+
+    .content .growTogether .left, .flowingConversations .right, .yourUsers .left,  {
+        /* padding: 50px 50px 50px; */
+    }
+
+}
+
