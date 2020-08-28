@@ -11,6 +11,10 @@ a {
 	font-weight: bold;
 }
 
+a:hover {
+	color: blue;
+}
+
 .container {
 	display: flex;
 	flex-flow: column wrap;
