@@ -1,7 +1,9 @@
 * {
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
+
 body {
 	color: #000;
 }
@@ -15,16 +17,38 @@ a:hover {
 	color: blue;
 }
 
-.container {
-	display: flex;
-	flex-flow: column wrap;
-	justify-content: center;
-	align-items: center;
-	height: 500px;
-	max-width: 100%;
-}
-
 img {
 	height: auto;
 	max-width: 100%;
+}
+
+
+.container {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	max-width: 100%;
+}
+
+.htmlcss {
+	text-align: center;
+	margin-top: 5rem;
+	display: flex;
+	flex-flow: column wrap;
+}
+
+.htmlcss h1 {
+	color: orangered;
+}
+
+.js{
+	text-align: center;
+	margin-top: 2rem;
+	display: flex;
+	flex-flow: column wrap;
+	margin-right: 25px;
+}
+
+.js h1 {
+	color: blueviolet;
 }
