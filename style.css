@@ -53,7 +53,22 @@ img {
 	color: blueviolet;
 }
 
+.domains{
+	margin-right: 50px;
+	margin-top: 2rem;
+	display: flex;
+	flex-flow: column wrap;
+	/* border: 2px solid sandybrown; */
+	/* text-align: center; */
+}
 
+.domains h1 {
+	color: #e0c341;
+}
+
+.domains a {
+	text-align: center;
+}
 @media only screen and (min-width: 230px) and (max-width: 900px) {
 	body {
 		font-size: 200%;
