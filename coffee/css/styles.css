@@ -657,27 +657,28 @@ header .container {
     padding-top: 30px;
     display: flex;
     flex-flow: row wrap;
-    max-width: 1150px;
+    justify-content: center;
+    /* max-width: 1150px; */
     width: 100%;
+    /* 
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
-    padding-right: 15px;
+    padding-right: 15px; */
   }
 
   .menu .coffees .left {
     display: flex;
     flex-flow: column wrap;
     justify-content: space-between;
-    margin-right: 30px;
+    margin-right: 15px;
   }
 
   .menu .coffees .right {
-    margin-left: 30px;
-
+    margin-left: 15px;
     display: flex;
     flex-flow: column wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
   } 
 
   .menu .coffees .left .coffee {
@@ -726,9 +727,18 @@ header .container {
   /* right side */
 
   .menu .coffees .right #latte {
-    border: 2px solid #000;
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
+  }
+
+  .menu .coffees .right #longBlack {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .menu .coffees .right #cappuccino {
+    display: flex;
+    flex-flow: row wrap;
   }
   
 
