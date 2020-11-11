@@ -6,6 +6,7 @@
     box-sizing: border-box;
     --mainColor: #7A7A7A;
     --orange: #E54E1B;
+    --black: #2A2A2A;
 }
 
 body {
@@ -671,14 +672,13 @@ header .container {
     display: flex;
     flex-flow: column wrap;
     justify-content: space-between;
-    margin-right: 15px;
+    /* margin-right: 15px; */
   }
 
   .menu .coffees .right {
-    margin-left: 15px;
+    /* margin-left: 15px; */
     display: flex;
     flex-flow: column wrap;
-    /* justify-content: space-between; */
   } 
 
   .menu .coffees .left .coffee {
@@ -691,10 +691,11 @@ header .container {
     padding-top: 30px;
   } 
 
-  .menu .coffeeName .price {
+  /* .menu .coffeeName .price {
     padding-left: 200px;
     color: #E54E1B;
-  }
+  } */
+
   .menu .coffees .coffee .coffeeContent {
     padding-left: 30px;
   } 
@@ -708,39 +709,381 @@ header .container {
     border: 9px solid #fff;
   }
 
+  /* left side */
 
   .menu .coffees .left #americano {
     display: flex;
     flex-flow: row wrap;
+    margin-bottom: 30px;
   } 
+
+  .menu #americano .price {
+    padding-left: 200px;
+    color: #E54E1B;
+  }
+
 
   .menu .coffees .left #hotChocolate {
     display: flex;
     flex-flow: row wrap;
+    margin-bottom: 30px;
+
   } 
+
+  .menu #hotChocolate .price {
+    padding-left: 190px;
+    color: #E54E1B;
+  }
+
 
   .menu .coffees .left #doubleAmericano {
     display: flex;
     flex-flow: row wrap;
+    margin-bottom: 30px;
+
   } 
   
+  .menu #doubleAmericano .price {
+    padding-left: 150px;
+    color: #E54E1B;
+  }
+
+
   /* right side */
 
   .menu .coffees .right #latte {
     display: flex;
     flex-flow: row wrap;
+    margin-bottom: 30px;
+
   }
+
+  .menu #latte .price {
+    padding-left: 260px;
+    color: #E54E1B;
+  }
+
 
   .menu .coffees .right #longBlack {
     display: flex;
     flex-flow: row wrap;
+    margin-bottom: 30px;
+
   }
+
+  .menu #longBlack .price {
+    padding-left: 200px;
+    color: #E54E1B;
+  }
+
 
   .menu .coffees .right #cappuccino {
     display: flex;
     flex-flow: row wrap;
   }
   
+  .menu #cappuccino .price {
+    padding-left: 200px;
+    color: #E54E1B;
+  }
+
+
+  /* Upcoming */
+ 
+  .upcoming {
+    padding-top: 120px;
+  }
+
+  .upcoming .container {
+    max-width: 1150px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+  } 
+
+  .upcoming .container h4 {
+    font-size: 44px;
+    font-weight: 700;
+  }
+  .upcoming .container .line {
+    height: 2px;
+    width: 150px;
+    background: var(--orange);
+    border-radius: 50px;
+    margin: 30px auto 0;
+  }
+  .upcoming .upcomingItems {
+    padding-bottom: 200px;
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 1150px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+    margin-top: 30px;
+  }
+
+  .upcoming .upcomingItems .left {
+    display: flex;
+    flex-flow: row nowrap;
+    flex-basis: 50%;
+    max-width: 50%;
+    /* margin-right: 50px; */
+  }
+
+  .upcoming .upcomingItems .right {
+    display: flex;
+    flex-flow: row nowrap;
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+
+  .upcoming .upcomingItems #upcomingImage img {
+    border-radius: 10px;
+  }
+
+  .upcoming .upcomingItems .left #upcomingContent {
+    padding-left: 30px;
+  }
+
+  .upcoming .upcomingItems .right #upcomingContent {
+    padding-left: 30px;
+  } 
+
+  .upcoming .upcomingItems #upcomingContent {
+    margin-top: 60px;
+    font-size: 20px;
+    color: #2A2A2A;
+    font-weight: 700;
+  }
+
+  .upcoming .upcomingItems #upcomingContent p {
+    margin-top: 15px;
+  }
+
+
+  /* Contact */
+
+  .contact {}
+
+  .contact .container {
+    max-width: 1150px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+  }
+
+  .contact .container h4 {
+    font-size: 44px;
+    font-weight: 700;
+  }
+  .contact .container .line {
+    height: 2px;
+    width: 150px;
+    background: var(--orange);
+    border-radius: 50px;
+    margin: 30px auto 0;
+  }
+
+  .contact .contactForm {
+    max-width: 1150px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    padding-bottom: 130px;
+  }
+
+  .contact .contactForm input, .contact .contactForm textarea {
+    padding: 0 25px;
+    border: 1px solid #7A7A7A;
+    border-radius: 5px;
+    height: 60px;
+    width: 100%;
+    font-size: 16px;
+    color: #7A7A7A;
+  }
+
+  .contact .contactForm .theContact {
+    display: flex;
+    flex-flow: column wrap;
+  }
+
+  .contact .contactForm .theContact .top {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  
+  .contact .contactForm .theContact .top #contactName {
+    flex-basis: 50%;
+    max-width: 50%;
+    margin-right: 15px;
+  }
+
+  .contact .contactForm .theContact .top #contactEmail {
+    flex-basis: 50%;
+    max-width: 50%;
+    margin-left: 15px;
+  }
+
+  .contact .contactForm .theContact .middle {
+    display: flex;
+    flex-flow: row wrap;
+    margin-top: 30px;
+  }
+
+  .contact .contactForm .theContact .bottom {
+    margin-top: 30px;
+  }
+
+  .contact .contactForm .theContact .bottom textarea {
+    height: 180px;
+    padding-top: 15px;
+    resize: none;
+  }
+
+  .contact .contactForm .theContact .submitButtonContainer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .contact .contactForm .theContact .submitButtonContainer .button {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 60px;
+    font-weight: 500;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #fff;
+    background: var(--orange);
+    text-transform: uppercase;
+  }
+
+
+  /* Contact Map */
+
+.contactMap iframe {
+  height: 430px;
+  width: 100%;
+}
+
+footer {
+  background: var(--black);
+  color: #fff;
+  min-height: 400px;
+}
+
+footer .top {
+  max-width: 1150px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  display: flex;
+  flex-flow: row wrap;
+ }
+
+footer .top .subscribe {
+  padding-top: 80px;
+  flex-basis: 50%;
+  max-width: 50%;
+} 
+
+footer .top .subscribe h4 {
+  margin-top: 45px;
+  color: #fff;
+  font-size: 44px;
+  font-weight: 700;
+ }
+
+ footer .top .subscribe p {
+  margin-top: 15px;
+  color: #fff;
+ }
+
+footer .top .subscribeForm {
+  margin-top: 45px;
+  padding-top: 80px;
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+footer .top .subscribeForm form {
+  display: flex;
+}
+
+footer .top .subscribeForm input[type=email] {
+  width: 100%;
+  height: 55px;
+  padding: 0 25px;
+  border: 1px solid #fff;
+  background: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+footer .top .subscribeForm form .button {
+  /* margin-left: 85px; */
+  margin-left: 30px;
+  width: 55px;
+  height: 55px;
+  /* padding: 0; */
+  padding: 5px 10px;
+  background-color: var(--orange);
+  color: #fff;
+  border: 0;
+  text-align: center;
+  font-size: 28px;
+  border-radius: 5px;
+}
+
+/* footer .subscribeForm .fa-envelope {
+} */
+
+
+
+footer .bottom {
+  margin-top: 130px;
+  padding-bottom: 130px;
+}
+
+footer .bottom .container {
+  max-width: 1150px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+
+
+
+
+
+
+
 
 
 /* Originally 776PX */
@@ -876,4 +1219,57 @@ header .container {
   .images .bottom {
     flex-direction: column;   
   }
+
+  /* Coffee Menu */
+
+    /* left side */
+
+    .menu .coffees .left #americano {
+      /* margin-top: 30px; */
+    } 
+  
+    .menu .coffees .left #hotChocolate {
+      margin-top: 30px;
+    } 
+  
+    .menu .coffees .left #doubleAmericano {
+      margin-top: 30px;
+    } 
+    
+    /* right side */
+  
+    .menu .coffees .right #latte {
+      margin-top: 30px;
+    }
+  
+    .menu .coffees .right #longBlack {
+      margin-top: 30px;
+    }
+  
+    .menu .coffees .right #cappuccino {
+      margin-top: 30px;
+    }
+
+    /* Upcoming */
+    .upcoming .upcomingItems {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .upcoming .upcomingItems .left {
+      flex-direction: column;
+    }
+
+    .upcoming .upcomingItems .right {
+      margin-top: 30px;
+      flex-direction: column;
+    }
+
+    .upcoming .upcomingItems #upcomingImage {
+      padding-left: 30px;
+    }
+
+    .upcoming .upcomingItems {
+      padding-bottom: 100px;
+    }
 }
