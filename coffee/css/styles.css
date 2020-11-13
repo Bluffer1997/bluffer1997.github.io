@@ -1065,7 +1065,16 @@ footer .top .subscribeForm form .button {
 
 footer .bottom {
   margin-top: 130px;
-  padding-bottom: 130px;
+  /* padding-bottom: 130px; */
+}
+
+footer .bottom h4 {
+  color: #fff;
+  padding-bottom: 25px;
+}
+
+footer .bottom p {
+  color: #fff;
 }
 
 footer .bottom .container {
@@ -1075,14 +1084,134 @@ footer .bottom .container {
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
+
+  display: flex;
+  flex-flow: row wrap;
+
+  padding-bottom: 130px;
+}
+
+footer .bottom .container .footerAbout {
+  display: flex;
+  flex-flow: column wrap;
+  flex-basis: 33.3%;
+} 
+
+footer .bottom .container .footerAbout .line {
+  width: 40px;
+  height: 3px;
+  border-radius: 50px;
+  background-color: #E54E1B;
+  margin-bottom: 25px;
 }
 
 
+footer .bottom .container .footerAbout .footerSocials {
+  margin-top: 25px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+footer .bottom .container .footerAbout .footerSocials li:nth-of-type(1) {
+  margin-left: 0;
+}
 
 
+footer .bottom .container .footerAbout .footerSocials li {
+  margin-right: 5px;
+  margin-left: 10px;
+}
+
+footer .bottom .container .footerAbout .footerSocials li a {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  background-color: #3D3D3D;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+}
+
+footer .bottom .container .openingHours {
+  padding-left: 40px;
+  flex-basis: 33.3%;
+}
 
 
+footer .bottom .container .openingHours .line {
+  width: 40px;
+  height: 3px;
+  border-radius: 50px;
+  background-color: #E54E1B;
+  margin-bottom: 25px;
+}
 
+footer .bottom .container .openingHours .hours {
+  /* padding-top: 15px; */
+} 
+
+footer .bottom .container .openingHours .hours li {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+}
+
+footer .bottom .container .instagramFeed {
+  flex-basis: 33.3%;
+  padding-left: 40px;
+
+}
+
+footer .bottom .container .instagramFeed .line {
+  width: 40px;
+  height: 3px;
+  border-radius: 50px;
+  background-color: #E54E1B;
+  margin-bottom: 25px;
+}
+
+
+footer .bottom .container .instagramFeed .instagramGallery {
+  display: flex;
+  flex-flow: column wrap;
+  margin-left: -8px;
+  margin-right: -8px;
+  
+}
+
+footer .bottom .container .instagramFeed .instagramGallery .instagramTop {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+footer .bottom .container .instagramFeed .instagramGallery .instagramBottom {
+  display: flex;
+  flex-flow: row wrap;
+} 
+
+footer .bottom .container .instagramFeed .instagramGallery a {
+  margin: 0 8px;
+  margin-top: 15px;
+}
+
+
+footer .bottom .footerCopy {
+  max-width: 1150px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  
+  border-top: 1px solid rgba(238, 238, 238, 0.33);
+  padding: 25px 0;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center; 
+
+}
 
 
 
@@ -1271,5 +1400,32 @@ footer .bottom .container {
 
     .upcoming .upcomingItems {
       padding-bottom: 100px;
+    }
+
+
+    /* Footer */
+
+    footer .top {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    footer .bottom .container {
+      flex-direction: column;
+    }
+    footer .top .subscribeForm {
+      padding-top: 0;
+    }
+
+
+    /* footerAbout, openingHours, instagramFeed */
+
+    footer .bottom .container .footerAbout {
+      padding-left: 40px;
+      margin-bottom: 30px;
+    }
+
+    footer .bottom .container .openingHours {
+      margin-bottom: 30px;
     }
 }
