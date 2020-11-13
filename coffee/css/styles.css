@@ -1429,3 +1429,11 @@ footer .bottom .footerCopy {
       margin-bottom: 30px;
     }
 }
+
+
+/* Very small screensize */
+@media only screen and (min-width: 250px) {
+  footer {
+    border: 2px solid pink;
+  }
+}
