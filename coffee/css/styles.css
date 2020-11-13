@@ -1432,8 +1432,218 @@ footer .bottom .footerCopy {
 
 
 /* Very small screensize */
+
 @media only screen and (min-width: 250px) {
-  footer {
-    border: 2px solid pink;
+  .navbar {
+    flex-direction: column;
+    /* justify-content: center */
   }
+
+  .navbar .links ul {
+    display: none;
+    flex-direction: column;
+    background: #f4f4f4;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .navbar .links ul li:hover {
+    background-color: #fff;
+  }
+  .navbar .links ul.active {
+    display: flex;
+  }
+  .toggle-button {
+    margin-top: 10px;
+    margin-right: 7.5rem;
+    display: flex;
+  }
+
+  .links li:first-child .border {
+    display: none;
+  }
+
+  /* Main section */
+
+  /* Specials */
+  .specials .items {
+    flex-wrap: wrap;
+  }
+
+  .specials .items .item1, .specials .items .item2, .specials .items .item3 {
+    margin-bottom: 20px;
+  }
+
+
+  /* Story */
+
+  /* Make "story" section mobile responsive. 10/19/20 */
+  .story .content {
+    /* display: flex; */
+    /* flex-flow: row nowrap; */
+    flex-direction: column;
+    /* justify-content: center; */
+  } 
+
+  .story .content #image {
+    flex-basis: 100%;
+    max-width: 100%;
+    /* margin-top: 60px;
+    padding-left: 15px;
+    padding-right: 15px; */
+  }
+
+
+  .story .content .about {
+    flex-basis: 100%;
+    max-width: 100%;
+    margin-top: 0;
+  } 
+
+  .story .content #socialIcons {
+    flex-flow: row nowrap;
+  }
+
+  /* Info */
+  .info .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .info .container .served .count {
+    margin-left: 0;
+  }
+
+  .info .container .served p {
+    margin-left: 0;
+  }
+
+  .info .container .type .count {
+    margin-left: 0;
+  }
+
+  .info .container .type p {
+    margin-left: 0;
+  } 
+
+  .info .container .team .count {
+    margin-left: 0;
+  }
+  .info .container .team p {
+    margin-left: 0;
+  }
+  
+  /* Feedback */
+
+  .feedback .cards { 
+    flex-direction: column;
+  }
+
+  .feedback .cards .cardLeft {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
+  .feedback .cards .customerImage {
+    align-self: center;
+  }
+
+  .feedback .cards .customerContent {
+    align-self: center;
+  }
+
+  .feedback .cards .cardRight {
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 80px;
+  }
+
+  /* Gallery */
+
+  .images .top {
+    flex-direction: column;   
+  }
+
+  .images .bottom {
+    flex-direction: column;   
+  }
+
+  /* Coffee Menu */
+
+    /* left side */
+
+    .menu .coffees .left #americano {
+      /* margin-top: 30px; */
+    } 
+  
+    .menu .coffees .left #hotChocolate {
+      margin-top: 30px;
+    } 
+  
+    .menu .coffees .left #doubleAmericano {
+      margin-top: 30px;
+    } 
+    
+    /* right side */
+  
+    .menu .coffees .right #latte {
+      margin-top: 30px;
+    }
+  
+    .menu .coffees .right #longBlack {
+      margin-top: 30px;
+    }
+  
+    .menu .coffees .right #cappuccino {
+      margin-top: 30px;
+    }
+
+    /* Upcoming */
+    .upcoming .upcomingItems {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .upcoming .upcomingItems .left {
+      flex-direction: column;
+    }
+
+    .upcoming .upcomingItems .right {
+      margin-top: 30px;
+      flex-direction: column;
+    }
+
+    .upcoming .upcomingItems #upcomingImage {
+      padding-left: 30px;
+    }
+
+    .upcoming .upcomingItems {
+      padding-bottom: 100px;
+    }
+
+
+    /* Footer */
+
+    footer .top {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    footer .bottom .container {
+      flex-direction: column;
+    }
+    footer .top .subscribeForm {
+      padding-top: 0;
+    }
+
+
+    /* footerAbout, openingHours, instagramFeed */
+
+    footer .bottom .container .footerAbout {
+      padding-left: 40px;
+      margin-bottom: 30px;
+    }
+
+    footer .bottom .container .openingHours {
+      margin-bottom: 30px;
+    } 
+
 }
