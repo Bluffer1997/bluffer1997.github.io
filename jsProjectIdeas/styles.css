@@ -24,4 +24,5 @@ body {
 
 li:hover {
     color: blue;
+    cursor: pointer;
 }
