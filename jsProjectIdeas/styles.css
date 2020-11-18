@@ -35,3 +35,7 @@ li:hover {
 .container .done {
     text-decoration: line-through;
 }
+
+.container .wip {
+    font-weight: bold;
+}
