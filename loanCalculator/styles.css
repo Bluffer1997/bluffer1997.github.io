@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+.container {
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+
+
+form #loanAmount {
+    /* width: 100px; */
+    margin: 5px 0 10px;
+    padding: 2px;
+} 
+
+form #loanPercentage {
+    /* width: 100px; */
+    margin: 5px 0 10px;
+    padding: 2px;
+} 
+
+form #monthsToPay {
+    /* width: 100px; */
+    margin: 5px 0 10px;
+    padding: 2px;
+} 
+
+form .buttons {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+form .submit {
+    padding: 5px 15px;
+    margin-right: 10px;
+}
+
+form .clearBtn {
+    padding: 5px 15px;
+    margin-left: 10px;
+}
+
+
+.container .results {
+    margin-top: 30px;
+}
+
+.container .results h2 {
+    text-align: center;
+}
+
+
+/* Results */
+
+.results {}
+
+.h2LoanAmount{
+    background: #b2bec3;
+    margin-bottom: 5px;
+}
+ 
+.h2LoanPercentage {
+    background: #b2bec3;
+    margin-bottom: 5px;
+}
+
+.h2LoanLength {
+    background: #b2bec3;
+    margin-bottom: 5px;
+}
+
+.h2MonthlyPayment {
+    background: #b2bec3;
+    margin-bottom: 5px;
+}
+
+.h2GrandTotal {
+    background: #5cb85c;
+}
+
+.errorMessage {
+    background: #d9534f;
+}
