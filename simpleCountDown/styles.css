@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+.container {
+    margin-top: 25vh;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+#startButton {
+    padding: 5px 15px;
+}
