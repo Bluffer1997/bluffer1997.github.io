@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+
+    --mainWhite: #f5f5f5;
+    --mainGreen: #80cfa9;
+    --mainBlack: #333333;
+    --mainRed: #d62828;
+    --mainBlue: #11b5e4;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #e3e3e3;
+}
+
+button:hover, input:hover {
+    background: #f5f5f5;
+    border: none;
+}
+
+.container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container h2 {
+    margin-bottom: 1.5rem;
+}
+
+.todo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-list {
+    min-width: 30%;
+    list-style: none;
+}
+
+.todo {
+    margin: 0.5rem;
+    background: white;
+    color: black;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo li {
+    flex: 1;
+}
+
+.complete-btn {
+    color: var(--mainGreen);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: .5rem;
+    font-size: 1rem;
+    border: none;
+}
+
+.edit-btn {
+    color: var(--mainBlue);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: .5rem;
+    font-size: 1rem;
+    border: none;
+    display: none;
+}
+
+.delete-btn {
+    color: var(--mainRed);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: .5rem;
+    font-size: 1rem;
+    border: none;
+}
+
+.todo-item {
+    padding: 0rem 0.5rem;
+}
+
+.fa-times-circle, .fa-check-circle {
+    pointer-events: none;
+} 
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+input[type="text"] {
+    height: 1.5rem;
+    padding: 0 5px;
+    outline: none;
+}
+
+.container #todo-button{
+    padding: 2.5px 5px;
+} 
+
+.container #clearItems {
+    outline: none;
+    margin-top: 25px;
+    padding: 5px 10px;
+}

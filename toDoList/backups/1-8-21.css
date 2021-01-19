@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+
+    --mainWhite: #f5f5f5;
+    --mainGreen: #80cfa9;
+    --mainBlack: #333333;
+    --mainRed: #d62828;
+    --mainBlue: #11b5e4;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #e3e3e3;
+}
+
+button:hover {
+    background: #f5f5f5;
+    border: none;
+}
+
+.container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container h2 {
+    margin-bottom: 1.5rem;
+}
+
+.container .form-group {}
+
+.container .form-group input[type="text"] {
+    height: 1.5rem;
+    padding: 0 5px;
+} 
+
+.container .form-group button {
+    margin-left: 10px;
+    /* padding: 0 5px; */
+    padding: 2px 10px;
+}
+
+.theList {
+    margin-top: 2rem;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.theList .item {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.theList .item #itemName {
+    /* display: block; */
+}
+
+.theList .item .itemButtons {
+    padding-left: 100px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.theList .item .itemButtons .completed, .theList .item .itemButtons .edit, .theList .item .itemButtons .delete {
+    padding: 0 5px;
+}
+
+.theList .item .itemButtons .completed a:hover, .theList .item .itemButtons .edit a:hover, .theList .item .itemButtons .delete a:hover {
+    background: var(--mainWhite);
+}
+
+.theList .item .itemButtons .completed a {
+    color: var(--mainGreen);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.theList .item .itemButtons .edit a {
+    color: var(--mainBlue);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.theList .item .itemButtons .delete a {
+    color: var(--mainRed);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+
+.container #clearItems {
+    margin-top: 25px;
+    padding: 5px 10px;
+}

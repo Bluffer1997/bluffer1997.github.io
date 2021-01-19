@@ -1,0 +1,2 @@
+hide item buttons by default
+in event listener, show buttons, append the child of the itemName id and add the itemButtons to it. 
