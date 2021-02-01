@@ -90,6 +90,18 @@ header .container h1 {
     color: var(--white);
 } 
 
+
+.toggle-button {
+    position: absolute;
+    top: 4.5rem;
+    right: 2rem;
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+}
 /* Main */
 
 main .container {
@@ -123,4 +135,69 @@ main .container h2 {
 main .container p {
     padding-left: 100px;
     color: var(--darkGray);
+}
+
+
+/* Mobile */
+
+@media only screen and (min-width: 250px) and (max-width: 1100px) {
+   header nav {
+       flex-direction: column;
+       /* margin: 0 50px; */
+        margin-left: 0;
+        margin-right: 0;
+     }
+    
+    header nav #logo {
+        margin: 0 50px;
+    }
+
+   header nav ul {
+       flex-direction: column;
+   }
+   .toggle-button {
+       display: flex;
+   }
+    .toggle-button .bar {
+        height: 3px;
+        width: 100%;
+        background: var(--white);
+        border-radius: 10px;
+   }
+    .links .toggle {
+       display: none;
+   }
+
+    .links .active {
+        display: flex;
+  }
+ 
+    .links .mobile {
+        background: #000;
+        text-transform: uppercase;
+        margin-left: 0;
+        margin-right: 0;
+}
+
+    .links .mobile li {
+        padding: 5px 0;
+        text-align: center;
+    }
+
+    .links .mobile li:hover {
+        background: var(--darkGray);
+        color: var(--black);
+    }
+
+   .navbar .links ul {
+        display: none;
+        flex-direction: column;
+        background: #f4f4f4;
+        margin-left: 0;
+        margin-right: 0;
+  }
+
+
+
+  
 }
