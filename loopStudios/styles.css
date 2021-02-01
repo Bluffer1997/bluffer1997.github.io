@@ -185,7 +185,7 @@ main .container p {
     }
 
     .links .mobile li:hover {
-        background: var(--darkGray);
+        background: #191919;
         color: var(--black);
     }
 
