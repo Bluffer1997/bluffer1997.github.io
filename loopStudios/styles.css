@@ -15,6 +15,7 @@ body {
     font-family: 'Alata', sans-serif;
     /* font-family: 'Josefin Sans', sans-serif; */
     color: var(--black);
+    /* overflow-x: hidden; */
 }
 
 ul {
@@ -72,7 +73,6 @@ nav ul li a {
     font-weight: 500;
 }
 
-
 header .container {
     border: 2px solid var(--white);
     display: flex;
@@ -102,6 +102,7 @@ header .container h1 {
     width: 30px;
     height: 21px;
 }
+
 /* Main */
 
 main .container {
@@ -260,6 +261,10 @@ footer .container .right #copyright {
 /* Mobile */
 
 @media only screen and (min-width: 250px) and (max-width: 1100px) {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
    header nav {
        flex-direction: column;
        /* margin: 0 50px; */
@@ -315,4 +320,52 @@ footer .container .right #copyright {
         margin-left: 0;
         margin-right: 0;
   }
+
+    header .container {
+        margin: 5rem auto 0;
+        max-width: 60%;
+    }
+    header .container h1 {
+        font-size: 35px;
+    }
+
+    /* Main */
+
+    main .container {
+/*        max-width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        margin: 160px 160px 100px;
+        */
+        margin: 80px 80px 50px; 
+        flex-direction: column;
+    }
+
+    main .container #left {
+        /* display: flex; */
+        flex-direction: column;
+    }
+
+    main .container #right {
+        /* transform: none; */
+        background: var(--white);
+        /* max-height: 400px; */
+    }
+
+    main .container h2 {
+        /* padding: 100px 0 30px 100px; */
+        /* padding: 50px 0 15px 50px; */
+        padding-top: 0;
+        font-size: 35px;
+        font-weight: 300;
+        font-family: 'Josefin Sans', sans-serif;
+        text-transform: uppercase;
+        color: var(--black);
+    }
+    
+    main .container p {
+        padding-left: 100px;
+        color: var(--darkGray);
+    }
+
 }
