@@ -260,7 +260,7 @@ footer .container .right #copyright {
 }
 /* Mobile */
 
-@media only screen and (min-width: 250px) and (max-width: 1100px) {
+@media only screen and (min-width: 150px) and (max-width: 1100px) {
     img {
         max-width: 100%;
         height: auto;
@@ -388,5 +388,23 @@ footer .container .right #copyright {
 
     .galleryButton {
         display: none;
+    }
+    .galleryImages {
+        flex-direction: column;
+        /* border: 2px solid purple; */
+        justify-content: none;
+    } 
+
+    .galleryImages .imageCard {
+        /* flex-basis: 22%; */
+        flex-basis: 100%;
+        margin-bottom: 0;
+    } 
+
+    .galleryImages .imageCard img {
+        /* height: 100%;
+        width: 100%;
+        filter: brightness(0.8);
+        object-fit: cover; */
     }
 }
