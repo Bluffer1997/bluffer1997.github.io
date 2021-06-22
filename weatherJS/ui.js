@@ -13,8 +13,8 @@ class UI {
     }
 
     paint(weather) {
-        // this.location.textContent = `${weather.name}, ${weather.sys.country}`;
-        this.location.textContent = `${weather.name}`;
+        this.location.textContent = `${weather.name}, ${weather.sys.country}`;
+        // this.location.textContent = `${weather.name}`;
         this.desc.textContent = weather.weather[0].main;
         this.string.textContent = `${weather.main.temp.toFixed(1)}\u00B0C`;
         // this.icon.setAttribute('src', weather.weather.icon);
