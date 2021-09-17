@@ -1,1 +1,1 @@
-window.alert('Hey MAXX, Fuck you!')
+document.window.alert('Hey MAXX, Fuck you!')
