@@ -68,9 +68,6 @@ img {
 .js #twentytwentysix a {
 	color: #F69D39;
 }
-.domains {
-	margin-bottom: 2rem;
-}
 .domains h1 {
 	color: #e0c341;
 }
@@ -80,6 +77,7 @@ img {
 }
 .domains h3 {
 	padding-left: 1rem;
+	padding-bottom: 2rem;
 }
 @media only screen and (min-width: 230px) and (max-width: 900px) {
 	body {
