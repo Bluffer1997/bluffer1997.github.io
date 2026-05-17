@@ -50,7 +50,7 @@ img {
 	margin-right: 25px;
 }
 
-h1 {
+.js h1 {
 	color: blueviolet;
 }
 
@@ -61,6 +61,10 @@ h1 {
 	flex-flow: column wrap;
 	/* border: 2px solid sandybrown; */
 	/* text-align: center; */
+}
+
+.container .js h1 #twentytwentysix {
+	color: #F69D39;
 }
 
 .domains h1 {
