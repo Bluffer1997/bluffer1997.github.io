@@ -33,7 +33,7 @@ img {
 
 .htmlcss {
 	text-align: center;
-	margin-top: 5rem;
+	margin-top: 2rem;
 	display: flex;
 	flex-flow: column wrap;
 }
@@ -44,7 +44,7 @@ img {
 
 .js{
 	text-align: center;
-	margin-top: 2.5rem;
+	margin-top: 2rem;
 	display: flex;
 	flex-flow: column wrap;
 	margin-right: 25px;
