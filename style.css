@@ -62,7 +62,9 @@ img {
 	/* border: 2px solid sandybrown; */
 	/* text-align: center; */
 }
-
+.js #twentytwentysix {
+	margin-top: 2rem;
+}
 .js #twentytwentysix a {
 	color: #F69D39;
 }
