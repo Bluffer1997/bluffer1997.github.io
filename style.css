@@ -77,7 +77,7 @@ img {
 }
 .domains h3 {
 	padding-left: 1rem;
-	padding-bottom: 2rem;
+	margin-bottom: 2rem;
 }
 @media only screen and (min-width: 230px) and (max-width: 900px) {
 	body {
