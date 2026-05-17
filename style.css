@@ -29,13 +29,6 @@ img {
 	align-items: center;
 	max-width: 100%;
 }
-.2026 {
-	margin-right: 50px;
-	margin-top: 2rem;
-	display: flex;
-	flex-flow: column wrap;
-
-}
 
 
 .htmlcss {
@@ -51,7 +44,7 @@ img {
 
 .js{
 	text-align: center;
-	margin-top: 2rem;
+	margin-top: 2.5rem;
 	display: flex;
 	flex-flow: column wrap;
 	margin-right: 25px;
