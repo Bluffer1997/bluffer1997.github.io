@@ -30,7 +30,10 @@ img {
 	max-width: 100%;
 }
 .2026 {
-	
+	text-align: center;
+	margin-top: 5rem;
+	display: flex;
+	flex-flow: column wrap;
 }
 
 .htmlcss {
