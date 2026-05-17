@@ -68,7 +68,9 @@ img {
 .js #twentytwentysix a {
 	color: #F69D39;
 }
-
+.domains {
+	margin-bottom: 2rem;
+}
 .domains h1 {
 	color: #e0c341;
 }
