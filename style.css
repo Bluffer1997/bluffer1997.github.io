@@ -70,7 +70,7 @@ img {
 .domains a {
 	text-align: center;
 }
-.domains h2 {
+.domains h3 {
 	padding-left: 1rem;
 }
 @media only screen and (min-width: 230px) and (max-width: 900px) {
