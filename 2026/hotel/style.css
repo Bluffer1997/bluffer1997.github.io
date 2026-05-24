@@ -1,0 +1,169 @@
+/* RESET */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  color: #111827;
+}
+
+/* HERO */
+.hero {
+  height: 550px;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+              url('https://images.unsplash.com/photo-1566073771259-6a8506099945');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.hero-content {
+  color: white;
+  max-width: 800px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin: 0;
+}
+
+.hero p {
+  margin-top: 10px;
+  color: #e5e7eb;
+}
+
+/* BOOKING BAR */
+.booking-bar {
+  margin-top: 30px;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.booking-bar input,
+.booking-bar select {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+.booking-bar button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.booking-bar button:hover {
+  background: #1d4ed8;
+}
+
+/* ROOMS */
+.rooms {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.room-grid {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.room-card {
+  width: 300px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.room-img {
+  height: 180px;
+  background: #ddd;
+}
+
+.room-content {
+  padding: 16px;
+  text-align: left;
+}
+
+.room-content h3 {
+  margin: 0;
+}
+
+.room-content p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.room-content span {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.room-content button {
+  margin-top: 10px;
+  width: 100%;
+  height: 36px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ABOUT */
+.about {
+  display: flex;
+  padding: 60px 20px;
+  gap: 40px;
+  align-items: center;
+  background: white;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-img {
+  flex: 1;
+  height: 250px;
+  background: #ddd;
+}
+
+/* CTA */
+.cta {
+  background: #2563eb;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.cta button {
+  margin-top: 20px;
+  background: white;
+  color: #2563eb;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+  background: #111827;
+  color: #9ca3af;
+  text-align: center;
+  padding: 20px;
+}
