@@ -94,7 +94,7 @@ body {
   border-radius: 6px;
 }
 
-.booking-bar button {
+.booking-bar #searchDate {
   background: #2563eb;
   color: white;
   border: none;
@@ -103,7 +103,7 @@ body {
   cursor: pointer;
 }
 
-.booking-bar button:hover {
+.booking-bar #searchDate:hover {
   background: #1d4ed8;
 }
 
