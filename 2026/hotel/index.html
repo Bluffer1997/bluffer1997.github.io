@@ -7,11 +7,20 @@
 </head>
 <body>
 
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <h2 class="logo">Hotel Manager</h2>
+    <div class="nav-buttons">
+      <button class="login-btn">Staff Login</button>
+      <button class="signup-btn">Sign Up</button>
+    </div>
+  </nav>
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Hotel Manager</h1>
-      <p>Comfort stays. Effortless booking.</p>
+      <h1>Find Your Perfect Stay</h1>
+      <p>Comfort, convenience, and simplicity.</p>
 
       <div class="booking-bar">
         <input type="date">
@@ -32,13 +41,22 @@
     <h2>Our Rooms</h2>
 
     <div class="room-grid">
+      <div class="room-card">
+        <div class="room-img"></div>
+        <div class="room-content">
+          <h3>Single Room</h3>
+          <p>Perfect for solo travelers.</p>
+          <span>$90/night</span>
+          <button>Book Now</button>
+        </div>
+      </div>
 
       <div class="room-card">
         <div class="room-img"></div>
         <div class="room-content">
-          <h3>Deluxe Room</h3>
-          <p>Comfortable and modern space.</p>
-          <span>$120/night</span>
+          <h3>Double Room</h3>
+          <p>Comfort for two guests.</p>
+          <span>$140/night</span>
           <button>Book Now</button>
         </div>
       </div>
@@ -47,37 +65,12 @@
         <div class="room-img"></div>
         <div class="room-content">
           <h3>Suite</h3>
-          <p>Luxury experience with more space.</p>
-          <span>$220/night</span>
+          <p>Luxury and space combined.</p>
+          <span>$250/night</span>
           <button>Book Now</button>
         </div>
       </div>
-
-      <div class="room-card">
-        <div class="room-img"></div>
-        <div class="room-content">
-          <h3>Standard Room</h3>
-          <p>Simple and affordable stay.</p>
-          <span>$90/night</span>
-          <button>Book Now</button>
-        </div>
-      </div>
-
     </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about">
-    <div class="about-text">
-      <h2>Why Stay With Us</h2>
-      <ul>
-        <li>Free Wi-Fi</li>
-        <li>24/7 Service</li>
-        <li>Prime Location</li>
-      </ul>
-    </div>
-
-    <div class="about-img"></div>
   </section>
 
   <!-- CTA -->
@@ -90,6 +83,16 @@
   <footer>
     <p>© 2026 Hotel</p>
   </footer>
-	<script src="hotel.js"></script>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal">
+    <div class="modal-content">
+      <h2>Staff Login</h2>
+      <input type="text" placeholder="Email">
+      <input type="password" placeholder="Password">
+      <button class="primary-btn">Login</button>
+    </div>
+  </div>
+
 </body>
 </html>
