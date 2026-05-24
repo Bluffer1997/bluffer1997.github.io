@@ -259,3 +259,8 @@ footer {
 
   transition: all 0.2s ease;
 }
+
+.close-btn:hover {
+  background: #e5e7eb;
+  transform: scale(1.05);
+}

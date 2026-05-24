@@ -15,6 +15,6 @@ modal.addEventListener("click", () => {
     modal.style.display = "none";
 })
 
-.modalContent.addEventListener("click", (e) => {
+modalContent.addEventListener("click", (e) => {
     e.stopPropogation();
 })
