@@ -1,7 +1,7 @@
 const loginBtn = document.querySelector(".login-btn");
 const signupBtn = document.querySelector(".signup-btn");
 const modal = document.querySelector(".modal");
-const modalContent = document.querySelector(".modal-Content");
+const modalContent = document.querySelector(".modal-content");
 console.log(loginBtn);
 console.log(signupBtn);
 console.log(modal);
@@ -16,5 +16,5 @@ modal.addEventListener("click", () => {
 })
 
 modalContent.addEventListener("click", (e) => {
-    e.stopPropogation();
+    e.stopPropagation();
 })
