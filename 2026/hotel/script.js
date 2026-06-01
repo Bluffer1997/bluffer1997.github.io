@@ -1,6 +1,8 @@
 // year 
-const thisYear = new Date();
-console.log(thisYear);
+const footer = document.getElementById('footer');
+const thisYear = new Date().getFullYear();
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager';
+
 //dates
 const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
@@ -25,6 +27,8 @@ const staffSignup = document.querySelector(".signup-btn");
 
 const modal = document.querySelector(".modal");
 const modalContent = document.querySelector(".modal-content");
+const modalClose = document.querySelector('.close-btn');
+console.log(modalClose);
 staffLogin.addEventListener("click", () => {
    modal.style.display = "flex"; 
 });
@@ -36,6 +40,11 @@ modal.addEventListener("click", () => {
 modalContent.addEventListener("click", (e) => {
     e.stopPropagation();
 })
+
+modalClose.addEventListener("click", () => {
+    modal.style.display = 'none';
+});
+
 const loginButton = document.querySelector('.primary-btn');
     loginButton.addEventListener("click", () => {
         const email = document.getElementById('email').value;
