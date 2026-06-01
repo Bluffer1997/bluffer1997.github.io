@@ -24,11 +24,10 @@ searchButton.addEventListener("click", () => {
 // modal 
 const staffLogin = document.querySelector(".login-btn");
 const staffSignup = document.querySelector(".signup-btn");
-
 const modal = document.querySelector(".modal");
 const modalContent = document.querySelector(".modal-content");
 const modalClose = document.querySelector('.close-btn');
-console.log(modalClose);
+
 staffLogin.addEventListener("click", () => {
    modal.style.display = "flex"; 
 });
@@ -49,7 +48,11 @@ const loginButton = document.querySelector('.primary-btn');
     loginButton.addEventListener("click", () => {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        console.log(email);
-        console.log(password);
+        if (email === "" || password === "") {
+            alert('error with logging in')
+            console.log('error with logging in.')
+        } else {
+            alert('logged in!' + ' welcome ' + email);
+        }
     })
 //end modal
