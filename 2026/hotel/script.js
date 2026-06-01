@@ -1,15 +1,19 @@
 //dates
 const checkIn = document.querySelector("#checkIn");
 const checkOut = document.querySelector("#checkOut");
+const checkInValue = document.getElementById("checkIn").value;
+const checkOutValue = document.getElementById("checkOut").value;
 const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
-    alert(checkIn.value);
-    alert(checkOut.value);
+    alert(checkInValue);
+    alert(checkOutValue);
 })
 
-console.log(checkIn);
-console.log(checkOut);
-console.log(searchButton);
+//console.log(checkIn);
+//console.log(checkOut);
+//console.log(searchButton);
+console.log(checkInValue)
+console.log(checkOutValue)
 
 // modal 
 const loginBtn = document.querySelector(".login-btn");
