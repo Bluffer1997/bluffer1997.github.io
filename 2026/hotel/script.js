@@ -1,3 +1,6 @@
+// year 
+const thisYear = new Date();
+console.log(thisYear);
 //dates
 const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
@@ -17,11 +20,12 @@ searchButton.addEventListener("click", () => {
 
 
 // modal 
-const loginBtn = document.querySelector(".login-btn");
-const signupBtn = document.querySelector(".signup-btn");
+const staffLogin = document.querySelector(".login-btn");
+const staffSignup = document.querySelector(".signup-btn");
+
 const modal = document.querySelector(".modal");
 const modalContent = document.querySelector(".modal-content");
-loginBtn.addEventListener("click", () => {
+staffLogin.addEventListener("click", () => {
    modal.style.display = "flex"; 
 });
 
@@ -32,5 +36,11 @@ modal.addEventListener("click", () => {
 modalContent.addEventListener("click", (e) => {
     e.stopPropagation();
 })
-
+const loginButton = document.querySelector('.primary-btn');
+    loginButton.addEventListener("click", () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        console.log(email);
+        console.log(password);
+    })
 //end modal
