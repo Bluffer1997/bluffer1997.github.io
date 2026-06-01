@@ -133,13 +133,19 @@ body {
 .room-card:hover {
   transform: translateY(-5px);
 }
+.room-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
 
 .room-img img {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .room-content {
   padding: 16px;
   text-align: left;
