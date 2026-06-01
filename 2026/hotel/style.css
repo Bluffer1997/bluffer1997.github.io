@@ -271,3 +271,43 @@ footer {
   background: #e5e7eb;
   transform: scale(1.05);
 }
+
+
+/* mobile friendly */
+@media (max-width: 768px) {
+  .booking-bar {
+    flex-direction: column;
+    gap: 10px;
+  }  
+  .booking-bar input,
+  .booking-bar select,
+  .booking-bar button {
+    width: 100%;
+  }
+
+   .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+    gap: 10px;
+    text-align: center;
+  }
+
+   .room-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .room-card {
+    width: 90%;
+  }
+
+    .hero {
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+}
