@@ -16,7 +16,7 @@ searchButton.addEventListener("click", () => {
     alert('You will check out on ' + checkOutValue);
     console.log('Checking out: ' + checkOutValue);
     alert('You will rent this room for ' + days + ' days.');
-    console.log('Renting for ' + days + ' days.');
+    console.log('Staying for ' + days + ' days.');
 
 })
 
