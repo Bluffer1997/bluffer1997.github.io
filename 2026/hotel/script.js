@@ -3,24 +3,26 @@ const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
 footer.innerHTML = '© ' + thisYear + ' Hotel Manager';
 
-//dates
+//booking section
 const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
+    const selectedRoom = document.getElementById('roomDropDown').value;
+        if (selectedRoom === '') {
+            alert("You've not entered a room type.")
+            return;
+        };
     const checkInValue = document.getElementById("checkIn").value;
     const checkOutValue = document.getElementById("checkOut").value;
     const CheckInDate = new Date(checkInValue);
     const checkOutDate = new Date(checkOutValue);
     const days = (checkOutDate - CheckInDate) / (1000 * 60 * 60 * 24);
-    alert('You will check in on ' + checkInValue);
-    console.log('Checking in: ' + checkInValue);
-    alert('You will check out on ' + checkOutValue);
-    console.log('Checking out: ' + checkOutValue);
-    alert('You will be staying in this room for ' + days + ' days.');
-    console.log('Staying for ' + days + ' days.');
-
-})
-
-
+        const message = 'You will check in on ' + checkInValue + '.\n' + 
+                    'You will check out on ' + checkOutValue + '.\n' +
+                    'You will be staying in this room for ' + days + ' days.\n' + 
+                    'You will rent a ' + selectedRoom + ' room.';
+    alert(message);
+    
+});
 // modal 
 const staffLogin = document.querySelector(".login-btn");
 const staffSignup = document.querySelector(".signup-btn");
