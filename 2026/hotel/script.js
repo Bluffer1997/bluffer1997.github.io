@@ -20,26 +20,44 @@ searchButton.addEventListener("click", () => {
                     'You will check out on ' + checkOutValue + '.\n' +
                     'You will be staying in this room for ' + days + ' days.\n' + 
                     'You will rent a ' + selectedRoom + ' room.';
-    alert(message);
-    updateBookingSummary(selectedRoom, checkInValue,checkOutValue, days);  
+//    alert(message);
+    let price = 0;
+    if (selectedRoom === 'single') {
+            price = 99;
+    } else if  (selectedRoom === 'double') {
+        price = 149;
+    } else if (selectedRoom === 'suite') {
+        price = 300
+    }
+
+    updateBookingSummary(selectedRoom, checkInValue,checkOutValue, days, price);  
 });
 
 
 //booking summary section 
-function updateBookingSummary(selectedRoom, checkInValue, checkOutValue, days) {
+function updateBookingSummary(
+    selectedRoom,
+    checkInValue, 
+    checkOutValue, 
+    days,
+    price
+) {
     const summaryRoom = document.getElementById('summaryRoom');
     const summaryCheckIn = document.getElementById('summaryCheckIn')
     const summaryCheckOut = document.getElementById('summaryCheckOut')
-    const summaryNights = document.getElementById('summaryNights') 
-    summaryRoom.textContent = selectedRoom;
-    summaryCheckIn.textContent = checkInValue;
-    summaryCheckOut.textContent = checkOutValue;
-    summaryNights.textContent = days;
-/*
+    const summaryNights = document.getElementById('summaryNights')     
     const summaryPrice = document.getElementById('summaryPrice')
     const summaryTotal = document.getElementById('summaryTotal')
-*/
-    }
+    
+        summaryRoom.textContent = selectedRoom;
+        summaryCheckIn.textContent = checkInValue;
+        summaryCheckOut.textContent = checkOutValue;
+        summaryNights.textContent = days;
+        summaryPrice.textContent = '$' + price;
+
+            const total =  days * price;
+            summaryTotal.textContent = '$' + total;
+        }
 
 // modal 
 const staffLogin = document.querySelector(".login-btn");
