@@ -100,7 +100,7 @@ function updateBookingSummary(
         };
 
 
-// modal -
+// modal 
 const staffLogin = document.querySelector(".login-btn");
 const staffSignup = document.querySelector(".signup-btn");
 const modal = document.querySelector(".modal");
