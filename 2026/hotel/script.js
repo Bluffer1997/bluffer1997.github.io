@@ -1,7 +1,16 @@
+// default booking dates
+const today = new Date();
+const tomorrow = new Date();
+tomorrow.setDate(today.getDate() + 1)
+document.getElementById('checkIn').value = today.toISOString().split('T')[0];
+document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0];
+
+
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: 08 August 2026';
+// footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on:' + today.toISOString().split('T')[1];
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Sunday August 09 2026';
 
 // room prices
 const roomPrices = {
@@ -88,13 +97,12 @@ modalClose.addEventListener("click", () => {
 
 const loginButton = document.querySelector('.primary-btn');
     loginButton.addEventListener("click", () => {
-        const email = document.getElementById('email').value;
+        const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        if (email === "" || password === "") {
-            alert('error with logging in')
-            console.log('error with logging in.')
+        if (username === "" || password === "") {
+            alert('Error With Logging In!')
         } else {
-            alert('logged in!' + ' welcome ' + email);
+            alert('You are now logged in!' + ' Welcome, ' + username + '.');
         }
     })
 //end modal
