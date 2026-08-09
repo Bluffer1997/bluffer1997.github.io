@@ -56,6 +56,20 @@ searchButton.addEventListener("click", () => {
         days,
         price
     ); 
+    // booking
+
+        currentBooking = {
+            room: selectedRoom,
+            checkIn: checkInValue,
+            checkOut: checkOutValue,
+            nights: days,
+            price: price,
+            subtotal: days * price,
+            tax: 0,
+            total: days * price
+        };
+        console.log(currentBooking)
+
 });
 
 
@@ -86,18 +100,6 @@ function updateBookingSummary(
             summaryTotal.textContent = '$' + total.toFixed(2);
         }
 
-// booking
-
-        currentBooking = {
-            room: selectedRoom,
-            checkIn: checkInValue,
-            checkOut: checkOutValue,
-            nights: days,
-            price: price,
-            subtotal: days * price,
-            tax: days * price * 0,
-            total: days * price
-        };
 
 
 // modal 
