@@ -5,18 +5,16 @@ tomorrow.setDate(today.getDate() + 1)
 document.getElementById('checkIn').value = today.toISOString().split('T')[0];
 document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0];
 
-
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-// footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on:' + today.toISOString().split('T')[1];
 footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Sunday August 09 2026';
 
 // room prices
 const roomPrices = {
-    single: 99,
-    double: 149,
-    suite: 299 
+    single: 119.99,
+    double: 174.99,
+    suite: 319.99 
 }
 document.getElementById('singlePrice').textContent = '$' + roomPrices.single + '/night';
 document.getElementById('doublePrice').textContent = '$' + roomPrices.double + '/night';
@@ -27,7 +25,7 @@ const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
     const selectedRoom = document.getElementById('roomDropDown').value;
         if (selectedRoom === '') {
-            alert("You've not entered a room type.")
+            alert("You've not entered a room type!")
             return;
         };
     const price = roomPrices[selectedRoom]
@@ -36,13 +34,6 @@ searchButton.addEventListener("click", () => {
     const CheckInDate = new Date(checkInValue);
     const checkOutDate = new Date(checkOutValue);
     const days = (checkOutDate - CheckInDate) / (1000 * 60 * 60 * 24);
-    /*
-        const message = 'You will check in on ' + checkInValue + '.\n' + 
-                    'You will check out on ' + checkOutValue + '.\n' +
-                    'You will be staying in this room for ' + days + ' days.\n' + 
-                    'You will rent a ' + selectedRoom + ' room.';
-        alert(message);
-    */
     updateBookingSummary(selectedRoom, checkInValue,checkOutValue, days, price);  
 });
 
@@ -67,9 +58,11 @@ function updateBookingSummary(
         summaryCheckOut.textContent = checkOutValue;
         summaryNights.textContent = days;
         summaryPrice.textContent = '$' + price;
-
-            const total =  days * price;
-            summaryTotal.textContent = '$' + total;
+            const subtotal = days * price;
+            // const tax = subtotal * 0.12;
+            const tax = 0;
+            const total = subtotal + tax;
+            summaryTotal.textContent = '$' + total.toFixed(2);
         }
 
 // modal 
