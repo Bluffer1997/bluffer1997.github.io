@@ -5,6 +5,7 @@ tomorrow.setDate(today.getDate() + 1)
 document.getElementById('checkIn').value = today.toISOString().split('T')[0];
 document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0];
 
+
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
@@ -21,6 +22,7 @@ document.getElementById('doublePrice').textContent = '$' + roomPrices.double + '
 document.getElementById('suitePrice').textContent = '$' + roomPrices.suite + '/night';
 
 //booking section
+let currentBooking = {};
 const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
     const selectedRoom = document.getElementById('roomDropDown').value;
@@ -31,10 +33,29 @@ searchButton.addEventListener("click", () => {
     const price = roomPrices[selectedRoom]
     const checkInValue = document.getElementById("checkIn").value;
     const checkOutValue = document.getElementById("checkOut").value;
-    const CheckInDate = new Date(checkInValue);
-    const checkOutDate = new Date(checkOutValue);
-    const days = (checkOutDate - CheckInDate) / (1000 * 60 * 60 * 24);
-    updateBookingSummary(selectedRoom, checkInValue,checkOutValue, days, price);  
+
+    // make sure check out is after check in date. 
+        const todayString = today.toISOString().split('T')[0];
+            if (checkInValue < todayString ) {
+                alert("Error! Check in date can not be before today!");
+                return;
+            }
+            // make sure check out is after check in
+            if (checkOutValue <= checkInValue) {
+                alert("Error! Check out date must be after check in date!");
+                return;
+            }
+        const checkInDate = new Date(checkInValue);
+        const checkOutDate = new Date(checkOutValue);
+        const days = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+  
+    updateBookingSummary(
+        selectedRoom,
+        checkInValue,
+        checkOutValue,
+        days,
+        price
+    ); 
 });
 
 
@@ -60,10 +81,24 @@ function updateBookingSummary(
         summaryPrice.textContent = '$' + price;
             const subtotal = days * price;
             // const tax = subtotal * 0.12;
-            const tax = 0;
+            let tax = 0;
             const total = subtotal + tax;
             summaryTotal.textContent = '$' + total.toFixed(2);
         }
+
+// booking
+
+        currentBooking = {
+            room: selectedRoom,
+            checkIn: checkInValue,
+            checkOut: checkOutValue,
+            nights: days,
+            price: price,
+            subtotal: days * price,
+            tax: days * price * 0,
+            total: days * price
+        };
+
 
 // modal 
 const staffLogin = document.querySelector(".login-btn");
