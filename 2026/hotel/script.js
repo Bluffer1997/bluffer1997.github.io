@@ -3,6 +3,16 @@ const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
 footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: 08 August 2026';
 
+// room prices
+const roomPrices = {
+    single: 99,
+    double: 149,
+    suite: 299 
+}
+document.getElementById('singlePrice').textContent = '$' + roomPrices.single + '/night';
+document.getElementById('doublePrice').textContent = '$' + roomPrices.double + '/night';
+document.getElementById('suitePrice').textContent = '$' + roomPrices.suite + '/night';
+
 //booking section
 const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
@@ -11,25 +21,19 @@ searchButton.addEventListener("click", () => {
             alert("You've not entered a room type.")
             return;
         };
+    const price = roomPrices[selectedRoom]
     const checkInValue = document.getElementById("checkIn").value;
     const checkOutValue = document.getElementById("checkOut").value;
     const CheckInDate = new Date(checkInValue);
     const checkOutDate = new Date(checkOutValue);
     const days = (checkOutDate - CheckInDate) / (1000 * 60 * 60 * 24);
+    /*
         const message = 'You will check in on ' + checkInValue + '.\n' + 
                     'You will check out on ' + checkOutValue + '.\n' +
                     'You will be staying in this room for ' + days + ' days.\n' + 
                     'You will rent a ' + selectedRoom + ' room.';
-//    alert(message);
-    let price = 0;
-    if (selectedRoom === 'single') {
-            price = 99;
-    } else if  (selectedRoom === 'double') {
-        price = 149;
-    } else if (selectedRoom === 'suite') {
-        price = 300
-    }
-
+        alert(message);
+    */
     updateBookingSummary(selectedRoom, checkInValue,checkOutValue, days, price);  
 });
 
