@@ -1,7 +1,7 @@
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager';
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: 08 August 2026';
 
 //booking section
 const searchButton = document.querySelector("#searchDate");
@@ -21,8 +21,26 @@ searchButton.addEventListener("click", () => {
                     'You will be staying in this room for ' + days + ' days.\n' + 
                     'You will rent a ' + selectedRoom + ' room.';
     alert(message);
-    
+    updateBookingSummary(selectedRoom, checkInValue,checkOutValue, days);  
 });
+
+
+//booking summary section 
+function updateBookingSummary(selectedRoom, checkInValue, checkOutValue, days) {
+    const summaryRoom = document.getElementById('summaryRoom');
+    const summaryCheckIn = document.getElementById('summaryCheckIn')
+    const summaryCheckOut = document.getElementById('summaryCheckOut')
+    const summaryNights = document.getElementById('summaryNights') 
+    summaryRoom.textContent = selectedRoom;
+    summaryCheckIn.textContent = checkInValue;
+    summaryCheckOut.textContent = checkOutValue;
+    summaryNights.textContent = days;
+/*
+    const summaryPrice = document.getElementById('summaryPrice')
+    const summaryTotal = document.getElementById('summaryTotal')
+*/
+    }
+
 // modal 
 const staffLogin = document.querySelector(".login-btn");
 const staffSignup = document.querySelector(".signup-btn");

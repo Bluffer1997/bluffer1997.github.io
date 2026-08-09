@@ -307,7 +307,9 @@ footer {
   font-size: 20px;
   font-weight: bold;
 }
-
+#summaryRoom {
+  text-transform: capitalize;
+}
 
 /* mobile friendly */
 @media (max-width: 768px) {
