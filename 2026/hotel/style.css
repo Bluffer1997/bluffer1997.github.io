@@ -50,14 +50,16 @@ body {
 
 /* HERO */
 .hero {
-  height: 550px;
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-              url('https://images.unsplash.com/photo-1566073771259-6a8506099945');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  padding: 0 40px;
+    min-height: 550px;
+    height: auto;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1566073771259-6a8506099945');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 60px 40px;
+    box-sizing: border-box;
 }
 
 .hero-content {
@@ -311,41 +313,80 @@ footer {
   text-transform: capitalize;
 }
 
+/* guest form */
+
+.guest-form {
+    margin-top: 20px;
+    background: #f9fafb;
+    color: #111827;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.guest-form h2 {
+    margin-top: 0;
+}
+
+.guest-form input {
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+}
+
+.guest-form button {
+    height: 40px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+
+
 /* mobile friendly */
 @media (max-width: 768px) {
-  .booking-bar {
-    flex-direction: column;
-    gap: 10px;
-  }  
-  .booking-bar input,
-  .booking-bar select,
-  .booking-bar button {
-    width: 100%;
-  }
+    .booking-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-   .navbar {
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-    gap: 10px;
-    text-align: center;
-  }
+    .booking-bar input,
+    .booking-bar select,
+    .booking-bar button {
+        width: 100%;
+    }
 
-   .room-grid {
-    flex-direction: column;
-    align-items: center;
-  }
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+        text-align: center;
+    }
 
-  .room-card {
-    width: 90%;
-  }
+    .room-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .room-card {
+        width: 90%;
+    }
 
     .hero {
-    height: auto;
-    padding: 40px 20px;
-  }
+        height: auto;
+        padding: 40px 20px;
+    }
 
-  .hero h1 {
-    font-size: 28px; 
-  }
+    .hero h1 {
+        font-size: 28px;
+    }
 }
