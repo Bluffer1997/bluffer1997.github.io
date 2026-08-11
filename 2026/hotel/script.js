@@ -9,13 +9,13 @@ document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0]
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Sunday August 09 2026';
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Monday August 10 2026';
 
 // room prices
 const roomPrices = {
-    single: 119.99,
-    double: 174.99,
-    suite: 319.99 
+    single: 99.99,
+    double: 119.99,
+    suite: 219.99 
 }
 document.getElementById('singlePrice').textContent = '$' + roomPrices.single + '/night';
 document.getElementById('doublePrice').textContent = '$' + roomPrices.double + '/night';
@@ -68,8 +68,9 @@ searchButton.addEventListener("click", () => {
             tax: 0,
             total: days * price
         };
-        console.log(currentBooking)
-
+        // console.log(currentBooking);
+        localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
+        console.log(localStorage.getItem("currentBooking"));
 });
 
 
@@ -80,7 +81,8 @@ function updateBookingSummary(
     checkOutValue, 
     days,
     price
-) {
+) 
+{
     const summaryRoom = document.getElementById('summaryRoom');
     const summaryCheckIn = document.getElementById('summaryCheckIn')
     const summaryCheckOut = document.getElementById('summaryCheckOut')
@@ -94,11 +96,48 @@ function updateBookingSummary(
         summaryNights.textContent = days;
         summaryPrice.textContent = '$' + price;
             const subtotal = days * price;
-            // const tax = subtotal * 0.12;
             let tax = 0;
             const total = subtotal + tax;
             summaryTotal.textContent = '$' + total.toFixed(2);
         }
+
+// Load Saved Booking
+const savedBooking = localStorage.getItem("currentBooking");
+
+if (savedBooking) {
+    const booking = JSON.parse(savedBooking);
+
+    updateBookingSummary(
+        booking.room,
+        booking.checkIn,
+        booking.checkOut,
+        booking.nights,
+        booking.price
+    );
+}
+
+
+// rooms 
+const roomDropDown = document.getElementById("roomDropDown");
+const bookingBar = document.querySelector(".booking-bar");
+
+const singleBook = document.getElementById("singleBook");
+    singleBook.addEventListener("click", () => {
+        roomDropDown.value = "single";
+        bookingBar.scrollIntoView({ behavior: "smooth" });
+        });
+
+const doubleBook = document.getElementById("doubleBook");
+    doubleBook.addEventListener("click", () => {
+            roomDropDown.value = "double";
+            bookingBar.scrollIntoView({ behavior: "smooth" });
+        });
+
+const suiteBook = document.getElementById("suiteBook");
+    suiteBook.addEventListener("click", () => {
+        roomDropDown.value = "suite";
+        bookingBar.scrollIntoView({ behavior: "smooth" });
+        });
 
 
 
