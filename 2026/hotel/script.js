@@ -195,7 +195,8 @@ const continueBooking = document.getElementById("continueBooking")
     localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
         console.log(currentBooking);
     });
-
+console.log("CURRENT BOOKING:", currentBooking);
+console.log("TOTAL:", currentBooking.total);
 // Booking Confirmation
 
 const bookingConfirmation = document.querySelector(".booking-confirmation");
@@ -216,7 +217,7 @@ continueBooking.addEventListener("click", () => {
     confirmCheckIn.textContent = currentBooking.checkIn;
     confirmCheckOut.textContent = currentBooking.checkOut;
     confirmNights.textContent = currentBooking.nights;
-    confirmTotal.textContent = currentBooking.total.toFixed(2);
+    confirmTotal.textContent = "$" + currentBooking.total;
     bookingConfirmation.style.display = 'block';
     bookingConfirmation.scrollIntoView({behavior: 'smooth'});
 });
