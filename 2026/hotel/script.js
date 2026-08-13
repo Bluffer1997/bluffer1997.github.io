@@ -213,7 +213,24 @@ continueBooking.addEventListener("click", () => {
     confirmCheckIn.textContent = currentBooking.checkIn;
     confirmCheckOut.textContent = currentBooking.checkOut;
     confirmNights.textContent = currentBooking.nights;
-    confirmTotal.textContent = "$" + currentBooking.total;
+    confirmTotal.textContent = "$" + currentBooking.total.toFixed(2);
     bookingConfirmation.style.display = 'block';
     bookingConfirmation.scrollIntoView({behavior: 'smooth'});
 });
+
+// Finalize Booking
+    const confirmBooking = document.getElementById('confirmBooking');
+    const confirmationId = document.getElementById('confirmationId');
+        confirmBooking.addEventListener("click", () => {
+            let reservationNumber = localStorage.getItem("reservationNumber");
+                if (reservationNumber === null) {
+                    reservationNumber = 1000;
+                } else {
+                    reservationNumber = Number(reservationNumber) + 1;
+                }
+            currentBooking.reservationId = reservationNumber;
+            localStorage.setItem("reservationNumber", reservationNumber);
+            localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
+            confirmationId.textContent = reservationNumber;
+            console.log("Your booking is confirmed: ", currentBooking) 
+        });
