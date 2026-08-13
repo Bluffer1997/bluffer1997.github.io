@@ -141,7 +141,7 @@ const savedBooking = localStorage.getItem("currentBooking");
 
 if (savedBooking) {
     const booking = JSON.parse(savedBooking);
-
+    currentBooking = booking;
     updateBookingSummary(
         booking.room,
         booking.checkIn,
@@ -196,5 +196,27 @@ const continueBooking = document.getElementById("continueBooking")
         console.log(currentBooking);
     });
 
-    // Booking Confirmation
-    
+// Booking Confirmation
+
+const bookingConfirmation = document.querySelector(".booking-confirmation");
+    bookingConfirmation.style.display = 'none';
+    const confirmGuest = document.getElementById("confirmationGuest");
+    const confirmRoom = document.getElementById("confirmationRoom");
+    const confirmCheckIn = document.getElementById("confirmationCheckIn");
+    const confirmCheckOut = document.getElementById("confirmationCheckOut");
+    const confirmNights = document.getElementById("confirmationNights");
+    const confirmTotal = document.getElementById("confirmationTotal");
+
+continueBooking.addEventListener("click", () => {
+        if (!currentBooking.guest) {    
+            return;
+        }
+    confirmGuest.textContent = currentBooking.guest.firstName + " " + currentBooking.guest.lastName;
+    confirmRoom.textContent = currentBooking.room;
+    confirmCheckIn.textContent = currentBooking.checkIn;
+    confirmCheckOut.textContent = currentBooking.checkOut;
+    confirmNights.textContent = currentBooking.nights;
+    confirmTotal.textContent = currentBooking.total.toFixed(2);
+    bookingConfirmation.style.display = 'block';
+    bookingConfirmation.scrollIntoView({behavior: 'smooth'});
+});
