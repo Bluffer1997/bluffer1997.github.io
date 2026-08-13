@@ -103,9 +103,8 @@ searchButton.addEventListener("click", () => {
             tax: 0,
             total: days * price
         };
-        // console.log(currentBooking);
         localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
-        console.log(localStorage.getItem("currentBooking"));
+
 });
 
 
@@ -193,12 +192,9 @@ const continueBooking = document.getElementById("continueBooking")
             phone: phone  
         };
     localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
-        console.log(currentBooking);
     });
-console.log("CURRENT BOOKING:", currentBooking);
-console.log("TOTAL:", currentBooking.total);
-// Booking Confirmation
 
+    // Booking Confirmation
 const bookingConfirmation = document.querySelector(".booking-confirmation");
     bookingConfirmation.style.display = 'none';
     const confirmGuest = document.getElementById("confirmationGuest");
