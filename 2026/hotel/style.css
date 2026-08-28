@@ -419,6 +419,281 @@ footer {
     background: #15803d;
 }
 
+/* RESERVATION LOOKUP */
+
+.reservation-lookup {
+margin-top: 20px;
+background: white;
+color: #111827;
+padding: 30px;
+border-radius: 12px;
+max-width: 500px;
+border: 1px solid #d1d5db;
+box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.reservation-lookup h2 {
+margin: 0 0 8px 0;
+font-size: 24px;
+}
+
+.reservation-lookup p {
+margin: 0 0 20px 0;
+color: #4b5563;
+}
+
+.lookup-form {
+display: flex;
+gap: 10px;
+}
+
+.lookup-form input {
+flex: 1;
+height: 42px;
+padding: 0 12px;
+border: 1px solid #d1d5db;
+border-radius: 6px;
+font-size: 16px;
+box-sizing: border-box;
+}
+
+.lookup-form button {
+height: 42px;
+padding: 0 16px;
+background: #2563eb;
+color: white;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-weight: bold;
+}
+
+.lookup-form button:hover {
+background: #1d4ed8;
+}
+
+.lookup-result {
+display: none;
+margin-top: 25px;
+border-top: 1px solid #d1d5db;
+padding-top: 20px;
+}
+
+.lookup-result h3 {
+margin: 0 0 15px 0;
+font-size: 20px;
+}
+
+.lookup-row {
+display: flex;
+justify-content: space-between;
+padding: 12px;
+border-bottom: 1px solid #e5e7eb;
+font-size: 16px;
+}
+
+.lookup-row span:first-child {
+font-weight: bold;
+color: #111827;
+}
+
+.lookup-row span:last-child {
+color: #374151;
+font-weight: 600;
+}
+
+.lookup-total {
+display: flex;
+justify-content: space-between;
+margin-top: 12px;
+padding: 15px;
+background: #f3f4f6;
+border-radius: 8px;
+font-size: 18px;
+font-weight: bold;
+}
+
+#lookupReservationId {
+color: #2563eb;
+}
+
+/* RESERVATIONS DASHBOARD */
+
+.reservations-dashboard {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background: white;
+    color: #111827;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+}
+
+.reservations-dashboard h2 {
+    margin: 0 0 25px 0;
+    font-size: 26px;
+}
+
+
+/* TABLE */
+
+.reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.reservations-table th {
+    background: #111827;
+    color: white;
+    padding: 12px 10px;
+    text-align: left;
+    font-size: 13px;
+}
+
+.reservations-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+    color: #111827;
+    vertical-align: middle;
+}
+
+.reservations-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+
+/* COLUMN WIDTHS */
+
+.reservations-table th:nth-child(1),
+.reservations-table td:nth-child(1) {
+    width: 9%;
+}
+
+.reservations-table th:nth-child(2),
+.reservations-table td:nth-child(2) {
+    width: 15%;
+}
+
+.reservations-table th:nth-child(3),
+.reservations-table td:nth-child(3) {
+    width: 14%;
+}
+
+.reservations-table th:nth-child(4),
+.reservations-table td:nth-child(4) {
+    width: 9%;
+}
+
+.reservations-table th:nth-child(5),
+.reservations-table td:nth-child(5) {
+    width: 12%;
+}
+
+.reservations-table th:nth-child(6),
+.reservations-table td:nth-child(6) {
+    width: 12%;
+}
+
+.reservations-table th:nth-child(7),
+.reservations-table td:nth-child(7) {
+    width: 7%;
+}
+
+.reservations-table th:nth-child(8),
+.reservations-table td:nth-child(8) {
+    width: 10%;
+}
+
+.reservations-table th:nth-child(9),
+.reservations-table td:nth-child(9) {
+    width: 12%;
+}
+
+
+/* RESERVATION NUMBER */
+
+.reservation-number {
+    color: #2563eb !important;
+    font-weight: bold;
+}
+
+
+/* ROOM */
+
+.reservation-room {
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+
+/* TOTAL */
+
+.reservation-total {
+    font-weight: bold;
+}
+
+
+/* DELETE BUTTON */
+
+.delete-reservation {
+    background: #dc2626;
+    color: white;
+
+    border: none;
+    padding: 7px 10px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.delete-reservation:hover {
+    background: #b91c1c;
+}
+
+
+/* NO RESERVATIONS */
+
+#noReservations {
+    color: #6b7280;
+    text-align: center;
+    margin: 25px 0;
+}
+
+
+/* DELETE ALL */
+
+#deleteAllReservations {
+    margin-top: 25px;
+
+    background: #dc2626;
+    color: white;
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+#deleteAllReservations:hover {
+    background: #b91c1c;
+}
+
+
 /* Mobile Friendly */
 @media (max-width: 768px) {
     .booking-bar {
@@ -457,4 +732,47 @@ footer {
     .hero h1 {
         font-size: 28px;
     }
+
+
+
+.reservations-dashboard {
+    width: calc(100% - 30px);
+    padding: 20px;
+    margin: 30px auto;
+}
+
+.reservations-table {
+    display: block;
+}
+
+.reservations-table thead {
+    display: none;
+}
+
+.reservations-table tbody,
+.reservations-table tr,
+.reservations-table td {
+    display: block;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.reservations-table tr {
+    margin-bottom: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.reservations-table td {
+    border: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reservations-table td:last-child {
+    border-bottom: none;
+}
 }

@@ -44,7 +44,7 @@ document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0]
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Thursday August 13 2026';
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Thursday August 27 2026';
 
 // room prices
 const roomPrices = {
@@ -58,6 +58,7 @@ document.getElementById('suitePrice').textContent = '$' + roomPrices.suite + '/n
 
 //booking section
 let currentBooking = {};
+let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
 const searchButton = document.querySelector("#searchDate");
 searchButton.addEventListener("click", () => {
     const selectedRoom = document.getElementById('roomDropDown').value;
@@ -219,18 +220,245 @@ continueBooking.addEventListener("click", () => {
 });
 
 // Finalize Booking
-    const confirmBooking = document.getElementById('confirmBooking');
-    const confirmationId = document.getElementById('confirmationId');
-        confirmBooking.addEventListener("click", () => {
-            let reservationNumber = localStorage.getItem("reservationNumber");
-                if (reservationNumber === null) {
-                    reservationNumber = 1000;
-                } else {
-                    reservationNumber = Number(reservationNumber) + 1;
-                }
-            currentBooking.reservationId = reservationNumber;
-            localStorage.setItem("reservationNumber", reservationNumber);
-            localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
-            confirmationId.textContent = reservationNumber;
-            console.log("Your booking is confirmed: ", currentBooking) 
-        });
+const confirmBooking = document.getElementById('confirmBooking');
+const confirmationId = document.getElementById('confirmationId');
+
+confirmBooking.addEventListener("click", () => {
+
+    // Get the next reservation number
+    let reservationNumber = localStorage.getItem("reservationNumber");
+
+    if (reservationNumber === null) {
+        reservationNumber = 1000;
+    } else {
+        reservationNumber = Number(reservationNumber) + 1;
+    }
+
+    // Add reservation number to current booking
+    currentBooking.reservationId = reservationNumber;
+
+    // Add booking to reservations array
+    reservations.push(currentBooking);
+
+    // Save everything
+    localStorage.setItem("reservationNumber", reservationNumber);
+    localStorage.setItem("reservations", JSON.stringify(reservations));
+    localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
+
+    // Display reservation number
+    confirmationId.textContent = reservationNumber;
+    console.log("Your booking is confirmed:", currentBooking);
+    console.log("All reservations:", reservations);
+
+displayReservations();
+});
+
+// Reservation Lookup
+
+const lookupButton = document.getElementById("lookupButton");
+const lookupResult = document.getElementById("lookupResult");
+
+const lookupReservationId = document.getElementById("lookupReservationId");
+const lookupGuest = document.getElementById("lookupGuest");
+const lookupPhone = document.getElementById("lookupPhone");
+const lookupRoom = document.getElementById("lookupRoom");
+const lookupCheckIn = document.getElementById("lookupCheckIn");
+const lookupCheckOut = document.getElementById("lookupCheckOut");
+const lookupNights = document.getElementById("lookupNights");
+const lookupTotal = document.getElementById("lookupTotal");
+
+lookupButton.addEventListener("click", () => {
+const reservationNumber = Number(
+    document.getElementById("reservationLookup").value
+);
+
+// Make sure something was entered
+if (!reservationNumber) {
+    alert("Please enter a reservation number.");
+    return;
+}
+
+// Find reservation
+const reservation = reservations.find(
+    booking => Number(booking.reservationId) === reservationNumber
+);
+
+// Reservation doesn't exist
+if (!reservation) {
+    alert("Reservation not found.");
+    lookupResult.style.display = "none";
+    return;
+}
+
+// Display reservation
+lookupReservationId.textContent = reservation.reservationId;
+
+lookupGuest.textContent =
+    reservation.guest.firstName + " " + reservation.guest.lastName;
+
+lookupPhone.textContent = reservation.guest.phone;
+
+lookupRoom.textContent = reservation.room;
+
+lookupCheckIn.textContent = reservation.checkIn;
+
+lookupCheckOut.textContent = reservation.checkOut;
+
+lookupNights.textContent = reservation.nights;
+
+lookupTotal.textContent =
+    "$" + reservation.total.toFixed(2);
+
+lookupResult.style.display = "block";
+
+lookupResult.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+});
+
+});
+
+// Delete All Reservations
+
+const deleteAllReservations = document.getElementById("deleteAllReservations");
+
+deleteAllReservations.addEventListener("click", () => {
+
+    const confirmDelete = confirm(
+        "Are you sure you want to delete ALL reservations?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    reservations = [];
+
+    localStorage.removeItem("reservations");
+    localStorage.removeItem("currentBooking");
+
+    // Reset reservation numbering
+    localStorage.removeItem("reservationNumber");
+
+    displayReservations();
+
+    confirmationId.textContent = "";
+
+    alert("All reservations have been deleted. The next reservation will be #1000.");
+
+    console.log("All reservations deleted.");
+    console.log("Reservation number reset to 1000.");
+});
+
+// RESERVATIONS DASHBOARD
+
+const reservationsTableBody = document.getElementById("reservationsTableBody");
+const noReservations = document.getElementById("noReservations");
+
+function displayReservations() {
+
+    // Clear the table first
+    reservationsTableBody.innerHTML = "";
+
+    // Check if there are any reservations
+    if (reservations.length === 0) {
+
+        noReservations.style.display = "block";
+
+        return;
+    }
+
+    noReservations.style.display = "none";
+
+    // Create a row for each reservation
+    reservations.forEach((reservation, index) => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td class="reservation-number">
+                ${reservation.reservationId}
+            </td>
+
+            <td>
+                ${reservation.guest.firstName}
+                ${reservation.guest.lastName}
+            </td>
+
+            <td>
+                ${reservation.guest.phone}
+            </td>
+
+            <td class="reservation-room">
+                ${reservation.room}
+            </td>
+
+            <td>
+                ${reservation.checkIn}
+            </td>
+
+            <td>
+                ${reservation.checkOut}
+            </td>
+
+            <td>
+                ${reservation.nights}
+            </td>
+
+            <td class="reservation-total">
+                $${reservation.total.toFixed(2)}
+            </td>
+
+            <td>
+                <button
+                    class="delete-reservation"
+                    data-index="${index}">
+                    Delete
+                </button>
+            </td>
+        `;
+
+        reservationsTableBody.appendChild(row);
+
+    });
+
+}
+
+
+// Display reservations when page loads
+displayReservations();
+
+
+// Delete individual reservation
+
+reservationsTableBody.addEventListener("click", (event) => {
+
+    if (!event.target.classList.contains("delete-reservation")) {
+        return;
+    }
+
+    const index = Number(event.target.dataset.index);
+
+    const reservation = reservations[index];
+
+    const confirmDelete = confirm(
+        "Delete reservation #" + reservation.reservationId + "?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    // Remove reservation from array
+    reservations.splice(index, 1);
+
+    // Save updated array
+    localStorage.setItem(
+        "reservations",
+        JSON.stringify(reservations)
+    );
+
+    // Refresh table
+    displayReservations();
+
+});

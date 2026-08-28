@@ -89,8 +89,111 @@
     <p>Reservation #: <span id="confirmationId"></span></p>
     <button id="confirmBooking">Confirm Booking</button>
 </div>
-  
+
+<!-- RESERVATION LOOKUP -->
+
+<div class="reservation-lookup">
+
+  <h2>Find Your Reservation</h2>
+  <p>Enter your reservation number to view your booking.</p>
+
+  <div class="lookup-form">
+    <input 
+      type="number" 
+      id="reservationLookup" 
+      placeholder="Reservation #"
+    >
+    <button id="lookupButton">Find Reservation</button>
+  </div>
+
+  <div class="lookup-result" id="lookupResult">
+
+```
+<h3>Reservation Details</h3>
+
+<div class="lookup-row">
+  <span>Reservation #:</span>
+  <span id="lookupReservationId">—</span>
+</div>
+
+<div class="lookup-row">
+  <span>Guest:</span>
+  <span id="lookupGuest">—</span>
+</div>
+
+<div class="lookup-row">
+  <span>Phone:</span>
+  <span id="lookupPhone">—</span>
+</div>
+
+<div class="lookup-row">
+  <span>Room:</span>
+  <span id="lookupRoom">—</span>
+</div>
+
+<div class="lookup-row">
+  <span>Check In:</span>
+  <span id="lookupCheckIn">—</span>
+</div>
+
+<div class="lookup-row">
+  <span>Check Out:</span>
+  <span id="lookupCheckOut">—</span>
+</div>
+
+<div class="lookup-row">
+  <span>Nights:</span>
+  <span id="lookupNights">—</span>
+</div>
+
+<div class="lookup-total">
+  <span>Total:</span>
+  <span id="lookupTotal">—</span>
+</div>
+  </div>
+</div>
+
   </section>
+<!-- RESERVATIONS DASHBOARD -->
+
+<div class="reservations-dashboard">
+
+  <h2>Reservations</h2>
+
+  <div class="reservations-table-container">
+
+    <table class="reservations-table">
+
+      <thead>
+        <tr>
+          <th>Reservation #</th>
+          <th>Guest</th>
+          <th>Phone</th>
+          <th>Room</th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Nights</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="reservationsTableBody">
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <p id="noReservations">
+    No reservations found.
+  </p>
+
+  <button id="deleteAllReservations">
+    Delete All Reservations
+  </button>
+
+</div>  
 
   <!-- ROOMS -->
 <!-- ROOMS -->
