@@ -48,7 +48,7 @@ footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: 
 
 // room prices
 const roomPrices = {
-    single: 199.99,
+    single: 119.99,
     double: 149.99,
     suite: 199.99 
 }
@@ -236,6 +236,7 @@ confirmBooking.addEventListener("click", () => {
 
     // Add reservation number to current booking
     currentBooking.reservationId = reservationNumber;
+    currentBooking.status = "Reserved";
 
     // Add booking to reservations array
     reservations.push(currentBooking);
@@ -410,6 +411,16 @@ function displayReservations() {
             </td>
 
             <td>
+                ${reservation.status || "Reserved"}
+            </td>
+            
+            <td>
+                <button
+                    class="cancel-reservation"
+                    data-index="${index}">
+                    Cancel
+                </button>
+
                 <button
                     class="delete-reservation"
                     data-index="${index}">
@@ -460,5 +471,50 @@ reservationsTableBody.addEventListener("click", (event) => {
 
     // Refresh table
     displayReservations();
+
+});
+
+// Cancel individual reservation
+
+reservationsTableBody.addEventListener("click", (event) => {
+
+    if (!event.target.classList.contains("cancel-reservation")) {
+        return;
+    }
+
+    const index = Number(event.target.dataset.index);
+
+    const reservation = reservations[index];
+
+    if (!reservation) {
+        return;
+    }
+
+    if (reservation.status === "Cancelled") {
+        alert("This reservation is already cancelled.");
+        return;
+    }
+
+    const confirmCancel = confirm(
+        "Cancel reservation #" + reservation.reservationId + "?"
+    );
+
+    if (!confirmCancel) {
+        return;
+    }
+
+    reservation.status = "Cancelled";
+
+    localStorage.setItem(
+        "reservations",
+        JSON.stringify(reservations)
+    );
+
+    displayReservations();
+
+    console.log(
+        "Reservation cancelled:",
+        reservation.reservationId
+    );
 
 });
