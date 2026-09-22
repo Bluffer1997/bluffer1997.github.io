@@ -1,37 +1,198 @@
-// Modal 
+// STAFF LOGIN / SIGNUP
+
 const staffLogin = document.querySelector(".login-btn");
 const staffSignup = document.querySelector(".signup-btn");
-const modal = document.querySelector(".modal");
-const modalContent = document.querySelector(".modal-content");
-const modalClose = document.querySelector('.close-btn');
+
+const loginModal = document.getElementById("loginModal");
+const signupModal = document.getElementById("signupModal");
+
+const loginModalContent = loginModal.querySelector(".modal-content");
+const signupModalContent = signupModal.querySelector(".modal-content");
+
+const loginClose = loginModal.querySelector(".close-btn");
+const signupClose = signupModal.querySelector(".close-btn");
+
+const loginButton = document.getElementById("loginButton");
+const signupButton = document.getElementById("signupButton");
+
+
+// OPEN LOGIN MODAL
 
 staffLogin.addEventListener("click", () => {
-   modal.style.display = "flex"; 
+
+    const loggedIn = localStorage.getItem("staffLoggedIn");
+
+    if (loggedIn === "true") {
+
+        localStorage.removeItem("staffLoggedIn");
+
+        alert("You have been logged out.");
+
+        updateStaffUI();
+
+    } else {
+
+        loginModal.style.display = "flex";
+
+    }
+
 });
 
-modal.addEventListener("click", () => {
-    modal.style.display = "none";
-})
 
-modalContent.addEventListener("click", (e) => {
-    e.stopPropagation();
-})
+// OPEN SIGNUP MODAL
 
-modalClose.addEventListener("click", () => {
-    modal.style.display = 'none';
+staffSignup.addEventListener("click", () => {
+    signupModal.style.display = "flex";
 });
 
-const loginButton = document.querySelector('.primary-btn');
-    loginButton.addEventListener("click", () => {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        if (username === "" || password === "") {
-            alert('Error With Logging In!')
-        } else {
-            alert('You are now logged in!' + ' Welcome, ' + username + '.');
-        }
-    })
-//end modal
+
+// CLOSE LOGIN MODAL
+
+loginClose.addEventListener("click", () => {
+    loginModal.style.display = "none";
+});
+
+
+// CLOSE SIGNUP MODAL
+
+signupClose.addEventListener("click", () => {
+    signupModal.style.display = "none";
+});
+
+
+// CLICKING BACKDROP CLOSES LOGIN MODAL
+
+loginModal.addEventListener("click", () => {
+    loginModal.style.display = "none";
+});
+
+
+// CLICKING BACKDROP CLOSES SIGNUP MODAL
+
+signupModal.addEventListener("click", () => {
+    signupModal.style.display = "none";
+});
+
+
+// PREVENT CLICKING INSIDE LOGIN MODAL FROM CLOSING IT
+
+loginModalContent.addEventListener("click", (event) => {
+    event.stopPropagation();
+});
+
+
+// PREVENT CLICKING INSIDE SIGNUP MODAL FROM CLOSING IT
+
+signupModalContent.addEventListener("click", (event) => {
+    event.stopPropagation();
+});
+
+
+// STAFF SIGNUP
+
+signupButton.addEventListener("click", () => {
+
+    const username = document.getElementById("signupUsername").value;
+    const password = document.getElementById("signupPassword").value;
+
+    if (username === "" || password === "") {
+        alert("Please enter a username and password.");
+        return;
+    }
+
+    const staffAccount = {
+        username: username,
+        password: password
+    };
+
+    localStorage.setItem(
+        "staffAccount",
+        JSON.stringify(staffAccount)
+    );
+
+    alert("Staff account created successfully!");
+
+    signupModal.style.display = "none";
+
+    document.getElementById("signupUsername").value = "";
+    document.getElementById("signupPassword").value = "";
+
+});
+
+
+// STAFF LOGIN
+
+loginButton.addEventListener("click", () => {
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username === "" || password === "") {
+        alert("Please enter your username and password.");
+        return;
+    }
+
+    const savedAccount = localStorage.getItem("staffAccount");
+
+    if (!savedAccount) {
+        alert("No staff account exists. Please sign up first.");
+        return;
+    }
+
+    const staffAccount = JSON.parse(savedAccount);
+
+    if (
+        username === staffAccount.username &&
+        password === staffAccount.password
+    ) {
+
+        localStorage.setItem("staffLoggedIn", "true");
+
+        alert("You are now logged in!");
+
+        loginModal.style.display = "none";
+
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+
+        updateStaffUI();
+
+    } else {
+
+        alert("Incorrect username or password.");
+
+    }
+
+});
+
+
+// UPDATE STAFF UI
+
+function updateStaffUI() {
+
+    const loggedIn = localStorage.getItem("staffLoggedIn");
+
+    if (loggedIn === "true") {
+
+        staffLogin.textContent = "Logout";
+        staffSignup.style.display = "none";
+
+    } else {
+
+        staffLogin.textContent = "Staff Login";
+        staffSignup.style.display = "inline-block";
+
+    }
+
+}
+
+
+// CHECK LOGIN STATUS WHEN PAGE LOADS
+
+updateStaffUI();
+
+// END STAFF LOGIN / SIGNUP
+
 
 // default booking dates
 const today = new Date();

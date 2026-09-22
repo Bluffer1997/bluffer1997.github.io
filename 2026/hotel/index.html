@@ -107,7 +107,7 @@
   </div>
 
   <div class="lookup-result" id="lookupResult">
-    
+
 <h3>Reservation Details</h3>
 
 <div class="lookup-row">
@@ -255,17 +255,33 @@
     <p id="footer"></p>
   </footer>
 
-  <!-- LOGIN MODAL -->
-  <div class="modal">
-    <div class="modal-content">
-      <h2>Staff Login</h2>
-      <input type="text" id="username" placeholder="Username">
-      <input type="password" id="password" placeholder="Password">
-      <button class="primary-btn">Login</button>
-      <button class="close-btn">X</button>
+ <!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <h2>Staff Login</h2>
 
-    </div>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button class="primary-btn" id="loginButton">Login</button>
+
+    <button class="close-btn">X</button>
   </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal" id="signupModal">
+  <div class="modal-content">
+    <h2>Create Staff Account</h2>
+
+    <input type="text" id="signupUsername" placeholder="Username">
+    <input type="password" id="signupPassword" placeholder="Password">
+
+    <button class="primary-btn" id="signupButton">Create Account</button>
+
+    <button class="close-btn signup-close-btn">X</button>
+  </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
