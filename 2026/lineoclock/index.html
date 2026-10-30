@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LineOclock</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div class="eyebrow">PERSONAL SESSION LOG</div>
+      <h1>Line<span>O</span>clock</h1>
+      <p class="subtitle">A private, local-only time and event log.</p>
+    </header>
+
+    <section class="timer-card">
+      <div class="section-label">SESSION TIMER</div>
+      <div id="timer" class="timer" aria-live="off">00:00:00</div>
+      <div class="timer-actions">
+        <button id="startBtn" class="button primary">Start timer</button>
+        <button id="pauseBtn" class="button secondary" disabled>Pause</button>
+        <button id="resetBtn" class="button ghost">Reset</button>
+      </div>
+      <p id="timerStatus" class="muted">Timer is not running.</p>
+    </section>
+
+    <section class="log-card">
+      <div class="section-label">SESSION EVENT</div>
+      <h2>Record an event</h2>
+      <p class="muted">Press the button to add a timestamp to this session.</p>
+      <button id="lineBtn" class="button record" disabled>＋ Doing a line</button>
+
+      <div class="fields">
+        <label>
+          Self-reported size
+          <select id="size">
+            <option value="">Not recorded</option>
+            <option>Small</option>
+            <option>Medium</option>
+            <option>Large</option>
+            <option>Prefer not to say</option>
+          </select>
+        </label>
+        <label>
+          Did it all go down?
+          <select id="completion">
+            <option value="">Not recorded</option>
+            <option>Yes</option>
+            <option>No</option>
+            <option>Unsure</option>
+          </select>
+        </label>
+        <label class="notes-label">
+          Notes (optional)
+          <input id="notes" type="text" maxlength="140" placeholder="Anything you want to remember">
+        </label>
+      </div>
+      <p class="hint">Size labels are only personal notes, not dose guidance or a measure of safety.</p>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat">
+        <span class="stat-label">TIME BETWEEN EVENTS</span>
+        <strong id="interval">—</strong>
+        <small id="intervalHint">Appears after the second event</small>
+      </article>
+      <article class="stat">
+        <span class="stat-label">EVENTS LOGGED</span>
+        <strong id="count">0</strong>
+        <small>In this session</small>
+      </article>
+    </section>
+
+    <section class="history-card">
+      <div class="history-heading">
+        <div>
+          <div class="section-label">TIMELINE</div>
+          <h2>Session history</h2>
+        </div>
+        <button id="clearBtn" class="text-button">Clear history</button>
+      </div>
+      <div id="emptyState" class="empty">No events recorded yet.</div>
+      <ol id="history" class="history"></ol>
+    </section>
+
+    <footer>
+      <p>This is a logging tool, not medical advice. Recording use does not make it safe.
+      Avoid mixing substances, don't use alone, and seek urgent medical help for chest pain,
+      trouble breathing, seizure, fainting, overheating, or severe confusion.</p>
+      <p class="privacy">Your log stays in this browser on this device (local storage).</p>
+    </footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
