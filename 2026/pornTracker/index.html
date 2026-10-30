@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div class="eyebrow">PERSONAL LIBRARY</div>
+      <h1>Private<span>Tracker</span></h1>
+      <p>Keep a private record of links and viewing dates.</p>
+    </header>
+
+    <section class="panel">
+      <div class="section-label">ADD A LINK</div>
+      <form id="entryForm">
+        <label for="url">Website URL</label>
+        <input id="url" type="url" placeholder="https://example.com/video" required>
+        <label for="title">Title or label <span class="optional">(optional)</span></label>
+        <input id="title" type="text" maxlength="100" placeholder="Give this link a name">
+        <button class="button primary" type="submit">＋ Add to tracker</button>
+      </form>
+      <p class="hint">The date and time are recorded automatically when you add a link.</p>
+    </section>
+
+    <section class="summary">
+      <article class="stat"><span>LINKS SAVED</span><strong id="totalCount">0</strong></article>
+      <article class="stat"><span>MARKED WATCHED</span><strong id="watchedCount">0</strong></article>
+      <article class="stat"><span>NOT YET WATCHED</span><strong id="unwatchedCount">0</strong></article>
+    </section>
+
+    <section class="panel">
+      <div class="list-heading">
+        <div>
+          <div class="section-label">YOUR RECORDS</div>
+          <h2>Saved links</h2>
+        </div>
+        <select id="filter" aria-label="Filter links">
+          <option value="all">All links</option>
+          <option value="unwatched">Not watched</option>
+          <option value="watched">Watched</option>
+        </select>
+      </div>
+      <div id="empty" class="empty">Nothing saved yet. Add your first link above.</div>
+      <div id="entries" class="entries"></div>
+    </section>
+
+    <footer>
+      <strong>Privacy note:</strong> Records are stored in this browser's local storage.
+      Anyone with access to this browser profile may be able to view them. This app does
+      not sync or encrypt your data.
+      <p>For passwords, use a dedicated password manager (such as Bitwarden, 1Password,
+      or your browser's built-in password manager). This tracker intentionally does not
+      store passwords: local storage is not a secure password vault.</p>
+    </footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
