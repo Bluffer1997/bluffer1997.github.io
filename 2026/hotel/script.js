@@ -577,6 +577,11 @@ function displayReservations() {
             
             <td>
                 <button
+                    class="edit-reservation"
+                    data-index="${index}">
+                    Edit
+                </button>
+                <button
                     class="cancel-reservation"
                     data-index="${index}">
                     Cancel
@@ -677,5 +682,166 @@ reservationsTableBody.addEventListener("click", (event) => {
         "Reservation cancelled:",
         reservation.reservationId
     );
+
+});
+
+
+ // EDIT RESERVATION MODAL
+
+const editReservationModal = document.getElementById("editReservationModal");
+const editReservationForm = document.getElementById("editReservationForm");
+
+const closeEditModal = document.getElementById("closeEditModal");
+const cancelEditModal = document.getElementById("cancelEditModal");
+
+let editingReservationIndex = null;
+
+
+// OPEN EDIT MODAL
+
+reservationsTableBody.addEventListener("click", (event) => {
+
+    const editButton = event.target.closest(".edit-reservation");
+
+    if (!editButton) {
+        return;
+    }
+
+    editingReservationIndex = Number(editButton.dataset.index);
+
+    const reservation = reservations[editingReservationIndex];
+
+    if (!reservation) {
+        return;
+    }
+
+    // Populate fields with existing reservation information
+
+    document.getElementById("editFirstName").value =
+        reservation.guest.firstName;
+
+    document.getElementById("editLastName").value =
+        reservation.guest.lastName;
+
+    document.getElementById("editPhone").value =
+        reservation.guest.phone;
+
+    document.getElementById("editRoom").value =
+        reservation.room;
+
+    document.getElementById("editCheckIn").value =
+        reservation.checkIn;
+
+    document.getElementById("editCheckOut").value =
+        reservation.checkOut;
+
+    editReservationModal.style.display = "flex";
+
+});
+
+
+// CLOSE EDIT MODAL
+
+function closeReservationEditor() {
+
+    editReservationModal.style.display = "none";
+    editingReservationIndex = null;
+
+}
+
+closeEditModal.addEventListener("click", closeReservationEditor);
+
+cancelEditModal.addEventListener("click", closeReservationEditor);
+
+
+// CLOSE WHEN CLICKING OUTSIDE MODAL
+
+editReservationModal.addEventListener("click", (event) => {
+
+    if (event.target === editReservationModal) {
+        closeReservationEditor();
+    }
+
+});
+
+
+// SAVE EDITED RESERVATION
+
+editReservationForm.addEventListener("submit", (event) => {
+
+    event.preventDefault();
+
+    if (editingReservationIndex === null) {
+        return;
+    }
+
+    const reservation = reservations[editingReservationIndex];
+
+    if (!reservation) {
+        return;
+    }
+
+    // Get updated information
+
+    const firstName = document.getElementById("editFirstName").value.trim();
+    const lastName = document.getElementById("editLastName").value.trim();
+    const phone = document.getElementById("editPhone").value.trim();
+    const room = document.getElementById("editRoom").value;
+
+    const checkIn = document.getElementById("editCheckIn").value;
+    const checkOut = document.getElementById("editCheckOut").value;
+
+    // Validate dates
+
+    if (!checkIn || !checkOut || checkOut <= checkIn) {
+        alert("Check-out must be after check-in.");
+        return;
+    }
+
+    // Calculate nights
+
+    const startDate = new Date(checkIn + "T00:00:00Z");
+    const endDate = new Date(checkOut + "T00:00:00Z");
+
+    const nights = (endDate - startDate) / (1000 * 60 * 60 * 24);
+
+    // Calculate updated price
+
+    const price = roomPrices[room];
+    const subtotal = nights * price;
+    const tax = 0;
+    const total = subtotal + tax;
+
+    // Update reservation
+
+    reservation.guest = {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone
+    };
+
+    reservation.room = room;
+    reservation.checkIn = checkIn;
+    reservation.checkOut = checkOut;
+    reservation.nights = nights;
+    reservation.price = price;
+    reservation.subtotal = subtotal;
+    reservation.tax = tax;
+    reservation.total = total;
+
+    // Save changes
+
+    localStorage.setItem(
+        "reservations",
+        JSON.stringify(reservations)
+    );
+
+    // Refresh dashboard and close modal
+
+    displayReservations();
+
+    closeReservationEditor();
+
+    alert("Reservation #" + reservation.reservationId + " updated successfully!");
 
 });

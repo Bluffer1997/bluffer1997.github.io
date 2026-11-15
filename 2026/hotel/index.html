@@ -282,6 +282,75 @@
     <button class="close-btn signup-close-btn">X</button>
   </div>
 </div>
+
+
+<!-- EDIT RESERVATION MODAL -->
+
+<div class="edit-modal-overlay" id="editReservationModal">
+
+    <div class="edit-modal-content">
+
+        <div class="edit-modal-header">
+            <h2>Edit Reservation</h2>
+            <button type="button" id="closeEditModal" class="edit-modal-close">&times;</button>
+        </div>
+
+        <form id="editReservationForm">
+
+            <div class="edit-form-group">
+                <label for="editFirstName">First Name</label>
+                <input type="text" id="editFirstName" required>
+            </div>
+
+            <div class="edit-form-group">
+                <label for="editLastName">Last Name</label>
+                <input type="text" id="editLastName" required>
+            </div>
+
+            <div class="edit-form-group">
+                <label for="editPhone">Phone Number</label>
+                <input type="tel" id="editPhone" required>
+            </div>
+
+            <div class="edit-form-group">
+                <label for="editRoom">Room Type</label>
+                <select id="editRoom" required>
+                    <option value="single">Single</option>
+                    <option value="double">Double</option>
+                    <option value="suite">Suite</option>
+                </select>
+            </div>
+
+            <div class="edit-form-row">
+
+                <div class="edit-form-group">
+                    <label for="editCheckIn">Check-in</label>
+                    <input type="date" id="editCheckIn" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="editCheckOut">Check-out</label>
+                    <input type="date" id="editCheckOut" required>
+                </div>
+
+            </div>
+
+            <div class="edit-modal-buttons">
+                <button type="button" id="cancelEditModal" class="edit-cancel-btn">
+                    Cancel
+                </button>
+
+                <button type="submit" class="edit-save-btn">
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
