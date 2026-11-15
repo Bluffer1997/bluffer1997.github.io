@@ -1040,3 +1040,40 @@ color: #2563eb;
 .edit-reservation:hover {
     background-color: #1d4ed8;
 }
+
+
+/* CHECK-IN BUTTON */
+
+.check-in-btn {
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.check-in-btn:hover {
+    background-color: #15803d;
+}
+
+/* CHECK-OUT BUTTON */
+
+.check-out-btn {
+    background-color: #64748b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.check-out-btn:hover {
+    background-color: #475569;
+}

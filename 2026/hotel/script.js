@@ -513,11 +513,26 @@ deleteAllReservations.addEventListener("click", () => {
 });
 
 // RESERVATIONS DASHBOARD
-
 const reservationsTableBody = document.getElementById("reservationsTableBody");
 const noReservations = document.getElementById("noReservations");
 
+// GET TODAY'S DATE IN LOCAL TIME
+
+function getTodayDateString() {
+    const date = new Date();
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+// DISPLAY RESERVATIONS
+
 function displayReservations() {
+
 
     // Clear the table first
     reservationsTableBody.innerHTML = "";
@@ -592,6 +607,31 @@ function displayReservations() {
                     data-index="${index}">
                     Delete
                 </button>
+                
+            ${(reservation.status || "Reserved") === "Reserved" ? `
+            ${getTodayDateString() >= reservation.checkIn ? `
+                <button class="check-in-btn" data-index="${index}">
+                    Check In
+                </button>
+            ` : `
+                <button class="check-in-btn" disabled>
+                    Check In (Not Yet)
+                </button>
+            `}
+        ` : ""}
+
+        ${reservation.status === "Checked In" ? `
+            ${getTodayDateString() >= reservation.checkOut ? `
+                <button class="check-out-btn" data-index="${index}">
+                    Check Out
+                </button>
+            ` : `
+                <button class="check-out-btn" disabled>
+                    Check Out (Not Yet)
+                </button>
+            `}
+        ` : ""}
+
             </td>
         `;
 
@@ -843,5 +883,80 @@ editReservationForm.addEventListener("submit", (event) => {
     closeReservationEditor();
 
     alert("Reservation #" + reservation.reservationId + " updated successfully!");
+
+});
+
+
+// GUEST CHECK-IN AND CHECK-OUT
+
+reservationsTableBody.addEventListener("click", (event) => {
+
+    const checkInButton = event.target.closest(".check-in-btn");
+    const checkOutButton = event.target.closest(".check-out-btn");
+
+    // CHECK IN
+
+    if (checkInButton) {
+        const index = Number(checkInButton.dataset.index);
+        const reservation = reservations[index];
+
+        if (!reservation || (reservation.status || "Reserved") !== "Reserved") {
+            return;
+        }
+
+        if (getTodayDateString() < reservation.checkIn) {
+            alert("This guest cannot check in before their reservation date.");
+            return;
+        }
+
+        const confirmCheckIn = confirm(
+            `Check in ${reservation.guest.firstName} ${reservation.guest.lastName}?`
+        );
+
+        if (!confirmCheckIn) {
+            return;
+        }
+
+        reservation.status = "Checked In";
+
+        localStorage.setItem(
+            "reservations",
+            JSON.stringify(reservations)
+        );
+
+        displayReservations();
+
+        alert("Guest successfully checked in!");
+
+        return;
+    }
+
+    // CHECK OUT
+
+    if (checkOutButton) {
+        const index = Number(checkOutButton.dataset.index);
+        const reservation = reservations[index];
+
+        if (!reservation || reservation.status !== "Checked In") {
+        return;
+    }
+
+    if (getTodayDateString() < reservation.checkOut) {
+    alert("This guest cannot check out before their scheduled checkout date.");
+    return;
+}
+
+        reservation.status = "Checked Out";
+
+        localStorage.setItem(
+            "reservations",
+            JSON.stringify(reservations)
+        );
+
+        displayReservations();
+
+        alert("Guest successfully checked out!");
+
+    }
 
 });
