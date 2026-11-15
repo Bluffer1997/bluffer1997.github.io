@@ -205,13 +205,13 @@ document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0]
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Tuesday September 21 2026';
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Sunday November 15 2026';
 
 // room prices
 const roomPrices = {
-    single: 119.99,
-    double: 149.99,
-    suite: 199.99 
+    single: 79.99,
+    double: 114.99,
+    suite: 139.99 
 }
 document.getElementById('singlePrice').textContent = '$' + roomPrices.single + '/night';
 document.getElementById('doublePrice').textContent = '$' + roomPrices.double + '/night';
