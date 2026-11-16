@@ -224,53 +224,93 @@ document.getElementById('suitePrice').textContent = '$' + roomPrices.suite + '/n
 let currentBooking = {};
 let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
 const searchButton = document.querySelector("#searchDate");
+
+let rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+
 searchButton.addEventListener("click", () => {
+
     const selectedRoom = document.getElementById('roomDropDown').value;
-        if (selectedRoom === '') {
-            alert("You've not entered a room type!")
-            return;
-        };
-    const price = roomPrices[selectedRoom]
+
+    if (selectedRoom === '') {
+        alert("You've not entered a room type!");
+        return;
+    }
+
     const checkInValue = document.getElementById("checkIn").value;
     const checkOutValue = document.getElementById("checkOut").value;
 
-    // make sure check out is after check in date. 
-        const todayString = today.toISOString().split('T')[0];
-            if (checkInValue < todayString ) {
-                alert("Error! Check in date can not be before today!");
-                return;
-            }
-            // make sure check out is after check in
-            if (checkOutValue <= checkInValue) {
-                alert("Error! Check out date must be after check in date!");
-                return;
-            }
-        const checkInDate = new Date(checkInValue);
-        const checkOutDate = new Date(checkOutValue);
-        const days = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
-  
+    // Make sure check-in is not before today
+
+    const todayString = today.toISOString().split('T')[0];
+
+    if (checkInValue < todayString) {
+        alert("Error! Check in date can not be before today!");
+        return;
+    }
+
+    // Make sure check-out is after check-in
+
+    if (checkOutValue <= checkInValue) {
+        alert("Error! Check out date must be after check in date!");
+        return;
+    }
+
+    // Calculate number of nights
+
+    const checkInDate = new Date(checkInValue);
+    const checkOutDate = new Date(checkOutValue);
+
+    const days = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+
+    // Calculate dynamic room price
+
+    const price = getDynamicRoomPrice(
+        selectedRoom,
+        checkInValue,
+        checkOutValue
+    );
+
+    if (price === null) {
+        alert("Sorry, no rooms of this type are available for those dates.");
+        return;
+    }
+
+    // Calculate booking totals
+
+    const subtotal = Number((days * price).toFixed(2));
+    const tax = 0;
+    const total = subtotal + tax;
+
+    // Update booking summary
+
     updateBookingSummary(
         selectedRoom,
         checkInValue,
         checkOutValue,
         days,
         price
-    ); 
-    // booking
+    );
 
-        currentBooking = {
-            room: selectedRoom,
-            checkIn: checkInValue,
-            checkOut: checkOutValue,
-            nights: days,
-            price: price,
-            subtotal: days * price,
-            tax: 0,
-            total: days * price
-        };
-        localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
+    // Save current booking
+
+    currentBooking = {
+        room: selectedRoom,
+        checkIn: checkInValue,
+        checkOut: checkOutValue,
+        nights: days,
+        price: price,
+        subtotal: subtotal,
+        tax: tax,
+        total: total
+    };
+
+    localStorage.setItem(
+        "currentBooking",
+        JSON.stringify(currentBooking)
+    );
 
 });
+
 
 
 //booking summary section 
@@ -293,8 +333,8 @@ function updateBookingSummary(
         summaryCheckIn.textContent = checkInValue;
         summaryCheckOut.textContent = checkOutValue;
         summaryNights.textContent = days;
-        summaryPrice.textContent = '$' + price;
-            const subtotal = days * price;
+        summaryPrice.textContent = '$' + price.toFixed(2);
+        const subtotal = days * price;
             let tax = 0;
             const total = subtotal + tax;
             summaryTotal.textContent = '$' + total.toFixed(2);
@@ -443,6 +483,115 @@ function findAvailableRoom(roomType, checkIn, checkOut, excludedReservationId = 
     }
 
     return null;
+}
+
+// CHECK ROOM AVAILABILITY FOR SELECTED DATES
+
+function getRoomAvailability(roomType, checkIn, checkOut, excludedReservationId = null) {
+
+    const matchingRooms = rooms.filter(
+        room => room.type === roomType
+    );
+
+    let availableRooms = 0;
+
+    matchingRooms.forEach(room => {
+
+        const roomIsOccupied = reservations.some(reservation => {
+
+            // Ignore the reservation currently being edited
+
+            if (
+                excludedReservationId !== null &&
+                Number(reservation.reservationId) === Number(excludedReservationId)
+            ) {
+                return false;
+            }
+
+            // Cancelled reservations do not occupy rooms
+
+            if (reservation.status === "Cancelled") {
+                return false;
+            }
+
+            // Check physical room number
+
+            if (Number(reservation.roomNumber) !== Number(room.number)) {
+                return false;
+            }
+
+            // Check whether reservation dates overlap
+
+            return (
+                checkIn < reservation.checkOut &&
+                checkOut > reservation.checkIn
+            );
+
+        });
+
+        if (!roomIsOccupied) {
+            availableRooms++;
+        }
+
+    });
+
+    return {
+        totalRooms: matchingRooms.length,
+        availableRooms: availableRooms
+    };
+
+}
+
+
+// CALCULATE DYNAMIC ROOM PRICE
+
+function getDynamicRoomPrice(roomType, checkIn, checkOut, excludedReservationId = null) {
+
+    const availability = getRoomAvailability(
+        roomType,
+        checkIn,
+        checkOut,
+        excludedReservationId
+    );
+
+    // No inventory or no available rooms
+
+    if (
+        availability.totalRooms === 0 ||
+        availability.availableRooms === 0
+    ) {
+        return null;
+    }
+
+    const availabilityPercentage =
+        (availability.availableRooms / availability.totalRooms) * 100;
+
+    let price = roomPrices[roomType];
+
+    // Apply pricing adjustments
+
+    if (availabilityPercentage >= 80) {
+
+        price *= 0.90;
+
+    } else if (availabilityPercentage >= 50) {
+
+        // Base price remains unchanged
+
+    } else if (availabilityPercentage >= 30) {
+
+        price *= 1.10;
+
+    } else {
+
+        price *= 1.20;
+
+    }
+
+    // Round to two decimal places
+
+    return Number(price.toFixed(2));
+
 }
 
 // CONFIRM BOOKING
@@ -985,12 +1134,45 @@ editReservationForm.addEventListener("submit", (event) => {
 
     const nights = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
-    // Calculate updated price
 
-    const price = roomPrices[room];
-    const subtotal = nights * price;
-    const tax = 0;
-    const total = subtotal + tax;
+// Check whether room type or dates have changed
+
+const bookingDetailsChanged =
+    room !== reservation.room ||
+    checkIn !== reservation.checkIn ||
+    checkOut !== reservation.checkOut;
+
+
+// Calculate updated price
+
+let price;
+
+if (bookingDetailsChanged) {
+
+    price = getDynamicRoomPrice(
+        room,
+        checkIn,
+        checkOut,
+        reservation.reservationId
+    );
+
+    if (price === null) {
+        alert("Sorry, no rooms of this type are available for those dates.");
+        return;
+    }
+
+} else {
+
+    // Keep the guest's original agreed price
+
+    price = reservation.price ?? roomPrices[room];
+
+}
+
+const subtotal = Number((nights * price).toFixed(2));
+const tax = 0;
+const total = subtotal + tax;
+
 
     // Update reservation
 
@@ -1105,7 +1287,6 @@ reservationsTableBody.addEventListener("click", (event) => {
 
 // ROOM INVENTORY MANAGEMENT
 
-let rooms = JSON.parse(localStorage.getItem("rooms")) || [];
 
 const roomNumberInput = document.getElementById("roomNumberInput");
 const roomTypeInput = document.getElementById("roomTypeInput");
