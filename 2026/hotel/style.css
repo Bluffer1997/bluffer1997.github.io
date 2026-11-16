@@ -1077,3 +1077,183 @@ color: #2563eb;
 .check-out-btn:hover {
     background-color: #475569;
 }
+
+
+/* ROOM INVENTORY MANAGEMENT */
+
+.room-inventory {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background: white;
+    color: #111827;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+}
+
+.room-inventory h2 {
+    margin: 0 0 10px 0;
+    font-size: 26px;
+}
+
+.room-inventory > p {
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+
+/* ROOM INVENTORY FORM */
+
+.room-inventory-form {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.room-inventory-form h3 {
+    margin: 0 0 15px 0;
+}
+
+.room-form-fields {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.room-form-fields input,
+.room-form-fields select {
+    flex: 1;
+    min-width: 150px;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.room-form-fields button {
+    height: 42px;
+    padding: 0 18px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.room-form-fields button:hover {
+    background: #1d4ed8;
+}
+
+#cancelRoomEdit {
+    background: #64748b;
+}
+
+#cancelRoomEdit:hover {
+    background: #475569;
+}
+
+
+/* ROOM INVENTORY TABLE */
+
+.room-inventory-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.room-inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.room-inventory-table th {
+    background: #111827;
+    color: white;
+    padding: 13px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.room-inventory-table td {
+    padding: 13px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.room-inventory-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+
+/* ROOM ACTION BUTTONS */
+
+.edit-room-btn,
+.delete-room-btn {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.edit-room-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.edit-room-btn:hover {
+    background: #1d4ed8;
+}
+
+.delete-room-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.delete-room-btn:hover {
+    background: #b91c1c;
+}
+
+
+/* NO ROOMS MESSAGE */
+
+#noRoomsMessage {
+    color: #6b7280;
+    text-align: center;
+    margin: 25px 0;
+}
+
+
+/* ROOM INVENTORY MOBILE */
+
+@media (max-width: 768px) {
+
+    .room-inventory {
+        width: calc(100% - 30px);
+        padding: 20px;
+        margin: 30px auto;
+    }
+
+    .room-form-fields {
+        flex-direction: column;
+    }
+
+    .room-form-fields input,
+    .room-form-fields select,
+    .room-form-fields button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}

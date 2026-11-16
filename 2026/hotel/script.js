@@ -384,12 +384,88 @@ continueBooking.addEventListener("click", () => {
 });
 
 // Finalize Booking
+// FINALIZE BOOKING
+
 const confirmBooking = document.getElementById('confirmBooking');
 const confirmationId = document.getElementById('confirmationId');
 
+
+// FIND AN AVAILABLE ROOM
+
+function findAvailableRoom(roomType, checkIn, checkOut) {
+
+    // Find rooms matching the requested type
+
+    const matchingRooms = rooms.filter(
+        room => room.type === roomType
+    );
+
+    // Check each matching room
+
+    for (const room of matchingRooms) {
+
+        const roomIsOccupied = reservations.some(reservation => {
+
+            // Cancelled reservations do not occupy rooms
+
+            if (reservation.status === "Cancelled") {
+                return false;
+            }
+
+            // Ignore reservations without an assigned physical room
+
+            if (Number(reservation.roomNumber) !== Number(room.number)) {
+                return false;
+            }
+
+            // Check whether the reservation dates overlap
+
+            return (
+                checkIn < reservation.checkOut &&
+                checkOut > reservation.checkIn
+            );
+
+        });
+
+        if (!roomIsOccupied) {
+            return room;
+        }
+
+    }
+
+    // No suitable room available
+
+    return null;
+
+}
+
+
+// CONFIRM BOOKING
+
 confirmBooking.addEventListener("click", () => {
 
+    if (!currentBooking.guest) {
+        alert("Please complete the guest information first.");
+        return;
+    }
+
+  
+
+    // Find an available physical room
+
+    const availableRoom = findAvailableRoom(
+        currentBooking.room,
+        currentBooking.checkIn,
+        currentBooking.checkOut
+    );
+
+    if (!availableRoom) {
+        alert("Sorry, no rooms of this type are available for those dates.");
+        return;
+    }
+
     // Get the next reservation number
+
     let reservationNumber = localStorage.getItem("reservationNumber");
 
     if (reservationNumber === null) {
@@ -398,24 +474,55 @@ confirmBooking.addEventListener("click", () => {
         reservationNumber = Number(reservationNumber) + 1;
     }
 
-    // Add reservation number to current booking
+    // Assign the physical room
+
+    currentBooking.roomNumber = availableRoom.number;
+
+    // Add reservation number and status
+
     currentBooking.reservationId = reservationNumber;
     currentBooking.status = "Reserved";
 
     // Add booking to reservations array
+
     reservations.push(currentBooking);
 
     // Save everything
+
     localStorage.setItem("reservationNumber", reservationNumber);
     localStorage.setItem("reservations", JSON.stringify(reservations));
     localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
 
-    // Display reservation number
-    confirmationId.textContent = reservationNumber;
-    console.log("Your booking is confirmed:", currentBooking);
-    console.log("All reservations:", reservations);
+    // Display confirmation details
+
+confirmationId.textContent = reservationNumber;
+
+confirmGuest.textContent =
+    currentBooking.guest.firstName + " " +
+    currentBooking.guest.lastName;
+
+confirmRoom.textContent =
+    currentBooking.room + " - Room " + currentBooking.roomNumber;
+
+confirmCheckIn.textContent = currentBooking.checkIn;
+confirmCheckOut.textContent = currentBooking.checkOut;
+confirmNights.textContent = currentBooking.nights;
+confirmTotal.textContent = "$" + currentBooking.total.toFixed(2);
+
+// Show confirmation
+
+bookingConfirmation.style.display = "block";
+
+console.log("Your booking is confirmed:", currentBooking);
+console.log("All reservations:", reservations);
 
 displayReservations();
+
+// Clear stored booking data for the next reservation
+
+currentBooking = {};
+
+localStorage.removeItem("currentBooking");
 });
 
 // Reservation Lookup
@@ -463,7 +570,8 @@ lookupGuest.textContent =
 
 lookupPhone.textContent = reservation.guest.phone;
 
-lookupRoom.textContent = reservation.room;
+lookupRoom.textContent =
+    reservation.room + (reservation.roomNumber ? " - Room " + reservation.roomNumber : "");
 
 lookupCheckIn.textContent = reservation.checkIn;
 
@@ -570,7 +678,7 @@ function displayReservations() {
             </td>
 
             <td class="reservation-room">
-                ${reservation.room}
+                ${reservation.room} ${reservation.roomNumber ? "- Room " + reservation.roomNumber : ""}
             </td>
 
             <td>
@@ -1080,7 +1188,7 @@ saveRoomButton.addEventListener("click", () => {
             type: roomType
         });
 
-        alert("Room added successfully!");
+        // alert("Room added successfully!");
 
     } else {
 
@@ -1110,7 +1218,7 @@ saveRoomButton.addEventListener("click", () => {
         room.number = roomNumber;
         room.type = roomType;
 
-        alert("Room updated successfully!");
+        // alert("Room updated successfully!");
 
     }
 
@@ -1179,7 +1287,7 @@ roomInventoryTableBody.addEventListener("click", (event) => {
         displayRooms();
         resetRoomForm();
 
-        alert("Room deleted successfully!");
+        // alert("Room deleted successfully!");
 
     }
 
