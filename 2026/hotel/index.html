@@ -195,6 +195,70 @@
 
 </div>  
 
+<!-- ROOM INVENTORY MANAGEMENT -->
+
+<section class="room-inventory" id="roomInventory" style="display: none;">
+
+    <h2>Manage Rooms</h2>
+    <p>Add, edit, and manage the hotel's individual rooms.</p>
+
+    <div class="room-inventory-form">
+
+        <h3 id="roomFormTitle">Add New Room</h3>
+
+        <div class="room-form-fields">
+
+            <input
+                type="number"
+                id="roomNumberInput"
+                placeholder="Room Number"
+                min="1"
+            >
+
+            <select id="roomTypeInput">
+                <option value="" disabled selected>Select Room Type</option>
+                <option value="single">Single</option>
+                <option value="double">Double</option>
+                <option value="suite">Suite</option>
+            </select>
+
+            <button type="button" id="saveRoomButton">
+                Add Room
+            </button>
+
+            <button type="button" id="cancelRoomEdit" style="display: none;">
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="room-inventory-table-container">
+
+        <table class="room-inventory-table">
+
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Room Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="roomInventoryTableBody">
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <p id="noRoomsMessage">
+        No rooms have been added yet.
+    </p>
+
+</section>
+
   <!-- ROOMS -->
 <!-- ROOMS -->
 <section class="rooms">
