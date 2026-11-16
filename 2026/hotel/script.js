@@ -171,16 +171,19 @@ loginButton.addEventListener("click", () => {
 function updateStaffUI() {
 
     const loggedIn = localStorage.getItem("staffLoggedIn");
+    const roomInventory = document.getElementById("roomInventory");
 
     if (loggedIn === "true") {
 
         staffLogin.textContent = "Logout";
         staffSignup.style.display = "none";
+        roomInventory.style.display = "block";
 
     } else {
 
         staffLogin.textContent = "Staff Login";
         staffSignup.style.display = "inline-block";
+        roomInventory.style.display = "none";
 
     }
 
@@ -960,3 +963,250 @@ reservationsTableBody.addEventListener("click", (event) => {
     }
 
 });
+
+
+// ROOM INVENTORY MANAGEMENT
+
+let rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+
+const roomNumberInput = document.getElementById("roomNumberInput");
+const roomTypeInput = document.getElementById("roomTypeInput");
+const saveRoomButton = document.getElementById("saveRoomButton");
+const cancelRoomEdit = document.getElementById("cancelRoomEdit");
+const roomInventoryTableBody = document.getElementById("roomInventoryTableBody");
+const noRoomsMessage = document.getElementById("noRoomsMessage");
+const roomFormTitle = document.getElementById("roomFormTitle");
+
+let editingRoomNumber = null;
+
+
+// SAVE ROOMS
+
+function saveRooms() {
+
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+
+}
+
+
+// DISPLAY ROOM INVENTORY
+
+function displayRooms() {
+
+    roomInventoryTableBody.innerHTML = "";
+
+    if (rooms.length === 0) {
+
+        noRoomsMessage.style.display = "block";
+        return;
+
+    }
+
+    noRoomsMessage.style.display = "none";
+
+    // Sort rooms by room number
+
+    rooms.sort((a, b) => a.number - b.number);
+
+    rooms.forEach((room) => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${room.number}</td>
+
+            <td>${room.type.charAt(0).toUpperCase() + room.type.slice(1)}</td>
+
+            <td>
+                <button
+                    class="edit-room-btn"
+                    data-room-number="${room.number}">
+                    Edit
+                </button>
+
+                <button
+                    class="delete-room-btn"
+                    data-room-number="${room.number}">
+                    Delete
+                </button>
+            </td>
+        `;
+
+        roomInventoryTableBody.appendChild(row);
+
+    });
+
+}
+
+
+// ADD OR UPDATE ROOM
+
+saveRoomButton.addEventListener("click", () => {
+
+    const roomNumber = Number(roomNumberInput.value);
+    const roomType = roomTypeInput.value;
+
+    if (!roomNumber || roomNumber < 1 || !Number.isInteger(roomNumber)) {
+
+        alert("Please enter a valid room number.");
+        return;
+
+    }
+
+    if (!roomType) {
+
+        alert("Please select a room type.");
+        return;
+
+    }
+
+    // ADD NEW ROOM
+
+    if (editingRoomNumber === null) {
+
+        const roomExists = rooms.some(
+            room => Number(room.number) === roomNumber
+        );
+
+        if (roomExists) {
+
+            alert("That room number already exists.");
+            return;
+
+        }
+
+        rooms.push({
+            number: roomNumber,
+            type: roomType
+        });
+
+        alert("Room added successfully!");
+
+    } else {
+
+        // UPDATE EXISTING ROOM
+
+        const room = rooms.find(
+            room => Number(room.number) === Number(editingRoomNumber)
+        );
+
+        if (!room) {
+            return;
+        }
+
+        const roomNumberExists = rooms.some(
+            existingRoom =>
+                Number(existingRoom.number) === roomNumber &&
+                Number(existingRoom.number) !== Number(editingRoomNumber)
+        );
+
+        if (roomNumberExists) {
+
+            alert("That room number already exists.");
+            return;
+
+        }
+
+        room.number = roomNumber;
+        room.type = roomType;
+
+        alert("Room updated successfully!");
+
+    }
+
+    saveRooms();
+    displayRooms();
+    resetRoomForm();
+
+});
+
+
+// EDIT OR DELETE ROOM
+
+roomInventoryTableBody.addEventListener("click", (event) => {
+
+    const editButton = event.target.closest(".edit-room-btn");
+    const deleteButton = event.target.closest(".delete-room-btn");
+
+    // EDIT ROOM
+
+    if (editButton) {
+
+        const roomNumber = Number(editButton.dataset.roomNumber);
+
+        const room = rooms.find(
+            room => Number(room.number) === roomNumber
+        );
+
+        if (!room) {
+            return;
+        }
+
+        editingRoomNumber = roomNumber;
+
+        roomNumberInput.value = room.number;
+        roomTypeInput.value = room.type;
+
+        roomFormTitle.textContent = "Edit Room";
+        saveRoomButton.textContent = "Save Changes";
+        cancelRoomEdit.style.display = "inline-block";
+
+        roomNumberInput.focus();
+
+        return;
+
+    }
+
+    // DELETE ROOM
+
+    if (deleteButton) {
+
+        const roomNumber = Number(deleteButton.dataset.roomNumber);
+
+        const confirmDelete = confirm(
+            `Are you sure you want to delete Room ${roomNumber}?`
+        );
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        rooms = rooms.filter(
+            room => Number(room.number) !== roomNumber
+        );
+
+        saveRooms();
+        displayRooms();
+        resetRoomForm();
+
+        alert("Room deleted successfully!");
+
+    }
+
+});
+
+
+// CANCEL ROOM EDIT / RESET FORM
+
+function resetRoomForm() {
+
+    editingRoomNumber = null;
+
+    roomNumberInput.value = "";
+    roomTypeInput.value = "";
+
+    roomFormTitle.textContent = "Add New Room";
+    saveRoomButton.textContent = "Add Room";
+
+    cancelRoomEdit.style.display = "none";
+
+}
+
+cancelRoomEdit.addEventListener("click", resetRoomForm);
+
+
+// DISPLAY ROOMS WHEN PAGE LOADS
+
+displayRooms();
+
+// END ROOM INVENTORY MANAGEMENT
