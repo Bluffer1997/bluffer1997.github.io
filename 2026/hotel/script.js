@@ -392,7 +392,7 @@ const confirmationId = document.getElementById('confirmationId');
 
 // FIND AN AVAILABLE ROOM
 
-function findAvailableRoom(roomType, checkIn, checkOut) {
+function findAvailableRoom(roomType, checkIn, checkOut, excludedReservationId = null) {
 
     // Find rooms matching the requested type
 
@@ -406,19 +406,28 @@ function findAvailableRoom(roomType, checkIn, checkOut) {
 
         const roomIsOccupied = reservations.some(reservation => {
 
+            // Ignore the reservation currently being edited
+
+            if (
+                excludedReservationId !== null &&
+                Number(reservation.reservationId) === Number(excludedReservationId)
+            ) {
+                return false;
+            }
+
             // Cancelled reservations do not occupy rooms
 
             if (reservation.status === "Cancelled") {
                 return false;
             }
 
-            // Ignore reservations without an assigned physical room
+            // Ignore reservations assigned to other physical rooms
 
             if (Number(reservation.roomNumber) !== Number(room.number)) {
                 return false;
             }
 
-            // Check whether the reservation dates overlap
+            // Check whether reservation dates overlap
 
             return (
                 checkIn < reservation.checkOut &&
@@ -433,12 +442,8 @@ function findAvailableRoom(roomType, checkIn, checkOut) {
 
     }
 
-    // No suitable room available
-
     return null;
-
 }
-
 
 // CONFIRM BOOKING
 
@@ -918,6 +923,9 @@ editReservationModal.addEventListener("click", (event) => {
 
 // SAVE EDITED RESERVATION
 
+
+// SAVE EDITED RESERVATION
+
 editReservationForm.addEventListener("submit", (event) => {
 
     event.preventDefault();
@@ -942,10 +950,31 @@ editReservationForm.addEventListener("submit", (event) => {
     const checkIn = document.getElementById("editCheckIn").value;
     const checkOut = document.getElementById("editCheckOut").value;
 
+    // Validate guest information
+
+    if (!firstName || !lastName || !phone || !room) {
+        alert("Please complete all guest and room information.");
+        return;
+    }
+
     // Validate dates
 
     if (!checkIn || !checkOut || checkOut <= checkIn) {
         alert("Check-out must be after check-in.");
+        return;
+    }
+
+    // Find an available physical room
+
+    const availableRoom = findAvailableRoom(
+        room,
+        checkIn,
+        checkOut,
+        reservation.reservationId
+    );
+
+    if (!availableRoom) {
+        alert("Sorry, no rooms of this type are available for those dates.");
         return;
     }
 
@@ -972,6 +1001,7 @@ editReservationForm.addEventListener("submit", (event) => {
     };
 
     reservation.room = room;
+    reservation.roomNumber = availableRoom.number;
     reservation.checkIn = checkIn;
     reservation.checkOut = checkOut;
     reservation.nights = nights;
@@ -1088,6 +1118,28 @@ const roomFormTitle = document.getElementById("roomFormTitle");
 let editingRoomNumber = null;
 
 
+// CHECK IF ROOM HAS AN ACTIVE RESERVATION
+
+function roomHasActiveReservations(roomNumber) {
+
+    return reservations.some(reservation => {
+
+        const status = reservation.status || "Reserved";
+
+        const isActive =
+            status === "Reserved" ||
+            status === "Checked In";
+
+        return (
+            Number(reservation.roomNumber) === Number(roomNumber) &&
+            isActive
+        );
+
+    });
+
+}
+
+
 // SAVE ROOMS
 
 function saveRooms() {
@@ -1192,11 +1244,19 @@ saveRoomButton.addEventListener("click", () => {
 
     } else {
 
-        // UPDATE EXISTING ROOM
+// UPDATE EXISTING ROOM
 
-        const room = rooms.find(
-            room => Number(room.number) === Number(editingRoomNumber)
-        );
+if (roomHasActiveReservations(editingRoomNumber)) {
+
+    alert("This room cannot be edited because it has an active reservation.");
+
+    return;
+
+}
+
+const room = rooms.find(
+    room => Number(room.number) === Number(editingRoomNumber)
+);
 
         if (!room) {
             return;
@@ -1238,58 +1298,76 @@ roomInventoryTableBody.addEventListener("click", (event) => {
 
     // EDIT ROOM
 
-    if (editButton) {
+if (editButton) {
 
-        const roomNumber = Number(editButton.dataset.roomNumber);
+    const roomNumber = Number(editButton.dataset.roomNumber);
 
-        const room = rooms.find(
-            room => Number(room.number) === roomNumber
-        );
+    if (roomHasActiveReservations(roomNumber)) {
 
-        if (!room) {
-            return;
-        }
-
-        editingRoomNumber = roomNumber;
-
-        roomNumberInput.value = room.number;
-        roomTypeInput.value = room.type;
-
-        roomFormTitle.textContent = "Edit Room";
-        saveRoomButton.textContent = "Save Changes";
-        cancelRoomEdit.style.display = "inline-block";
-
-        roomNumberInput.focus();
+        alert("This room cannot be edited because it has an active reservation.");
 
         return;
 
     }
 
+    const room = rooms.find(
+        room => Number(room.number) === roomNumber
+    );
+
+    if (!room) {
+        return;
+    }
+
+    editingRoomNumber = roomNumber;
+
+    roomNumberInput.value = room.number;
+    roomTypeInput.value = room.type;
+
+    roomFormTitle.textContent = "Edit Room";
+    saveRoomButton.textContent = "Save Changes";
+    cancelRoomEdit.style.display = "inline-block";
+
+    roomNumberInput.focus();
+
+    return;
+
+}
+
     // DELETE ROOM
 
-    if (deleteButton) {
+// DELETE ROOM
 
-        const roomNumber = Number(deleteButton.dataset.roomNumber);
+if (deleteButton) {
 
-        const confirmDelete = confirm(
-            `Are you sure you want to delete Room ${roomNumber}?`
-        );
+    const roomNumber = Number(deleteButton.dataset.roomNumber);
 
-        if (!confirmDelete) {
-            return;
-        }
+    if (roomHasActiveReservations(roomNumber)) {
 
-        rooms = rooms.filter(
-            room => Number(room.number) !== roomNumber
-        );
+        alert("This room cannot be deleted because it has an active reservation.");
 
-        saveRooms();
-        displayRooms();
-        resetRoomForm();
-
-        // alert("Room deleted successfully!");
+        return;
 
     }
+
+    const confirmDelete = confirm(
+        `Are you sure you want to delete Room ${roomNumber}?`
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    rooms = rooms.filter(
+        room => Number(room.number) !== roomNumber
+    );
+
+    saveRooms();
+    displayRooms();
+    resetRoomForm();
+
+    // alert("Room deleted successfully!");
+
+}
 
 });
 
