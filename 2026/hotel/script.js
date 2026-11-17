@@ -507,10 +507,20 @@ function findAvailableRoom(roomType, checkIn, checkOut, excludedReservationId = 
 
             // Check whether reservation dates overlap
 
-            return (
-                checkIn < reservation.checkOut &&
-                checkOut > reservation.checkIn
-            );
+            // Account for guests who checked in before their scheduled date.
+
+const occupiedFrom =
+    reservation.status === "Checked In" &&
+    reservation.checkIn > getTodayDateString()
+        ? getTodayDateString()
+        : reservation.checkIn;
+
+// Check whether reservation dates overlap.
+
+return (
+    checkIn < reservation.checkOut &&
+    checkOut > occupiedFrom
+);
 
         });
 
@@ -560,10 +570,20 @@ function getRoomAvailability(roomType, checkIn, checkOut, excludedReservationId 
 
             // Check whether reservation dates overlap
 
-            return (
-                checkIn < reservation.checkOut &&
-                checkOut > reservation.checkIn
-            );
+// Account for guests who checked in before their scheduled date.
+
+const occupiedFrom =
+    reservation.status === "Checked In" &&
+    reservation.checkIn > getTodayDateString()
+        ? getTodayDateString()
+        : reservation.checkIn;
+
+// Check whether reservation dates overlap.
+
+return (
+    checkIn < reservation.checkOut &&
+    checkOut > occupiedFrom
+);
 
         });
 
@@ -916,29 +936,16 @@ function displayReservations() {
 
                 
             ${(reservation.status || "Reserved") === "Reserved" ? `
-            ${getTodayDateString() >= reservation.checkIn ? `
                 <button class="check-in-btn" data-index="${index}">
-                    Check In
+                Check In
                 </button>
-            ` : `
-                <button class="check-in-btn" disabled>
-                    Check In (Not Yet)
-                </button>
-            `}
-        ` : ""}
+            ` : ""}
 
-        ${reservation.status === "Checked In" ? `
-            ${getTodayDateString() >= reservation.checkOut ? `
+            ${reservation.status === "Checked In" ? `
                 <button class="check-out-btn" data-index="${index}">
                     Check Out
                 </button>
-            ` : `
-                <button class="check-out-btn" disabled>
-                    Check Out (Not Yet)
-                </button>
-            `}
-        ` : ""}
-
+            ` : ""}
             </td>
         `;
 
@@ -1249,6 +1256,8 @@ const total = subtotal + tax;
 });
 
 
+
+
 // GUEST CHECK-IN AND CHECK-OUT
 
 reservationsTableBody.addEventListener("click", (event) => {
@@ -1266,8 +1275,52 @@ reservationsTableBody.addEventListener("click", (event) => {
             return;
         }
 
-        if (getTodayDateString() < reservation.checkIn) {
-            alert("This guest cannot check in before their reservation date.");
+        const today = getTodayDateString();
+
+        // Make sure the assigned physical room still exists.
+
+        const assignedRoom = rooms.find(
+            room => Number(room.number) === Number(reservation.roomNumber)
+        );
+
+        if (!assignedRoom) {
+            alert("The room assigned to this reservation no longer exists.");
+            return;
+        }
+
+        // Check whether another reservation occupies this physical room.
+
+        const roomIsOccupied = reservations.some(otherReservation => {
+
+            if (
+                Number(otherReservation.reservationId) ===
+                Number(reservation.reservationId)
+            ) {
+                return false;
+            }
+
+            const status = otherReservation.status || "Reserved";
+
+            if (status === "Cancelled" || status === "Checked Out") {
+                return false;
+            }
+
+            if (
+                Number(otherReservation.roomNumber) !==
+                Number(reservation.roomNumber)
+            ) {
+                return false;
+            }
+
+            return (
+                today < otherReservation.checkOut &&
+                reservation.checkOut > otherReservation.checkIn
+            );
+
+        });
+
+        if (roomIsOccupied) {
+            alert("This room is currently occupied or has another reservation during the requested stay. Check-in cannot proceed.");
             return;
         }
 
@@ -1279,6 +1332,7 @@ reservationsTableBody.addEventListener("click", (event) => {
             return;
         }
 
+        reservation.actualCheckIn = today;
         reservation.status = "Checked In";
 
         localStorage.setItem(
@@ -1295,19 +1349,45 @@ reservationsTableBody.addEventListener("click", (event) => {
 
     // CHECK OUT
 
+    // CHECK OUT
+
     if (checkOutButton) {
         const index = Number(checkOutButton.dataset.index);
         const reservation = reservations[index];
 
         if (!reservation || reservation.status !== "Checked In") {
-        return;
-    }
+            return;
+        }
 
-    if (getTodayDateString() < reservation.checkOut) {
-    alert("This guest cannot check out before their scheduled checkout date.");
-    return;
-}
+        const today = getTodayDateString();
 
+        const checkInDate = new Date(
+            (reservation.actualCheckIn || reservation.checkIn) + "T00:00:00Z"
+        );
+
+        const checkOutDate = new Date(today + "T00:00:00Z");
+
+        const nights = Math.max(
+            1,
+            Math.round(
+                (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
+            )
+        );
+
+        const price = Number(
+            reservation.price ?? roomPrices[reservation.room]
+        );
+
+        const subtotal = Number((nights * price).toFixed(2));
+        const tax = 0;
+        const total = subtotal + tax;
+
+        reservation.checkOut = today;
+        reservation.nights = nights;
+        reservation.price = price;
+        reservation.subtotal = subtotal;
+        reservation.tax = tax;
+        reservation.total = total;
         reservation.status = "Checked Out";
 
         localStorage.setItem(
@@ -1318,10 +1398,10 @@ reservationsTableBody.addEventListener("click", (event) => {
         displayReservations();
 
         alert("Guest successfully checked out!");
-
     }
 
 });
+
 
 
 // ROOM INVENTORY MANAGEMENT
