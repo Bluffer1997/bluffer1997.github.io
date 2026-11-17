@@ -246,7 +246,7 @@ document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0]
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Sunday November 15 2026';
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Monday November 16 2026';
 
 // room prices
 const roomPrices = {
