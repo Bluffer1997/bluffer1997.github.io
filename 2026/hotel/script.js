@@ -16,7 +16,7 @@ const loginButton = document.getElementById("loginButton");
 const signupButton = document.getElementById("signupButton");
 
 
-// OPEN LOGIN MODAL
+// OPEN LOGIN MODAL / LOGOUT
 
 staffLogin.addEventListener("click", () => {
 
@@ -42,7 +42,17 @@ staffLogin.addEventListener("click", () => {
 // OPEN SIGNUP MODAL
 
 staffSignup.addEventListener("click", () => {
+
+    // An administrator account can only be created once.
+
+    if (localStorage.getItem("staffAccount")) {
+        alert("An administrator account already exists. Signup is disabled.");
+        updateStaffUI();
+        return;
+    }
+
     signupModal.style.display = "flex";
+
 });
 
 
@@ -88,9 +98,18 @@ signupModalContent.addEventListener("click", (event) => {
 });
 
 
-// STAFF SIGNUP
+// ADMIN ACCOUNT SIGNUP
 
 signupButton.addEventListener("click", () => {
+
+    // Never allow an existing administrator account to be replaced.
+
+    if (localStorage.getItem("staffAccount")) {
+        alert("An administrator account already exists. Signup is disabled.");
+        signupModal.style.display = "none";
+        updateStaffUI();
+        return;
+    }
 
     const username = document.getElementById("signupUsername").value;
     const password = document.getElementById("signupPassword").value;
@@ -110,17 +129,19 @@ signupButton.addEventListener("click", () => {
         JSON.stringify(staffAccount)
     );
 
-    alert("Staff account created successfully!");
+    alert("Administrator account created successfully!");
 
     signupModal.style.display = "none";
 
     document.getElementById("signupUsername").value = "";
     document.getElementById("signupPassword").value = "";
 
+    updateStaffUI();
+
 });
 
 
-// STAFF LOGIN
+// ADMIN LOGIN
 
 loginButton.addEventListener("click", () => {
 
@@ -135,7 +156,7 @@ loginButton.addEventListener("click", () => {
     const savedAccount = localStorage.getItem("staffAccount");
 
     if (!savedAccount) {
-        alert("No staff account exists. Please sign up first.");
+        alert("No administrator account exists. Please create one first.");
         return;
     }
 
@@ -166,24 +187,41 @@ loginButton.addEventListener("click", () => {
 });
 
 
-// UPDATE STAFF UI
+// UPDATE ADMIN UI
 
 function updateStaffUI() {
 
-    const loggedIn = localStorage.getItem("staffLoggedIn");
-    const roomInventory = document.getElementById("roomInventory");
+    const loggedIn = localStorage.getItem("staffLoggedIn") === "true";
 
-    if (loggedIn === "true") {
+    const roomInventory = document.getElementById("roomInventory");
+    const reservationsDashboard = document.getElementById("reservationsDashboard");
+    const editReservationModal = document.getElementById("editReservationModal");
+
+    const accountExists = localStorage.getItem("staffAccount") !== null;
+
+    if (loggedIn) {
 
         staffLogin.textContent = "Logout";
-        staffSignup.style.display = "none";
+
         roomInventory.style.display = "block";
+        reservationsDashboard.style.display = "block";
+
+        staffSignup.style.display = "none";
 
     } else {
 
         staffLogin.textContent = "Staff Login";
-        staffSignup.style.display = "inline-block";
+
         roomInventory.style.display = "none";
+        reservationsDashboard.style.display = "none";
+
+        // Signup is only available before the first administrator account exists.
+
+        staffSignup.style.display = accountExists ? "none" : "inline-block";
+
+        // Close the edit modal if the administrator logs out.
+
+        editReservationModal.style.display = "none";
 
     }
 
@@ -855,23 +893,27 @@ function displayReservations() {
                 ${reservation.status || "Reserved"}
             </td>
             
-            <td>
-                <button
-                    class="edit-reservation"
-                    data-index="${index}">
-                    Edit
-                </button>
-                <button
-                    class="cancel-reservation"
-                    data-index="${index}">
-                    Cancel
-                </button>
+                    <td>
+                ${(reservation.status || "Reserved") !== "Cancelled" ? `
+                    <button
+                        class="edit-reservation"
+                        data-index="${index}">
+                        Edit
+                    </button>
+
+                    <button
+                        class="cancel-reservation"
+                        data-index="${index}">
+                        Cancel
+                    </button>
+                ` : ""}
 
                 <button
                     class="delete-reservation"
                     data-index="${index}">
                     Delete
                 </button>
+
                 
             ${(reservation.status || "Reserved") === "Reserved" ? `
             ${getTodayDateString() >= reservation.checkIn ? `
@@ -1004,8 +1046,8 @@ let editingReservationIndex = null;
 
 // OPEN EDIT MODAL
 
-reservationsTableBody.addEventListener("click", (event) => {
 
+reservationsTableBody.addEventListener("click", (event) => {
     const editButton = event.target.closest(".edit-reservation");
 
     if (!editButton) {
@@ -1016,9 +1058,10 @@ reservationsTableBody.addEventListener("click", (event) => {
 
     const reservation = reservations[editingReservationIndex];
 
-    if (!reservation) {
+    if (!reservation || reservation.status === "Cancelled") {
         return;
     }
+
 
     // Populate fields with existing reservation information
 
@@ -1070,25 +1113,21 @@ editReservationModal.addEventListener("click", (event) => {
 });
 
 
-// SAVE EDITED RESERVATION
-
 
 // SAVE EDITED RESERVATION
 
 editReservationForm.addEventListener("submit", (event) => {
-
     event.preventDefault();
-
-    if (editingReservationIndex === null) {
-        return;
-    }
-
     const reservation = reservations[editingReservationIndex];
-
     if (!reservation) {
         return;
     }
 
+    if (reservation.status === "Cancelled") {
+        alert("Cancelled reservations cannot be edited.");
+        closeReservationEditor();
+        return;
+    }
     // Get updated information
 
     const firstName = document.getElementById("editFirstName").value.trim();
