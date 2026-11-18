@@ -1619,3 +1619,72 @@ color: #2563eb;
         height: 42px;
     }
 }
+/* MOBILE BOOKING SEARCH FIX */
+
+@media (max-width: 768px) {
+    .booking-bar {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .booking-bar input,
+    .booking-bar select,
+    .booking-bar button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* MOBILE RESERVATION LOOKUP FIX */
+
+@media (max-width: 768px) {
+    .reservation-lookup {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .lookup-form {
+        flex-direction: column;
+    }
+
+    .lookup-form input,
+    .lookup-form button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* MOBILE AVAILABILITY HEADING ALIGNMENT */
+
+@media (max-width: 768px) {
+    .booking-availability h2 {
+        text-align: center;
+    }
+}
+/* MOBILE EDIT RESERVATION MODAL FIX */
+
+@media (max-width: 500px) {
+    .edit-modal-overlay {
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .edit-modal-content {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+    }
+}
+
+/* MOBILE RESERVATION ACTION BUTTONS FIX */
+
+@media (max-width: 768px) {
+    .reservations-table td:last-child button {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        margin: 3px 0;
+    }
+}
