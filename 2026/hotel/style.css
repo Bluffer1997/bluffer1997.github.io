@@ -1257,3 +1257,365 @@ color: #2563eb;
     }
 
 }
+
+/* ========================================
+   NEW BOOKING WORKFLOW - STEP 7
+======================================== */
+
+/* AVAILABILITY AND PRICING */
+
+.booking-availability {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    padding: 25px;
+    box-sizing: border-box;
+
+    background: white;
+    color: #111827;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.booking-availability h2 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    color: #16a34a;
+}
+
+.booking-availability .booking-summary {
+    max-width: 100%;
+    margin-top: 15px;
+    box-sizing: border-box;
+}
+
+#proceedToGuest {
+    width: 100%;
+    height: 46px;
+    margin-top: 20px;
+
+    background: #2563eb;
+    color: white;
+
+    border: none;
+    border-radius: 7px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#proceedToGuest:hover {
+    background: #1d4ed8;
+}
+
+
+/* GUEST INFORMATION FORM */
+
+.guest-form {
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+
+    background: white;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.guest-form h2 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+}
+
+.guest-form input {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    box-sizing: border-box;
+
+    font-size: 15px;
+}
+
+.guest-form button {
+    width: 100%;
+    height: 46px;
+    margin-top: 10px;
+
+    background: #2563eb;
+    color: white;
+
+    border: none;
+    border-radius: 7px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.guest-form button:hover {
+    background: #1d4ed8;
+}
+
+/* Restore the flex layout when JavaScript shows the form.
+   The selector leaves display:none untouched. */
+
+#guestForm[style="display: block;"] {
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* FINAL BOOKING REVIEW */
+
+.booking-review {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background: white;
+    color: #111827;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.booking-review h2 {
+    margin: 0 0 25px 0;
+    font-size: 24px;
+}
+
+.booking-review h3 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+}
+
+.booking-review p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+
+    margin: 0;
+    padding: 13px 10px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    font-size: 15px;
+}
+
+.booking-review p span {
+    font-weight: bold;
+    text-align: right;
+}
+
+#confirmBooking {
+    width: 100%;
+    height: 46px;
+    margin-top: 25px;
+
+    background: #16a34a;
+    color: white;
+
+    border: none;
+    border-radius: 7px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#confirmBooking:hover {
+    background: #15803d;
+}
+
+
+/* BOOKING WORKFLOW - MOBILE */
+
+@media (max-width: 768px) {
+
+    .booking-availability,
+    .guest-form,
+    .booking-review {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .booking-availability h2,
+    .guest-form h2,
+    .booking-review h2 {
+        font-size: 21px;
+    }
+
+    .booking-review p {
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    #proceedToGuest,
+    .guest-form button,
+    #confirmBooking {
+        width: 100%;
+        min-height: 46px;
+    }
+
+}
+
+/* FIX: REVIEW BOOKING TEXT COLOUR */
+
+.hero .booking-review p {
+    color: #111827;
+}
+
+.hero .booking-review p span {
+    color: #111827;
+    font-weight: 700;
+}
+
+.hero .booking-review h2,
+.hero .booking-review h3 {
+    color: #111827;
+}
+
+/* ========================================
+   BOOKING SUCCESS / CONFIRMATION
+======================================== */
+
+.hero .booking-success {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 25px;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background: white;
+    color: #111827;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.booking-success h2 {
+    margin: 0 0 20px 0;
+    color: #16a34a;
+    font-size: 26px;
+}
+
+.hero .booking-success p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    margin: 0;
+    padding: 12px 0;
+
+    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.booking-success p span {
+    color: #111827;
+    font-weight: bold;
+}
+
+#confirmationId {
+    color: #2563eb;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* SUCCESS SCREEN BUTTONS */
+
+#editConfirmedBooking,
+#bookAnotherRoom {
+    min-height: 42px;
+    padding: 10px 16px;
+    margin-top: 20px;
+    margin-right: 8px;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#editConfirmedBooking {
+    background: #2563eb;
+    color: white;
+}
+
+#editConfirmedBooking:hover {
+    background: #1d4ed8;
+}
+
+#bookAnotherRoom {
+    background: #16a34a;
+    color: white;
+}
+
+#bookAnotherRoom:hover {
+    background: #15803d;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    .hero .booking-success {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    #editConfirmedBooking,
+    #bookAnotherRoom {
+        width: 100%;
+        margin: 8px 0 0 0;
+    }
+}
+
+/* SEARCH BUTTON ALIGNMENT FIX */
+
+.booking-bar {
+    align-items: center;
+}
+
+.booking-bar #searchDate {
+    height: 40px;
+    min-width: 100px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    align-self: center;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* MOBILE SEARCH BUTTON */
+
+@media (max-width: 768px) {
+    .booking-bar #searchDate {
+        width: 100%;
+        height: 42px;
+    }
+}

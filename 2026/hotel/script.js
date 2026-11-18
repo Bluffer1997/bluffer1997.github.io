@@ -246,7 +246,7 @@ document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0]
 // year 
 const footer = document.getElementById('footer');
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Monday November 16 2026';
+footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Tuesday November 17 2026';
 
 // room prices
 const roomPrices = {
@@ -259,17 +259,111 @@ document.getElementById('doublePrice').textContent = '$' + roomPrices.double + '
 document.getElementById('suitePrice').textContent = '$' + roomPrices.suite + '/night';
 
 //booking section
+
+// BOOKING WORKFLOW
+
 let currentBooking = {};
 let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
-const searchButton = document.querySelector("#searchDate");
-
 let rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+
+let confirmedReservationId = null;
+
+const searchButton = document.getElementById("searchDate");
+const roomDropDown = document.getElementById("roomDropDown");
+const bookingBar = document.querySelector(".booking-bar");
+
+const bookingSearch = document.getElementById("bookingSearch");
+const bookingAvailability = document.getElementById("bookingAvailability");
+const guestForm = document.getElementById("guestForm");
+const bookingReview = document.getElementById("bookingReview");
+const bookingSuccess = document.getElementById("bookingSuccess");
+
+const proceedToGuest = document.getElementById("proceedToGuest");
+const continueBooking = document.getElementById("continueBooking");
+const confirmBooking = document.getElementById("confirmBooking");
+const bookAnotherRoom = document.getElementById("bookAnotherRoom");
+const editConfirmedBooking = document.getElementById("editConfirmedBooking");
+
+// CUSTOMER EDIT BOOKING MODAL
+
+const confirmedBookingEditModal =
+    document.getElementById("confirmedBookingEditModal");
+
+const confirmedBookingEditForm =
+    document.getElementById("confirmedBookingEditForm");
+
+const closeConfirmedEditModal =
+    document.getElementById("closeConfirmedEditModal");
+
+const cancelConfirmedEditModal =
+    document.getElementById("cancelConfirmedEditModal");
+
+
+// BOOKING SUMMARY
+
+function updateBookingSummary(
+    selectedRoom,
+    checkInValue,
+    checkOutValue,
+    days,
+    price
+) {
+
+    document.getElementById("summaryRoom").textContent = selectedRoom;
+    document.getElementById("summaryCheckIn").textContent = checkInValue;
+    document.getElementById("summaryCheckOut").textContent = checkOutValue;
+    document.getElementById("summaryNights").textContent = days;
+    document.getElementById("summaryPrice").textContent = "$" + price.toFixed(2);
+
+    const total = days * price;
+
+    document.getElementById("summaryTotal").textContent =
+        "$" + total.toFixed(2);
+
+}
+
+
+// DISPLAY BOOKING REVIEW
+
+// DISPLAY FINAL BOOKING REVIEW
+
+function displayBookingReview() {
+
+    const guest = currentBooking.guest;
+
+    document.getElementById("confirmationGuest").textContent =
+        guest.firstName + " " + guest.lastName;
+
+    document.getElementById("confirmationRoom").textContent =
+        currentBooking.room;
+
+    document.getElementById("confirmationCheckIn").textContent =
+        currentBooking.checkIn;
+
+    document.getElementById("confirmationCheckOut").textContent =
+        currentBooking.checkOut;
+
+    document.getElementById("confirmationNights").textContent =
+        currentBooking.nights;
+
+    document.getElementById("confirmationPrice").textContent =
+        "$" + currentBooking.price.toFixed(2);
+
+    document.getElementById("confirmationTotal").textContent =
+        "$" + currentBooking.total.toFixed(2);
+
+}
+
+// SEARCH FOR A ROOM
+
+
+// SEARCH FOR A ROOM
 
 searchButton.addEventListener("click", () => {
 
-    const selectedRoom = document.getElementById('roomDropDown').value;
+    const selectedRoom = roomDropDown.value;
 
-    if (selectedRoom === '') {
+    if (!selectedRoom) {
         alert("You've not entered a room type!");
         return;
     }
@@ -277,30 +371,29 @@ searchButton.addEventListener("click", () => {
     const checkInValue = document.getElementById("checkIn").value;
     const checkOutValue = document.getElementById("checkOut").value;
 
-    // Make sure check-in is not before today
-
-    const todayString = today.toISOString().split('T')[0];
-
-    if (checkInValue < todayString) {
-        alert("Error! Check in date can not be before today!");
+    if (!checkInValue || !checkOutValue) {
+        alert("Please select both dates.");
         return;
     }
 
-    // Make sure check-out is after check-in
+    if (checkInValue < getTodayDateString()) {
+        alert("Error! Check-in date cannot be before today!");
+        return;
+    }
 
     if (checkOutValue <= checkInValue) {
-        alert("Error! Check out date must be after check in date!");
+        alert("Error! Check-out date must be after check-in date!");
         return;
     }
 
-    // Calculate number of nights
+    const checkInDate = new Date(checkInValue + "T00:00:00Z");
+    const checkOutDate = new Date(checkOutValue + "T00:00:00Z");
 
-    const checkInDate = new Date(checkInValue);
-    const checkOutDate = new Date(checkOutValue);
+    const nights = Math.round(
+        (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
+    );
 
-    const days = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
-
-    // Calculate dynamic room price
+    // Check availability and calculate the nightly price.
 
     const price = getDynamicRoomPrice(
         selectedRoom,
@@ -313,160 +406,482 @@ searchButton.addEventListener("click", () => {
         return;
     }
 
-    // Calculate booking totals
-
-    const subtotal = Number((days * price).toFixed(2));
+    const subtotal = Number((nights * price).toFixed(2));
     const tax = 0;
     const total = subtotal + tax;
-
-    // Update booking summary
-
-    updateBookingSummary(
-        selectedRoom,
-        checkInValue,
-        checkOutValue,
-        days,
-        price
-    );
-
-    // Save current booking
 
     currentBooking = {
         room: selectedRoom,
         checkIn: checkInValue,
         checkOut: checkOutValue,
-        nights: days,
+        nights: nights,
         price: price,
         subtotal: subtotal,
         tax: tax,
         total: total
     };
 
-    localStorage.setItem(
-        "currentBooking",
-        JSON.stringify(currentBooking)
-    );
+    // Display availability and pricing BEFORE requesting guest information.
 
-});
-
-
-
-//booking summary section 
-function updateBookingSummary(
-    selectedRoom,
-    checkInValue, 
-    checkOutValue, 
-    days,
-    price
-) 
-{
-    const summaryRoom = document.getElementById('summaryRoom');
-    const summaryCheckIn = document.getElementById('summaryCheckIn')
-    const summaryCheckOut = document.getElementById('summaryCheckOut')
-    const summaryNights = document.getElementById('summaryNights')     
-    const summaryPrice = document.getElementById('summaryPrice')
-    const summaryTotal = document.getElementById('summaryTotal')
-    
-        summaryRoom.textContent = selectedRoom;
-        summaryCheckIn.textContent = checkInValue;
-        summaryCheckOut.textContent = checkOutValue;
-        summaryNights.textContent = days;
-        summaryPrice.textContent = '$' + price.toFixed(2);
-        const subtotal = days * price;
-            let tax = 0;
-            const total = subtotal + tax;
-            summaryTotal.textContent = '$' + total.toFixed(2);
-        }
-
-// Load Saved Booking
-const savedBooking = localStorage.getItem("currentBooking");
-
-if (savedBooking) {
-    const booking = JSON.parse(savedBooking);
-    currentBooking = booking;
     updateBookingSummary(
-        booking.room,
-        booking.checkIn,
-        booking.checkOut,
-        booking.nights,
-        booking.price
+        selectedRoom,
+        checkInValue,
+        checkOutValue,
+        nights,
+        price
     );
-}
 
+    // Clear previous guest information.
 
-// rooms 
-const roomDropDown = document.getElementById("roomDropDown");
-const bookingBar = document.querySelector(".booking-bar");
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("phone").value = "";
 
-const singleBook = document.getElementById("singleBook");
-    singleBook.addEventListener("click", () => {
-        roomDropDown.value = "single";
-        bookingBar.scrollIntoView({ behavior: "smooth" });
-        });
+    // Show the availability and pricing stage.
 
-const doubleBook = document.getElementById("doubleBook");
-    doubleBook.addEventListener("click", () => {
-            roomDropDown.value = "double";
-            bookingBar.scrollIntoView({ behavior: "smooth" });
-        });
+    bookingSearch.style.display = "none";
+    bookingAvailability.style.display = "block";
+    guestForm.style.display = "none";
+    bookingReview.style.display = "none";
+    bookingSuccess.style.display = "none";
 
-const suiteBook = document.getElementById("suiteBook");
-    suiteBook.addEventListener("click", () => {
-        roomDropDown.value = "suite";
-        bookingBar.scrollIntoView({ behavior: "smooth" });
-        });
-
-
-// Guest Info
-
-const continueBooking = document.getElementById("continueBooking")
-    continueBooking.addEventListener("click", () => {
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const phone = document.getElementById('phone').value;
-
-        if (firstName === '' || lastName === '' || phone=== '') {
-            alert("Error! You must enter all guest information!");
-            return;
-        }
-        currentBooking.guest = {
-            firstName: firstName,
-            lastName: lastName,
-            phone: phone  
-        };
-    localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
+    bookingAvailability.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
     });
 
-    // Booking Confirmation
-const bookingConfirmation = document.querySelector(".booking-confirmation");
-    bookingConfirmation.style.display = 'none';
-    const confirmGuest = document.getElementById("confirmationGuest");
-    const confirmRoom = document.getElementById("confirmationRoom");
-    const confirmCheckIn = document.getElementById("confirmationCheckIn");
-    const confirmCheckOut = document.getElementById("confirmationCheckOut");
-    const confirmNights = document.getElementById("confirmationNights");
-    const confirmTotal = document.getElementById("confirmationTotal");
-
-continueBooking.addEventListener("click", () => {
-        if (!currentBooking.guest) {    
-            return;
-        }
-    confirmGuest.textContent = currentBooking.guest.firstName + " " + currentBooking.guest.lastName;
-    confirmRoom.textContent = currentBooking.room;
-    confirmCheckIn.textContent = currentBooking.checkIn;
-    confirmCheckOut.textContent = currentBooking.checkOut;
-    confirmNights.textContent = currentBooking.nights;
-    confirmTotal.textContent = "$" + currentBooking.total.toFixed(2);
-    bookingConfirmation.style.display = 'block';
-    bookingConfirmation.scrollIntoView({behavior: 'smooth'});
 });
 
-// Finalize Booking
-// FINALIZE BOOKING
 
-const confirmBooking = document.getElementById('confirmBooking');
-const confirmationId = document.getElementById('confirmationId');
+// CONTINUE TO GUEST INFORMATION
 
+proceedToGuest.addEventListener("click", () => {
+
+    if (!currentBooking.room) {
+        alert("Please search for an available room first.");
+        return;
+    }
+
+    bookingAvailability.style.display = "none";
+    guestForm.style.display = "block";
+
+    guestForm.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+});
+
+
+// CONTINUE TO FINAL BOOKING REVIEW
+
+continueBooking.addEventListener("click", () => {
+
+    if (!currentBooking.room) {
+        alert("Please search for an available room first.");
+        return;
+    }
+
+    const firstName =
+        document.getElementById("firstName").value.trim();
+
+    const lastName =
+        document.getElementById("lastName").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    if (!firstName || !lastName || !phone) {
+        alert("Please enter all guest information.");
+        return;
+    }
+
+    currentBooking.guest = {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone
+    };
+
+    displayBookingReview();
+
+    // Move to final review.
+
+    guestForm.style.display = "none";
+    bookingReview.style.display = "block";
+
+    bookingReview.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+});
+
+// CONFIRM NEW BOOKING
+
+confirmBooking.addEventListener("click", () => {
+
+    if (!currentBooking.guest || !currentBooking.room) {
+        alert("Please complete the booking information first.");
+        return;
+    }
+
+    // Check availability again before confirming.
+
+    const availableRoom = findAvailableRoom(
+        currentBooking.room,
+        currentBooking.checkIn,
+        currentBooking.checkOut
+    );
+
+    if (!availableRoom) {
+        alert("Sorry, this room is no longer available for those dates. Please start a new search.");
+        return;
+    }
+
+    // Generate the next reservation number.
+
+    let reservationNumber = localStorage.getItem("reservationNumber");
+
+    if (reservationNumber === null) {
+        reservationNumber = 1000;
+    } else {
+        reservationNumber = Number(reservationNumber) + 1;
+    }
+
+    currentBooking.roomNumber = availableRoom.number;
+    currentBooking.reservationId = reservationNumber;
+    currentBooking.status = "Reserved";
+
+    // Save the confirmed reservation.
+
+    reservations.push(currentBooking);
+
+    localStorage.setItem("reservationNumber", reservationNumber);
+    localStorage.setItem("reservations", JSON.stringify(reservations));
+
+    // Remember which reservation the success screen belongs to.
+
+    confirmedReservationId = reservationNumber;
+
+    // Display successful booking details.
+
+    document.getElementById("confirmationId").textContent =
+        reservationNumber;
+
+    document.getElementById("successGuest").textContent =
+        currentBooking.guest.firstName + " " +
+        currentBooking.guest.lastName;
+
+    document.getElementById("successRoom").textContent =
+        currentBooking.room + " - Room " + currentBooking.roomNumber;
+
+    document.getElementById("successCheckIn").textContent =
+        currentBooking.checkIn;
+
+    document.getElementById("successCheckOut").textContent =
+        currentBooking.checkOut;
+
+    document.getElementById("successNights").textContent =
+        currentBooking.nights;
+
+    document.getElementById("successTotal").textContent =
+        "$" + currentBooking.total.toFixed(2);
+
+    // Clear temporary booking data.
+
+    currentBooking = {};
+    localStorage.removeItem("currentBooking");
+
+    // Show the successful booking stage.
+
+    bookingSearch.style.display = "none";
+    guestForm.style.display = "none";
+    bookingReview.style.display = "none";
+    bookingSuccess.style.display = "block";
+
+    displayReservations();
+
+    bookingSuccess.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    console.log("Booking confirmed:", reservationNumber);
+
+});
+
+
+// BOOK ANOTHER ROOM
+
+bookAnotherRoom.addEventListener("click", () => {
+
+    currentBooking = {};
+    confirmedReservationId = null;
+
+    localStorage.removeItem("currentBooking");
+
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("phone").value = "";
+
+    roomDropDown.value = "";
+
+    document.getElementById("checkIn").value =
+        getTodayDateString();
+
+    const nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    const nextDayString =
+        `${nextDay.getFullYear()}-${String(nextDay.getMonth() + 1).padStart(2, "0")}-${String(nextDay.getDate()).padStart(2, "0")}`;
+
+    document.getElementById("checkOut").value = nextDayString;
+
+    bookingSearch.style.display = "block";
+    guestForm.style.display = "none";
+    bookingReview.style.display = "none";
+    bookingSuccess.style.display = "none";
+
+    bookingSearch.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+});
+
+
+// OPEN CUSTOMER EDIT BOOKING MODAL
+
+editConfirmedBooking.addEventListener("click", () => {
+
+    const reservation = reservations.find(
+        item => Number(item.reservationId) === Number(confirmedReservationId)
+    );
+
+    if (!reservation || reservation.status !== "Reserved") {
+        alert("This booking can no longer be edited here.");
+        return;
+    }
+
+    document.getElementById("confirmedEditFirstName").value =
+        reservation.guest.firstName;
+
+    document.getElementById("confirmedEditLastName").value =
+        reservation.guest.lastName;
+
+    document.getElementById("confirmedEditPhone").value =
+        reservation.guest.phone;
+
+    document.getElementById("confirmedEditRoom").value =
+        reservation.room;
+
+    document.getElementById("confirmedEditCheckIn").value =
+        reservation.checkIn;
+
+    document.getElementById("confirmedEditCheckOut").value =
+        reservation.checkOut;
+
+    confirmedBookingEditModal.style.display = "flex";
+
+});
+
+
+// CLOSE CUSTOMER EDIT MODAL
+
+function closeConfirmedBookingEditor() {
+    confirmedBookingEditModal.style.display = "none";
+}
+
+closeConfirmedEditModal.addEventListener(
+    "click",
+    closeConfirmedBookingEditor
+);
+
+cancelConfirmedEditModal.addEventListener(
+    "click",
+    closeConfirmedBookingEditor
+);
+
+confirmedBookingEditModal.addEventListener("click", (event) => {
+
+    if (event.target === confirmedBookingEditModal) {
+        closeConfirmedBookingEditor();
+    }
+
+});
+
+
+// SAVE CUSTOMER EDITED BOOKING
+
+confirmedBookingEditForm.addEventListener("submit", (event) => {
+
+    event.preventDefault();
+
+    const reservation = reservations.find(
+        item => Number(item.reservationId) === Number(confirmedReservationId)
+    );
+
+    if (!reservation || reservation.status !== "Reserved") {
+        alert("This booking can no longer be edited.");
+        closeConfirmedBookingEditor();
+        return;
+    }
+
+    const firstName =
+        document.getElementById("confirmedEditFirstName").value.trim();
+
+    const lastName =
+        document.getElementById("confirmedEditLastName").value.trim();
+
+    const phone =
+        document.getElementById("confirmedEditPhone").value.trim();
+
+    const room =
+        document.getElementById("confirmedEditRoom").value;
+
+    const checkIn =
+        document.getElementById("confirmedEditCheckIn").value;
+
+    const checkOut =
+        document.getElementById("confirmedEditCheckOut").value;
+
+    if (!firstName || !lastName || !phone || !room) {
+        alert("Please complete all guest and room information.");
+        return;
+    }
+
+    if (!checkIn || !checkOut || checkOut <= checkIn) {
+        alert("Check-out must be after check-in.");
+        return;
+    }
+
+    if (checkIn < getTodayDateString()) {
+        alert("Check-in date cannot be before today.");
+        return;
+    }
+
+    // Check availability without counting this reservation against itself.
+
+    const availableRoom = findAvailableRoom(
+        room,
+        checkIn,
+        checkOut,
+        reservation.reservationId
+    );
+
+    if (!availableRoom) {
+        alert("Sorry, no rooms of this type are available for those dates.");
+        return;
+    }
+
+    const bookingDetailsChanged =
+        room !== reservation.room ||
+        checkIn !== reservation.checkIn ||
+        checkOut !== reservation.checkOut;
+
+    let price;
+
+    if (bookingDetailsChanged) {
+
+        price = getDynamicRoomPrice(
+            room,
+            checkIn,
+            checkOut,
+            reservation.reservationId
+        );
+
+        if (price === null) {
+            alert("Sorry, no rooms of this type are available for those dates.");
+            return;
+        }
+
+    } else {
+
+        // Keep the original agreed price if only guest details changed.
+
+        price = reservation.price;
+
+    }
+
+    const startDate = new Date(checkIn + "T00:00:00Z");
+    const endDate = new Date(checkOut + "T00:00:00Z");
+
+    const nights = Math.round(
+        (endDate - startDate) / (1000 * 60 * 60 * 24)
+    );
+
+    const subtotal = Number((nights * price).toFixed(2));
+    const tax = 0;
+    const total = subtotal + tax;
+
+    // Update the existing reservation. Its number stays the same.
+
+    reservation.guest = {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone
+    };
+
+    reservation.room = room;
+    reservation.roomNumber = availableRoom.number;
+    reservation.checkIn = checkIn;
+    reservation.checkOut = checkOut;
+    reservation.nights = nights;
+    reservation.price = price;
+    reservation.subtotal = subtotal;
+    reservation.tax = tax;
+    reservation.total = total;
+
+    localStorage.setItem(
+        "reservations",
+        JSON.stringify(reservations)
+    );
+
+    // Refresh the success screen with the updated details.
+
+    document.getElementById("successGuest").textContent =
+        firstName + " " + lastName;
+
+    document.getElementById("successRoom").textContent =
+        room + " - Room " + availableRoom.number;
+
+    document.getElementById("successCheckIn").textContent = checkIn;
+    document.getElementById("successCheckOut").textContent = checkOut;
+    document.getElementById("successNights").textContent = nights;
+    document.getElementById("successTotal").textContent =
+        "$" + total.toFixed(2);
+
+    displayReservations();
+
+    closeConfirmedBookingEditor();
+
+    alert("Your booking has been updated successfully.");
+
+});
+
+
+// ROOM CARDS - BOOK NOW BUTTONS
+
+const singleBook = document.getElementById("singleBook");
+const doubleBook = document.getElementById("doubleBook");
+const suiteBook = document.getElementById("suiteBook");
+
+singleBook.addEventListener("click", () => {
+    roomDropDown.value = "single";
+    bookingBar.scrollIntoView({ behavior: "smooth" });
+});
+
+doubleBook.addEventListener("click", () => {
+    roomDropDown.value = "double";
+    bookingBar.scrollIntoView({ behavior: "smooth" });
+});
+
+suiteBook.addEventListener("click", () => {
+    roomDropDown.value = "suite";
+    bookingBar.scrollIntoView({ behavior: "smooth" });
+});
+
+// END BOOKING WORKFLOW
 
 // FIND AN AVAILABLE ROOM
 
@@ -652,92 +1067,8 @@ function getDynamicRoomPrice(roomType, checkIn, checkOut, excludedReservationId 
 
 }
 
-// CONFIRM BOOKING
-
-confirmBooking.addEventListener("click", () => {
-
-    if (!currentBooking.guest) {
-        alert("Please complete the guest information first.");
-        return;
-    }
-
-  
-
-    // Find an available physical room
-
-    const availableRoom = findAvailableRoom(
-        currentBooking.room,
-        currentBooking.checkIn,
-        currentBooking.checkOut
-    );
-
-    if (!availableRoom) {
-        alert("Sorry, no rooms of this type are available for those dates.");
-        return;
-    }
-
-    // Get the next reservation number
-
-    let reservationNumber = localStorage.getItem("reservationNumber");
-
-    if (reservationNumber === null) {
-        reservationNumber = 1000;
-    } else {
-        reservationNumber = Number(reservationNumber) + 1;
-    }
-
-    // Assign the physical room
-
-    currentBooking.roomNumber = availableRoom.number;
-
-    // Add reservation number and status
-
-    currentBooking.reservationId = reservationNumber;
-    currentBooking.status = "Reserved";
-
-    // Add booking to reservations array
-
-    reservations.push(currentBooking);
-
-    // Save everything
-
-    localStorage.setItem("reservationNumber", reservationNumber);
-    localStorage.setItem("reservations", JSON.stringify(reservations));
-    localStorage.setItem("currentBooking", JSON.stringify(currentBooking));
-
-    // Display confirmation details
-
-confirmationId.textContent = reservationNumber;
-
-confirmGuest.textContent =
-    currentBooking.guest.firstName + " " +
-    currentBooking.guest.lastName;
-
-confirmRoom.textContent =
-    currentBooking.room + " - Room " + currentBooking.roomNumber;
-
-confirmCheckIn.textContent = currentBooking.checkIn;
-confirmCheckOut.textContent = currentBooking.checkOut;
-confirmNights.textContent = currentBooking.nights;
-confirmTotal.textContent = "$" + currentBooking.total.toFixed(2);
-
-// Show confirmation
-
-bookingConfirmation.style.display = "block";
-
-console.log("Your booking is confirmed:", currentBooking);
-console.log("All reservations:", reservations);
-
-displayReservations();
-
-// Clear stored booking data for the next reservation
-
-currentBooking = {};
-
-localStorage.removeItem("currentBooking");
-});
-
 // Reservation Lookup
+
 
 const lookupButton = document.getElementById("lookupButton");
 const lookupResult = document.getElementById("lookupResult");
@@ -785,7 +1116,7 @@ lookupPhone.textContent = reservation.guest.phone;
 lookupRoom.textContent =
     reservation.room + (reservation.roomNumber ? " - Room " + reservation.roomNumber : "");
 
-lookupCheckIn.textContent = reservation.checkIn;
+lookupCheckIn.textContent = reservation.actualCheckIn || reservation.checkIn;
 
 lookupCheckOut.textContent = reservation.checkOut;
 
@@ -894,7 +1225,7 @@ function displayReservations() {
             </td>
 
             <td>
-                ${reservation.checkIn}
+    ${reservation.actualCheckIn || reservation.checkIn}
             </td>
 
             <td>

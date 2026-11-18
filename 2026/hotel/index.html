@@ -23,72 +23,133 @@
       <h1>Find Your Perfect Stay</h1>
       <p>Comfort, convenience, and simplicity.</p>
 
-      <div class="booking-bar">
-        <input type="date" id="checkIn">
-        <input type="date" id="checkOut">
-        <select id="roomDropDown">
-          <option value="" disabled selected>Room Type</option>
-          <option value="single">Single</option>
-          <option value="double">Double</option>
-          <option value="suite">Suite</option>
-        </select>
-        <button id="searchDate">Search</button>
-      </div>
-            <!-- BOOKING SUMMARY -->
-    <div class="booking-summary">
-      <h2>Booking Summary</h2>
+<!-- STAGE 1: ROOM SEARCH -->
 
-      <div class="summary-row">
-        <span>Room:</span>
-        <span id="summaryRoom">Not selected</span>
-      </div>
+<div class="booking-bar" id="bookingSearch">
 
-      <div class="summary-row">
-        <span>Check In:</span>
-        <span id="summaryCheckIn">—</span>
-      </div>
+  <input type="date" id="checkIn">
+  <input type="date" id="checkOut">
 
-      <div class="summary-row">
-        <span>Check Out:</span>
-        <span id="summaryCheckOut">—</span>
-      </div>
+  <select id="roomDropDown">
+    <option value="" disabled selected>Room Type</option>
+    <option value="single">Single</option>
+    <option value="double">Double</option>
+    <option value="suite">Suite</option>
+  </select>
 
-      <div class="summary-row">
-        <span>Nights:</span>
-        <span id="summaryNights">—</span>
-      </div>
+  <button id="searchDate">Search</button>
 
-      <div class="summary-row">
-        <span>Price:</span>
-        <span id="summaryPrice">—</span>
-      </div>
-
-      <div class="summary-total">
-        <span>Total:</span>
-        <span id="summaryTotal">—</span>
-      </div>
-    </div>
-
-    <div class="guest-form">
-      <h2>Guest Information</h2>
-      <input type="text" id="firstName" placeholder="First Name">
-      <input type="text" id="lastName" placeholder="Last Name">
-      <input type="tel" id="phone" placeholder="Phone Number">
-      <button id="continueBooking">Continue</button>
-    </div>
-
-    <div class="booking-confirmation">
-    <h2>Confirm Your Booking</h2>
-
-    <p>Guest: <span id="confirmationGuest">—</span></p>
-    <p>Room: <span id="confirmationRoom">—</span></p>
-    <p>Check In: <span id="confirmationCheckIn">—</span></p>
-    <p>Check Out: <span id="confirmationCheckOut">—</span></p>
-    <p>Nights: <span id="confirmationNights">—</span></p>
-    <p>Total: <span id="confirmationTotal">—</span></p>
-    <p>Reservation #: <span id="confirmationId"></span></p>
-    <button id="confirmBooking">Confirm Booking</button>
 </div>
+
+
+<!-- STAGE 1: AVAILABILITY AND PRICING -->
+
+<div class="booking-availability" id="bookingAvailability" style="display: none;">
+
+  <h2>Room Available!</h2>
+
+  <div class="booking-summary">
+
+    <h3>Your Booking Details</h3>
+
+    <div class="summary-row">
+      <span>Room:</span>
+      <span id="summaryRoom">Not selected</span>
+    </div>
+
+    <div class="summary-row">
+      <span>Check In:</span>
+      <span id="summaryCheckIn">—</span>
+    </div>
+
+    <div class="summary-row">
+      <span>Check Out:</span>
+      <span id="summaryCheckOut">—</span>
+    </div>
+
+    <div class="summary-row">
+      <span>Nights:</span>
+      <span id="summaryNights">—</span>
+    </div>
+
+    <div class="summary-row">
+      <span>Price Per Night:</span>
+      <span id="summaryPrice">—</span>
+    </div>
+
+    <div class="summary-total">
+      <span>Total:</span>
+      <span id="summaryTotal">—</span>
+    </div>
+
+  </div>
+
+  <button id="proceedToGuest">Continue</button>
+
+</div>
+
+
+<!-- STAGE 2: GUEST INFORMATION -->
+
+<div class="guest-form" id="guestForm" style="display: none;">
+
+  <h2>Guest Information</h2>
+
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+  <input type="tel" id="phone" placeholder="Phone Number">
+
+  <button id="continueBooking">Continue</button>
+
+</div>
+
+
+<!-- STAGE 2: FINAL BOOKING REVIEW -->
+
+<div class="booking-review" id="bookingReview" style="display: none;">
+
+  <h2>Review Your Booking</h2>
+
+  <h3>Guest Details</h3>
+
+  <p>Guest: <span id="confirmationGuest">—</span></p>
+  <p>Room: <span id="confirmationRoom">—</span></p>
+  <p>Check In: <span id="confirmationCheckIn">—</span></p>
+  <p>Check Out: <span id="confirmationCheckOut">—</span></p>
+  <p>Nights: <span id="confirmationNights">—</span></p>
+  <p>Price Per Night: <span id="confirmationPrice">—</span></p>
+  <p>Total: <span id="confirmationTotal">—</span></p>
+
+  <button id="confirmBooking">Confirm Booking</button>
+
+</div>
+
+
+
+<!-- STAGE 3: SUCCESSFUL BOOKING -->
+
+<div class="booking-success" id="bookingSuccess" style="display: none;">
+
+  <h2>Booking Confirmed!</h2>
+
+  <p>Reservation #: <span id="confirmationId"></span></p>
+  <p>Guest: <span id="successGuest">—</span></p>
+  <p>Room: <span id="successRoom">—</span></p>
+  <p>Check In: <span id="successCheckIn">—</span></p>
+  <p>Check Out: <span id="successCheckOut">—</span></p>
+  <p>Nights: <span id="successNights">—</span></p>
+  <p>Total: <span id="successTotal">—</span></p>
+
+  <button id="editConfirmedBooking">Edit Booking</button>
+  <button id="bookAnotherRoom">Book Another Room</button>
+
+</div>
+
+<!-- BOOKING SUMMARY -->
+
+
+
+
 
 <!-- RESERVATION LOOKUP -->
 
@@ -259,7 +320,6 @@
 
 </section>
 
-  <!-- ROOMS -->
 <!-- ROOMS -->
 <section class="rooms">
   <h2>Our Rooms</h2>
@@ -349,6 +409,75 @@
 
 
 <!-- EDIT RESERVATION MODAL -->
+
+<!-- CUSTOMER EDIT CONFIRMED BOOKING MODAL -->
+
+<div class="edit-modal-overlay" id="confirmedBookingEditModal">
+
+    <div class="edit-modal-content">
+
+        <div class="edit-modal-header">
+            <h2>Edit Your Booking</h2>
+            <button type="button" id="closeConfirmedEditModal" class="edit-modal-close">&times;</button>
+        </div>
+
+        <form id="confirmedBookingEditForm">
+
+            <div class="edit-form-group">
+                <label for="confirmedEditFirstName">First Name</label>
+                <input type="text" id="confirmedEditFirstName" required>
+            </div>
+
+            <div class="edit-form-group">
+                <label for="confirmedEditLastName">Last Name</label>
+                <input type="text" id="confirmedEditLastName" required>
+            </div>
+
+            <div class="edit-form-group">
+                <label for="confirmedEditPhone">Phone Number</label>
+                <input type="tel" id="confirmedEditPhone" required>
+            </div>
+
+            <div class="edit-form-group">
+                <label for="confirmedEditRoom">Room Type</label>
+                <select id="confirmedEditRoom" required>
+                    <option value="single">Single</option>
+                    <option value="double">Double</option>
+                    <option value="suite">Suite</option>
+                </select>
+            </div>
+
+            <div class="edit-form-row">
+
+                <div class="edit-form-group">
+                    <label for="confirmedEditCheckIn">Check-in</label>
+                    <input type="date" id="confirmedEditCheckIn" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="confirmedEditCheckOut">Check-out</label>
+                    <input type="date" id="confirmedEditCheckOut" required>
+                </div>
+
+            </div>
+
+            <div class="edit-modal-buttons">
+
+                <button type="button" id="cancelConfirmedEditModal" class="edit-cancel-btn">
+                    Cancel
+                </button>
+
+                <button type="submit" class="edit-save-btn">
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 <div class="edit-modal-overlay" id="editReservationModal">
 
