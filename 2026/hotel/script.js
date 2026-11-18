@@ -46,7 +46,7 @@ const thisYear = new Date().getFullYear();
 
 footer.innerHTML =
     "© " + thisYear + " Hotel Manager" +
-    "<br/> Last worked on: Tuesday November 17 2026";
+    "<br/> V1.0 Completed on 11/17/2026";
 
 
 // ROOM BASE PRICES
