@@ -1,549 +1,683 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotel Manager</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Manager</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <h2 class="logo">Hotel Manager</h2>
-    <div class="nav-buttons">
-      <button class="login-btn">Staff Login</button>
-      <button class="signup-btn">Sign Up</button>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Find Your Perfect Stay</h1>
-      <p>Comfort, convenience, and simplicity.</p>
-
-<!-- STAGE 1: ROOM SEARCH -->
-
-<div class="booking-bar" id="bookingSearch">
-
-  <input type="date" id="checkIn">
-  <input type="date" id="checkOut">
-
-  <select id="roomDropDown">
-    <option value="" disabled selected>Room Type</option>
-    <option value="single">Single</option>
-    <option value="double">Double</option>
-    <option value="suite">Suite</option>
-  </select>
-
-  <button id="searchDate">Search</button>
-
-</div>
-
-
-<!-- STAGE 1: AVAILABILITY AND PRICING -->
-
-<div class="booking-availability" id="bookingAvailability" style="display: none;">
-
-  <h2>Room Available!</h2>
-
-  <div class="booking-summary">
-
-    <h3>Your Booking Details</h3>
-
-    <div class="summary-row">
-      <span>Room:</span>
-      <span id="summaryRoom">Not selected</span>
-    </div>
-
-    <div class="summary-row">
-      <span>Check In:</span>
-      <span id="summaryCheckIn">—</span>
-    </div>
-
-    <div class="summary-row">
-      <span>Check Out:</span>
-      <span id="summaryCheckOut">—</span>
-    </div>
-
-    <div class="summary-row">
-      <span>Nights:</span>
-      <span id="summaryNights">—</span>
-    </div>
-
-    <div class="summary-row">
-      <span>Price Per Night:</span>
-      <span id="summaryPrice">—</span>
-    </div>
-
-    <div class="summary-total">
-      <span>Total:</span>
-      <span id="summaryTotal">—</span>
-    </div>
-
-  </div>
-
-  <button id="proceedToGuest">Continue</button>
-
-</div>
-
-
-<!-- STAGE 2: GUEST INFORMATION -->
-
-<div class="guest-form" id="guestForm" style="display: none;">
-
-  <h2>Guest Information</h2>
-
-  <input type="text" id="firstName" placeholder="First Name">
-  <input type="text" id="lastName" placeholder="Last Name">
-  <input type="tel" id="phone" placeholder="Phone Number">
-
-  <button id="continueBooking">Continue</button>
-
-</div>
-
-
-<!-- STAGE 2: FINAL BOOKING REVIEW -->
-
-<div class="booking-review" id="bookingReview" style="display: none;">
-
-  <h2>Review Your Booking</h2>
-
-  <h3>Guest Details</h3>
-
-  <p>Guest: <span id="confirmationGuest">—</span></p>
-  <p>Room: <span id="confirmationRoom">—</span></p>
-  <p>Check In: <span id="confirmationCheckIn">—</span></p>
-  <p>Check Out: <span id="confirmationCheckOut">—</span></p>
-  <p>Nights: <span id="confirmationNights">—</span></p>
-  <p>Price Per Night: <span id="confirmationPrice">—</span></p>
-  <p>Total: <span id="confirmationTotal">—</span></p>
-
-  <button id="confirmBooking">Confirm Booking</button>
-
-</div>
-
-
-
-<!-- STAGE 3: SUCCESSFUL BOOKING -->
-
-<div class="booking-success" id="bookingSuccess" style="display: none;">
-
-  <h2>Booking Confirmed!</h2>
-
-  <p>Reservation #: <span id="confirmationId"></span></p>
-  <p>Guest: <span id="successGuest">—</span></p>
-  <p>Room: <span id="successRoom">—</span></p>
-  <p>Check In: <span id="successCheckIn">—</span></p>
-  <p>Check Out: <span id="successCheckOut">—</span></p>
-  <p>Nights: <span id="successNights">—</span></p>
-  <p>Total: <span id="successTotal">—</span></p>
-
-  <button id="editConfirmedBooking">Edit Booking</button>
-  <button id="bookAnotherRoom">Book Another Room</button>
-
-</div>
-
-<!-- BOOKING SUMMARY -->
-
-
-
-
-
-<!-- RESERVATION LOOKUP -->
-
-<div class="reservation-lookup">
-
-  <h2>Find Your Reservation</h2>
-  <p>Enter your reservation number to view your booking.</p>
-
-  <div class="lookup-form">
-    <input 
-      type="number" 
-      id="reservationLookup" 
-      placeholder="Reservation #"
-    >
-    <button id="lookupButton">Find Reservation</button>
-  </div>
-
-  <div class="lookup-result" id="lookupResult">
-
-<h3>Reservation Details</h3>
-
-<div class="lookup-row">
-  <span>Reservation #:</span>
-  <span id="lookupReservationId">—</span>
-</div>
-
-<div class="lookup-row">
-  <span>Guest:</span>
-  <span id="lookupGuest">—</span>
-</div>
-
-<div class="lookup-row">
-  <span>Phone:</span>
-  <span id="lookupPhone">—</span>
-</div>
-
-<div class="lookup-row">
-  <span>Room:</span>
-  <span id="lookupRoom">—</span>
-</div>
-
-<div class="lookup-row">
-  <span>Check In:</span>
-  <span id="lookupCheckIn">—</span>
-</div>
-
-<div class="lookup-row">
-  <span>Check Out:</span>
-  <span id="lookupCheckOut">—</span>
-</div>
-
-<div class="lookup-row">
-  <span>Nights:</span>
-  <span id="lookupNights">—</span>
-</div>
-
-<div class="lookup-total">
-  <span>Total:</span>
-  <span id="lookupTotal">—</span>
-</div>
-  </div>
-</div>
-
-  </section>
-<!-- RESERVATIONS DASHBOARD -->
-
-<div class="reservations-dashboard" id="reservationsDashboard" style="display: none;">
-
-  <h2>Reservations</h2>
-
-  <div class="reservations-table-container">
-
-    <table class="reservations-table">
-
-      <thead>
-        <tr>
-          <th>Reservation #</th>
-          <th>Guest</th>
-          <th>Phone</th>
-          <th>Room</th>
-          <th>Check In</th>
-          <th>Check Out</th>
-          <th>Nights</th>
-          <th>Total</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody id="reservationsTableBody">
-      </tbody>
-
-    </table>
-
-  </div>
-
-  <p id="noReservations">
-    No reservations found.
-  </p>
-
-  <button id="deleteAllReservations">
-    Delete All Reservations
-  </button>
-
-</div>  
-
-<!-- ROOM INVENTORY MANAGEMENT -->
-
-<section class="room-inventory" id="roomInventory" style="display: none;">
-
-    <h2>Manage Rooms</h2>
-    <p>Add, edit, and manage the hotel's individual rooms.</p>
-
-    <div class="room-inventory-form">
-
-        <h3 id="roomFormTitle">Add New Room</h3>
-
-        <div class="room-form-fields">
-
-            <input
-                type="number"
-                id="roomNumberInput"
-                placeholder="Room Number"
-                min="1"
-            >
-
-            <select id="roomTypeInput">
-                <option value="" disabled selected>Select Room Type</option>
-                <option value="single">Single</option>
-                <option value="double">Double</option>
-                <option value="suite">Suite</option>
-            </select>
-
-            <button type="button" id="saveRoomButton">
-                Add Room
-            </button>
-
-            <button type="button" id="cancelRoomEdit" style="display: none;">
-                Cancel
-            </button>
-
+    <!-- ========================================
+         NAVIGATION
+    ========================================= -->
+
+    <nav class="navbar">
+        <h2 class="logo">Hotel Manager</h2>
+
+        <div class="nav-buttons">
+            <button class="login-btn">Staff Login</button>
+            <button class="signup-btn">Sign Up</button>
         </div>
-
-    </div>
-
-    <div class="room-inventory-table-container">
-
-        <table class="room-inventory-table">
-
-            <thead>
-                <tr>
-                    <th>Room Number</th>
-                    <th>Room Type</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-
-            <tbody id="roomInventoryTableBody">
-            </tbody>
-
-        </table>
-
-    </div>
-
-    <p id="noRoomsMessage">
-        No rooms have been added yet.
-    </p>
-
-</section>
-
-<!-- ROOMS -->
-<section class="rooms">
-  <h2>Our Rooms</h2>
-
-  <div class="room-grid">
-
-    <!-- SINGLE -->
-    <div class="room-card">
-      <div class="room-img">
-        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80" alt="Single Room">
-      </div>
-      <div class="room-content">
-        <h3>Single Room</h3>
-        <p>Perfect for solo travelers.</p>
-        <span id="singlePrice"></span>
-        <button id="singleBook">Book Now</button>
-      </div>
-    </div>
-
-    <!-- DOUBLE -->
-    <div class="room-card">
-      <div class="room-img">
-        <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=800&q=80" alt="Double Room">
-      </div>
-      <div class="room-content">
-        <h3>Double Room</h3>
-        <p>Comfort for two guests.</p>
-        <span id="doublePrice"></span>
-        <button id="doubleBook">Book Now</button>
-      </div>
-    </div>
-
-    <!-- SUITE -->
-    <div class="room-card">
-      <div class="room-img">
-        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Suite Room">
-      </div>
-      <div class="room-content">
-        <h3>Suite</h3>
-        <p>Luxury and space combined.</p>
-        <span id="suitePrice"></span>
-        <button id="suiteBook">Book Now</button>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Ready to book your stay?</h2>
-    <button>Check Availability</button>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p id="footer"></p>
-  </footer>
-
- <!-- LOGIN MODAL -->
-<div class="modal" id="loginModal">
-  <div class="modal-content">
-    <h2>Staff Login</h2>
-
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-
-    <button class="primary-btn" id="loginButton">Login</button>
-
-    <button class="close-btn">X</button>
-  </div>
-</div>
-
-<!-- SIGNUP MODAL -->
-<div class="modal" id="signupModal">
-  <div class="modal-content">
-    <h2>Create Staff Account</h2>
-
-    <input type="text" id="signupUsername" placeholder="Username">
-    <input type="password" id="signupPassword" placeholder="Password">
-
-    <button class="primary-btn" id="signupButton">Create Account</button>
-
-    <button class="close-btn signup-close-btn">X</button>
-  </div>
-</div>
+    </nav>
 
 
-<!-- EDIT RESERVATION MODAL -->
+    <!-- ========================================
+         HERO SECTION & BOOKING WORKFLOW
+    ========================================= -->
 
-<!-- CUSTOMER EDIT CONFIRMED BOOKING MODAL -->
+    <section class="hero">
 
-<div class="edit-modal-overlay" id="confirmedBookingEditModal">
+        <div class="hero-content">
 
-    <div class="edit-modal-content">
+            <h1>Find Your Perfect Stay</h1>
+            <p>Comfort, convenience, and simplicity.</p>
 
-        <div class="edit-modal-header">
-            <h2>Edit Your Booking</h2>
-            <button type="button" id="closeConfirmedEditModal" class="edit-modal-close">&times;</button>
-        </div>
 
-        <form id="confirmedBookingEditForm">
+            <!-- STAGE 1: ROOM SEARCH -->
 
-            <div class="edit-form-group">
-                <label for="confirmedEditFirstName">First Name</label>
-                <input type="text" id="confirmedEditFirstName" required>
-            </div>
+            <div class="booking-bar" id="bookingSearch">
 
-            <div class="edit-form-group">
-                <label for="confirmedEditLastName">Last Name</label>
-                <input type="text" id="confirmedEditLastName" required>
-            </div>
+                <input type="date" id="checkIn">
+                <input type="date" id="checkOut">
 
-            <div class="edit-form-group">
-                <label for="confirmedEditPhone">Phone Number</label>
-                <input type="tel" id="confirmedEditPhone" required>
-            </div>
-
-            <div class="edit-form-group">
-                <label for="confirmedEditRoom">Room Type</label>
-                <select id="confirmedEditRoom" required>
+                <select id="roomDropDown">
+                    <option value="" disabled selected>Room Type</option>
                     <option value="single">Single</option>
                     <option value="double">Double</option>
                     <option value="suite">Suite</option>
                 </select>
+
+                <button id="searchDate">Search</button>
+
             </div>
 
-            <div class="edit-form-row">
 
-                <div class="edit-form-group">
-                    <label for="confirmedEditCheckIn">Check-in</label>
-                    <input type="date" id="confirmedEditCheckIn" required>
+            <!-- STAGE 2: AVAILABILITY & PRICING -->
+
+            <div class="booking-availability" id="bookingAvailability" style="display: none;">
+
+                <h2>Room Available!</h2>
+
+                <div class="booking-summary">
+
+                    <h3>Your Booking Details</h3>
+
+                    <div class="summary-row">
+                        <span>Room:</span>
+                        <span id="summaryRoom">Not selected</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Check In:</span>
+                        <span id="summaryCheckIn">—</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Check Out:</span>
+                        <span id="summaryCheckOut">—</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Nights:</span>
+                        <span id="summaryNights">—</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Price Per Night:</span>
+                        <span id="summaryPrice">—</span>
+                    </div>
+
+                    <div class="summary-total">
+                        <span>Total:</span>
+                        <span id="summaryTotal">—</span>
+                    </div>
+
                 </div>
 
-                <div class="edit-form-group">
-                    <label for="confirmedEditCheckOut">Check-out</label>
-                    <input type="date" id="confirmedEditCheckOut" required>
+                <button id="proceedToGuest">Continue</button>
+
+            </div>
+
+
+            <!-- STAGE 3: GUEST INFORMATION -->
+
+            <div class="guest-form" id="guestForm" style="display: none;">
+
+                <h2>Guest Information</h2>
+
+                <input type="text" id="firstName" placeholder="First Name">
+                <input type="text" id="lastName" placeholder="Last Name">
+                <input type="tel" id="phone" placeholder="Phone Number">
+
+                <button id="continueBooking">Continue</button>
+
+            </div>
+
+
+            <!-- STAGE 4: FINAL BOOKING REVIEW -->
+
+            <div class="booking-review" id="bookingReview" style="display: none;">
+
+                <h2>Review Your Booking</h2>
+
+                <h3>Guest Details</h3>
+
+                <p>Guest: <span id="confirmationGuest">—</span></p>
+                <p>Room: <span id="confirmationRoom">—</span></p>
+                <p>Check In: <span id="confirmationCheckIn">—</span></p>
+                <p>Check Out: <span id="confirmationCheckOut">—</span></p>
+                <p>Nights: <span id="confirmationNights">—</span></p>
+                <p>Price Per Night: <span id="confirmationPrice">—</span></p>
+                <p>Total: <span id="confirmationTotal">—</span></p>
+
+                <button id="confirmBooking">Confirm Booking</button>
+
+            </div>
+
+
+            <!-- STAGE 5: BOOKING SUCCESS -->
+
+            <div class="booking-success" id="bookingSuccess" style="display: none;">
+
+                <h2>Booking Confirmed!</h2>
+
+                <p>Reservation #: <span id="confirmationId"></span></p>
+                <p>Guest: <span id="successGuest">—</span></p>
+                <p>Room: <span id="successRoom">—</span></p>
+                <p>Check In: <span id="successCheckIn">—</span></p>
+                <p>Check Out: <span id="successCheckOut">—</span></p>
+                <p>Nights: <span id="successNights">—</span></p>
+                <p>Total: <span id="successTotal">—</span></p>
+
+                <button id="editConfirmedBooking">Edit Booking</button>
+                <button id="bookAnotherRoom">Book Another Room</button>
+
+            </div>
+
+
+            <!-- RESERVATION LOOKUP -->
+
+            <div class="reservation-lookup">
+
+                <h2>Find Your Reservation</h2>
+                <p>Enter your reservation number to view your booking.</p>
+
+                <div class="lookup-form">
+
+                    <input
+                        type="number"
+                        id="reservationLookup"
+                        placeholder="Reservation #"
+                    >
+
+                    <button id="lookupButton">Find Reservation</button>
+
+                </div>
+
+                <!-- LOOKUP RESULTS -->
+
+                <div class="lookup-result" id="lookupResult">
+
+                    <h3>Reservation Details</h3>
+
+                    <div class="lookup-row">
+                        <span>Reservation #:</span>
+                        <span id="lookupReservationId">—</span>
+                    </div>
+
+                    <div class="lookup-row">
+                        <span>Guest:</span>
+                        <span id="lookupGuest">—</span>
+                    </div>
+
+                    <div class="lookup-row">
+                        <span>Phone:</span>
+                        <span id="lookupPhone">—</span>
+                    </div>
+
+                    <div class="lookup-row">
+                        <span>Room:</span>
+                        <span id="lookupRoom">—</span>
+                    </div>
+
+                    <div class="lookup-row">
+                        <span>Check In:</span>
+                        <span id="lookupCheckIn">—</span>
+                    </div>
+
+                    <div class="lookup-row">
+                        <span>Check Out:</span>
+                        <span id="lookupCheckOut">—</span>
+                    </div>
+
+                    <div class="lookup-row">
+                        <span>Nights:</span>
+                        <span id="lookupNights">—</span>
+                    </div>
+
+                    <div class="lookup-total">
+                        <span>Total:</span>
+                        <span id="lookupTotal">—</span>
+                    </div>
+
                 </div>
 
             </div>
 
-            <div class="edit-modal-buttons">
+        </div>
 
-                <button type="button" id="cancelConfirmedEditModal" class="edit-cancel-btn">
-                    Cancel
-                </button>
+    </section>
 
-                <button type="submit" class="edit-save-btn">
-                    Save Changes
-                </button>
 
-            </div>
+    <!-- ========================================
+         ADMIN: RESERVATIONS DASHBOARD
+    ========================================= -->
 
-        </form>
+    <div class="reservations-dashboard" id="reservationsDashboard" style="display: none;">
+
+        <h2>Reservations</h2>
+
+        <div class="reservations-table-container">
+
+            <table class="reservations-table">
+
+                <thead>
+                    <tr>
+                        <th>Reservation #</th>
+                        <th>Guest</th>
+                        <th>Phone</th>
+                        <th>Room</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Nights</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="reservationsTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p id="noReservations">
+            No reservations found.
+        </p>
+
+        <button id="deleteAllReservations">
+            Delete All Reservations
+        </button>
 
     </div>
 
-</div>
 
-<div class="edit-modal-overlay" id="editReservationModal">
+    <!-- ========================================
+         ADMIN: ROOM INVENTORY MANAGEMENT
+    ========================================= -->
 
-    <div class="edit-modal-content">
+    <section class="room-inventory" id="roomInventory" style="display: none;">
 
-        <div class="edit-modal-header">
-            <h2>Edit Reservation</h2>
-            <button type="button" id="closeEditModal" class="edit-modal-close">&times;</button>
-        </div>
+        <h2>Manage Rooms</h2>
+        <p>Add, edit, and manage the hotel's individual rooms.</p>
 
-        <form id="editReservationForm">
+        <!-- ROOM INVENTORY FORM -->
 
-            <div class="edit-form-group">
-                <label for="editFirstName">First Name</label>
-                <input type="text" id="editFirstName" required>
-            </div>
+        <div class="room-inventory-form">
 
-            <div class="edit-form-group">
-                <label for="editLastName">Last Name</label>
-                <input type="text" id="editLastName" required>
-            </div>
+            <h3 id="roomFormTitle">Add New Room</h3>
 
-            <div class="edit-form-group">
-                <label for="editPhone">Phone Number</label>
-                <input type="tel" id="editPhone" required>
-            </div>
+            <div class="room-form-fields">
 
-            <div class="edit-form-group">
-                <label for="editRoom">Room Type</label>
-                <select id="editRoom" required>
+                <input
+                    type="number"
+                    id="roomNumberInput"
+                    placeholder="Room Number"
+                    min="1"
+                >
+
+                <select id="roomTypeInput">
+                    <option value="" disabled selected>Select Room Type</option>
                     <option value="single">Single</option>
                     <option value="double">Double</option>
                     <option value="suite">Suite</option>
                 </select>
-            </div>
 
-            <div class="edit-form-row">
+                <button type="button" id="saveRoomButton">
+                    Add Room
+                </button>
 
-                <div class="edit-form-group">
-                    <label for="editCheckIn">Check-in</label>
-                    <input type="date" id="editCheckIn" required>
-                </div>
-
-                <div class="edit-form-group">
-                    <label for="editCheckOut">Check-out</label>
-                    <input type="date" id="editCheckOut" required>
-                </div>
-
-            </div>
-
-            <div class="edit-modal-buttons">
-                <button type="button" id="cancelEditModal" class="edit-cancel-btn">
+                <button type="button" id="cancelRoomEdit" style="display: none;">
                     Cancel
                 </button>
 
-                <button type="submit" class="edit-save-btn">
-                    Save Changes
-                </button>
             </div>
 
-        </form>
+        </div>
+
+        <!-- ROOM INVENTORY TABLE -->
+
+        <div class="room-inventory-table-container">
+
+            <table class="room-inventory-table">
+
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Room Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="roomInventoryTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p id="noRoomsMessage">
+            No rooms have been added yet.
+        </p>
+
+    </section>
+
+
+    <!-- ========================================
+         PUBLIC: ROOM CARDS
+    ========================================= -->
+
+    <section class="rooms">
+
+        <h2>Our Rooms</h2>
+
+        <div class="room-grid">
+
+            <!-- SINGLE ROOM -->
+
+            <div class="room-card">
+
+                <div class="room-img">
+                    <img
+                        src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80"
+                        alt="Single Room"
+                    >
+                </div>
+
+                <div class="room-content">
+
+                    <h3>Single Room</h3>
+                    <p>Perfect for solo travelers.</p>
+                    <span id="singlePrice"></span>
+
+                    <button id="singleBook">Book Now</button>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOUBLE ROOM -->
+
+            <div class="room-card">
+
+                <div class="room-img">
+                    <img
+                        src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=800&q=80"
+                        alt="Double Room"
+                    >
+                </div>
+
+                <div class="room-content">
+
+                    <h3>Double Room</h3>
+                    <p>Comfort for two guests.</p>
+                    <span id="doublePrice"></span>
+
+                    <button id="doubleBook">Book Now</button>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUITE -->
+
+            <div class="room-card">
+
+                <div class="room-img">
+                    <img
+                        src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80"
+                        alt="Suite Room"
+                    >
+                </div>
+
+                <div class="room-content">
+
+                    <h3>Suite</h3>
+                    <p>Luxury and space combined.</p>
+                    <span id="suitePrice"></span>
+
+                    <button id="suiteBook">Book Now</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         CALL TO ACTION
+    ========================================= -->
+
+    <section class="cta">
+
+        <h2>Ready to book your stay?</h2>
+        <button>Check Availability</button>
+
+    </section>
+
+
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+        <p id="footer"></p>
+    </footer>
+
+
+    <!-- ========================================
+         STAFF LOGIN MODAL
+    ========================================= -->
+
+    <div class="modal" id="loginModal">
+
+        <div class="modal-content">
+
+            <h2>Staff Login</h2>
+
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+
+            <button class="primary-btn" id="loginButton">Login</button>
+
+            <button class="close-btn">X</button>
+
+        </div>
 
     </div>
 
-</div>
 
+    <!-- ========================================
+         STAFF SIGNUP MODAL
+    ========================================= -->
+
+    <div class="modal" id="signupModal">
+
+        <div class="modal-content">
+
+            <h2>Create Staff Account</h2>
+
+            <input type="text" id="signupUsername" placeholder="Username">
+            <input type="password" id="signupPassword" placeholder="Password">
+
+            <button class="primary-btn" id="signupButton">Create Account</button>
+
+            <button class="close-btn signup-close-btn">X</button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         CUSTOMER: EDIT CONFIRMED BOOKING MODAL
+    ========================================= -->
+
+    <div class="edit-modal-overlay" id="confirmedBookingEditModal">
+
+        <div class="edit-modal-content">
+
+            <div class="edit-modal-header">
+
+                <h2>Edit Your Booking</h2>
+
+                <button
+                    type="button"
+                    id="closeConfirmedEditModal"
+                    class="edit-modal-close"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+            <form id="confirmedBookingEditForm">
+
+                <div class="edit-form-group">
+                    <label for="confirmedEditFirstName">First Name</label>
+                    <input type="text" id="confirmedEditFirstName" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="confirmedEditLastName">Last Name</label>
+                    <input type="text" id="confirmedEditLastName" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="confirmedEditPhone">Phone Number</label>
+                    <input type="tel" id="confirmedEditPhone" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="confirmedEditRoom">Room Type</label>
+
+                    <select id="confirmedEditRoom" required>
+                        <option value="single">Single</option>
+                        <option value="double">Double</option>
+                        <option value="suite">Suite</option>
+                    </select>
+                </div>
+
+                <div class="edit-form-row">
+
+                    <div class="edit-form-group">
+                        <label for="confirmedEditCheckIn">Check-in</label>
+                        <input type="date" id="confirmedEditCheckIn" required>
+                    </div>
+
+                    <div class="edit-form-group">
+                        <label for="confirmedEditCheckOut">Check-out</label>
+                        <input type="date" id="confirmedEditCheckOut" required>
+                    </div>
+
+                </div>
+
+                <div class="edit-modal-buttons">
+
+                    <button
+                        type="button"
+                        id="cancelConfirmedEditModal"
+                        class="edit-cancel-btn"
+                    >
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="edit-save-btn">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         ADMIN: EDIT RESERVATION MODAL
+    ========================================= -->
+
+    <div class="edit-modal-overlay" id="editReservationModal">
+
+        <div class="edit-modal-content">
+
+            <div class="edit-modal-header">
+
+                <h2>Edit Reservation</h2>
+
+                <button
+                    type="button"
+                    id="closeEditModal"
+                    class="edit-modal-close"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+            <form id="editReservationForm">
+
+                <div class="edit-form-group">
+                    <label for="editFirstName">First Name</label>
+                    <input type="text" id="editFirstName" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="editLastName">Last Name</label>
+                    <input type="text" id="editLastName" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="editPhone">Phone Number</label>
+                    <input type="tel" id="editPhone" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="editRoom">Room Type</label>
+
+                    <select id="editRoom" required>
+                        <option value="single">Single</option>
+                        <option value="double">Double</option>
+                        <option value="suite">Suite</option>
+                    </select>
+                </div>
+
+                <div class="edit-form-row">
+
+                    <div class="edit-form-group">
+                        <label for="editCheckIn">Check-in</label>
+                        <input type="date" id="editCheckIn" required>
+                    </div>
+
+                    <div class="edit-form-group">
+                        <label for="editCheckOut">Check-out</label>
+                        <input type="date" id="editCheckOut" required>
+                    </div>
+
+                </div>
+
+                <div class="edit-modal-buttons">
+
+                    <button
+                        type="button"
+                        id="cancelEditModal"
+                        class="edit-cancel-btn"
+                    >
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="edit-save-btn">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         JAVASCRIPT
+    ========================================= -->
+
+<script src="staffLogin.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>

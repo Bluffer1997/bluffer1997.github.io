@@ -1,272 +1,99 @@
-// STAFF LOGIN / SIGNUP
 
-const staffLogin = document.querySelector(".login-btn");
-const staffSignup = document.querySelector(".signup-btn");
+/* =========================================================
+   HOTEL MANAGER
+   Main Application JavaScript
+========================================================= */
 
-const loginModal = document.getElementById("loginModal");
-const signupModal = document.getElementById("signupModal");
 
-const loginModalContent = loginModal.querySelector(".modal-content");
-const signupModalContent = signupModal.querySelector(".modal-content");
+/* =========================================================
+   1. INITIAL SETUP
+========================================================= */
 
-const loginClose = loginModal.querySelector(".close-btn");
-const signupClose = signupModal.querySelector(".close-btn");
 
-const loginButton = document.getElementById("loginButton");
-const signupButton = document.getElementById("signupButton");
+// GET TODAY'S DATE IN LOCAL TIME
 
+function getTodayDateString() {
 
-// OPEN LOGIN MODAL / LOGOUT
+    const date = new Date();
 
-staffLogin.addEventListener("click", () => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
 
-    const loggedIn = localStorage.getItem("staffLoggedIn");
-
-    if (loggedIn === "true") {
-
-        localStorage.removeItem("staffLoggedIn");
-
-        alert("You have been logged out.");
-
-        updateStaffUI();
-
-    } else {
-
-        loginModal.style.display = "flex";
-
-    }
-
-});
-
-
-// OPEN SIGNUP MODAL
-
-staffSignup.addEventListener("click", () => {
-
-    // An administrator account can only be created once.
-
-    if (localStorage.getItem("staffAccount")) {
-        alert("An administrator account already exists. Signup is disabled.");
-        updateStaffUI();
-        return;
-    }
-
-    signupModal.style.display = "flex";
-
-});
-
-
-// CLOSE LOGIN MODAL
-
-loginClose.addEventListener("click", () => {
-    loginModal.style.display = "none";
-});
-
-
-// CLOSE SIGNUP MODAL
-
-signupClose.addEventListener("click", () => {
-    signupModal.style.display = "none";
-});
-
-
-// CLICKING BACKDROP CLOSES LOGIN MODAL
-
-loginModal.addEventListener("click", () => {
-    loginModal.style.display = "none";
-});
-
-
-// CLICKING BACKDROP CLOSES SIGNUP MODAL
-
-signupModal.addEventListener("click", () => {
-    signupModal.style.display = "none";
-});
-
-
-// PREVENT CLICKING INSIDE LOGIN MODAL FROM CLOSING IT
-
-loginModalContent.addEventListener("click", (event) => {
-    event.stopPropagation();
-});
-
-
-// PREVENT CLICKING INSIDE SIGNUP MODAL FROM CLOSING IT
-
-signupModalContent.addEventListener("click", (event) => {
-    event.stopPropagation();
-});
-
-
-// ADMIN ACCOUNT SIGNUP
-
-signupButton.addEventListener("click", () => {
-
-    // Never allow an existing administrator account to be replaced.
-
-    if (localStorage.getItem("staffAccount")) {
-        alert("An administrator account already exists. Signup is disabled.");
-        signupModal.style.display = "none";
-        updateStaffUI();
-        return;
-    }
-
-    const username = document.getElementById("signupUsername").value;
-    const password = document.getElementById("signupPassword").value;
-
-    if (username === "" || password === "") {
-        alert("Please enter a username and password.");
-        return;
-    }
-
-    const staffAccount = {
-        username: username,
-        password: password
-    };
-
-    localStorage.setItem(
-        "staffAccount",
-        JSON.stringify(staffAccount)
-    );
-
-    alert("Administrator account created successfully!");
-
-    signupModal.style.display = "none";
-
-    document.getElementById("signupUsername").value = "";
-    document.getElementById("signupPassword").value = "";
-
-    updateStaffUI();
-
-});
-
-
-// ADMIN LOGIN
-
-loginButton.addEventListener("click", () => {
-
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    if (username === "" || password === "") {
-        alert("Please enter your username and password.");
-        return;
-    }
-
-    const savedAccount = localStorage.getItem("staffAccount");
-
-    if (!savedAccount) {
-        alert("No administrator account exists. Please create one first.");
-        return;
-    }
-
-    const staffAccount = JSON.parse(savedAccount);
-
-    if (
-        username === staffAccount.username &&
-        password === staffAccount.password
-    ) {
-
-        localStorage.setItem("staffLoggedIn", "true");
-
-        alert("You are now logged in!");
-
-        loginModal.style.display = "none";
-
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-
-        updateStaffUI();
-
-    } else {
-
-        alert("Incorrect username or password.");
-
-    }
-
-});
-
-
-// UPDATE ADMIN UI
-
-function updateStaffUI() {
-
-    const loggedIn = localStorage.getItem("staffLoggedIn") === "true";
-
-    const roomInventory = document.getElementById("roomInventory");
-    const reservationsDashboard = document.getElementById("reservationsDashboard");
-    const editReservationModal = document.getElementById("editReservationModal");
-
-    const accountExists = localStorage.getItem("staffAccount") !== null;
-
-    if (loggedIn) {
-
-        staffLogin.textContent = "Logout";
-
-        roomInventory.style.display = "block";
-        reservationsDashboard.style.display = "block";
-
-        staffSignup.style.display = "none";
-
-    } else {
-
-        staffLogin.textContent = "Staff Login";
-
-        roomInventory.style.display = "none";
-        reservationsDashboard.style.display = "none";
-
-        // Signup is only available before the first administrator account exists.
-
-        staffSignup.style.display = accountExists ? "none" : "inline-block";
-
-        // Close the edit modal if the administrator logs out.
-
-        editReservationModal.style.display = "none";
-
-    }
+    return `${year}-${month}-${day}`;
 
 }
 
 
-// CHECK LOGIN STATUS WHEN PAGE LOADS
+// SET DEFAULT BOOKING DATES
 
-updateStaffUI();
-
-// END STAFF LOGIN / SIGNUP
-
-
-// default booking dates
 const today = new Date();
+
 const tomorrow = new Date();
-tomorrow.setDate(today.getDate() + 1)
-document.getElementById('checkIn').value = today.toISOString().split('T')[0];
-document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0];
+tomorrow.setDate(today.getDate() + 1);
+
+document.getElementById("checkIn").value =
+    today.toISOString().split("T")[0];
+
+document.getElementById("checkOut").value =
+    tomorrow.toISOString().split("T")[0];
 
 
-// year 
-const footer = document.getElementById('footer');
+// UPDATE FOOTER YEAR
+
+const footer = document.getElementById("footer");
 const thisYear = new Date().getFullYear();
-footer.innerHTML = '© ' + thisYear + ' Hotel Manager' + '<br/> Last worked on: Tuesday November 17 2026';
 
-// room prices
+footer.innerHTML =
+    "© " + thisYear + " Hotel Manager" +
+    "<br/> Last worked on: Tuesday November 17 2026";
+
+
+// ROOM BASE PRICES
+
 const roomPrices = {
     single: 79.99,
     double: 114.99,
-    suite: 139.99 
-}
-document.getElementById('singlePrice').textContent = '$' + roomPrices.single + '/night';
-document.getElementById('doublePrice').textContent = '$' + roomPrices.double + '/night';
-document.getElementById('suitePrice').textContent = '$' + roomPrices.suite + '/night';
+    suite: 139.99
+};
 
-//booking section
 
-// BOOKING WORKFLOW
+// DISPLAY ROOM PRICES
+
+document.getElementById("singlePrice").textContent =
+    "$" + roomPrices.single + "/night";
+
+document.getElementById("doublePrice").textContent =
+    "$" + roomPrices.double + "/night";
+
+document.getElementById("suitePrice").textContent =
+    "$" + roomPrices.suite + "/night";
+
+
+
+/* =========================================================
+   2. SHARED APPLICATION DATA
+========================================================= */
+
 
 let currentBooking = {};
-let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
-let rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+
+let reservations =
+    JSON.parse(localStorage.getItem("reservations")) || [];
+
+let rooms =
+    JSON.parse(localStorage.getItem("rooms")) || [];
 
 let confirmedReservationId = null;
+
+
+
+/* =========================================================
+   3. BOOKING WORKFLOW
+========================================================= */
+
+
+// BOOKING ELEMENTS
 
 const searchButton = document.getElementById("searchDate");
 const roomDropDown = document.getElementById("roomDropDown");
@@ -284,7 +111,8 @@ const confirmBooking = document.getElementById("confirmBooking");
 const bookAnotherRoom = document.getElementById("bookAnotherRoom");
 const editConfirmedBooking = document.getElementById("editConfirmedBooking");
 
-// CUSTOMER EDIT BOOKING MODAL
+
+// CUSTOMER EDIT BOOKING MODAL ELEMENTS
 
 const confirmedBookingEditModal =
     document.getElementById("confirmedBookingEditModal");
@@ -299,7 +127,7 @@ const cancelConfirmedEditModal =
     document.getElementById("cancelConfirmedEditModal");
 
 
-// BOOKING SUMMARY
+// UPDATE BOOKING SUMMARY
 
 function updateBookingSummary(
     selectedRoom,
@@ -309,11 +137,20 @@ function updateBookingSummary(
     price
 ) {
 
-    document.getElementById("summaryRoom").textContent = selectedRoom;
-    document.getElementById("summaryCheckIn").textContent = checkInValue;
-    document.getElementById("summaryCheckOut").textContent = checkOutValue;
-    document.getElementById("summaryNights").textContent = days;
-    document.getElementById("summaryPrice").textContent = "$" + price.toFixed(2);
+    document.getElementById("summaryRoom").textContent =
+        selectedRoom;
+
+    document.getElementById("summaryCheckIn").textContent =
+        checkInValue;
+
+    document.getElementById("summaryCheckOut").textContent =
+        checkOutValue;
+
+    document.getElementById("summaryNights").textContent =
+        days;
+
+    document.getElementById("summaryPrice").textContent =
+        "$" + price.toFixed(2);
 
     const total = days * price;
 
@@ -322,8 +159,6 @@ function updateBookingSummary(
 
 }
 
-
-// DISPLAY BOOKING REVIEW
 
 // DISPLAY FINAL BOOKING REVIEW
 
@@ -354,8 +189,6 @@ function displayBookingReview() {
 
 }
 
-// SEARCH FOR A ROOM
-
 
 // SEARCH FOR A ROOM
 
@@ -368,8 +201,11 @@ searchButton.addEventListener("click", () => {
         return;
     }
 
-    const checkInValue = document.getElementById("checkIn").value;
-    const checkOutValue = document.getElementById("checkOut").value;
+    const checkInValue =
+        document.getElementById("checkIn").value;
+
+    const checkOutValue =
+        document.getElementById("checkOut").value;
 
     if (!checkInValue || !checkOutValue) {
         alert("Please select both dates.");
@@ -386,14 +222,17 @@ searchButton.addEventListener("click", () => {
         return;
     }
 
-    const checkInDate = new Date(checkInValue + "T00:00:00Z");
-    const checkOutDate = new Date(checkOutValue + "T00:00:00Z");
+    const checkInDate =
+        new Date(checkInValue + "T00:00:00Z");
+
+    const checkOutDate =
+        new Date(checkOutValue + "T00:00:00Z");
 
     const nights = Math.round(
         (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
     );
 
-    // Check availability and calculate the nightly price.
+    // Check availability and calculate nightly price.
 
     const price = getDynamicRoomPrice(
         selectedRoom,
@@ -421,7 +260,7 @@ searchButton.addEventListener("click", () => {
         total: total
     };
 
-    // Display availability and pricing BEFORE requesting guest information.
+    // Display availability and pricing before guest information.
 
     updateBookingSummary(
         selectedRoom,
@@ -437,7 +276,7 @@ searchButton.addEventListener("click", () => {
     document.getElementById("lastName").value = "";
     document.getElementById("phone").value = "";
 
-    // Show the availability and pricing stage.
+    // Show availability and pricing stage.
 
     bookingSearch.style.display = "none";
     bookingAvailability.style.display = "block";
@@ -504,7 +343,7 @@ continueBooking.addEventListener("click", () => {
 
     displayBookingReview();
 
-    // Move to final review.
+    // Show final review.
 
     guestForm.style.display = "none";
     bookingReview.style.display = "block";
@@ -515,6 +354,7 @@ continueBooking.addEventListener("click", () => {
     });
 
 });
+
 
 // CONFIRM NEW BOOKING
 
@@ -540,7 +380,8 @@ confirmBooking.addEventListener("click", () => {
 
     // Generate the next reservation number.
 
-    let reservationNumber = localStorage.getItem("reservationNumber");
+    let reservationNumber =
+        localStorage.getItem("reservationNumber");
 
     if (reservationNumber === null) {
         reservationNumber = 1000;
@@ -590,9 +431,10 @@ confirmBooking.addEventListener("click", () => {
     // Clear temporary booking data.
 
     currentBooking = {};
+
     localStorage.removeItem("currentBooking");
 
-    // Show the successful booking stage.
+    // Show successful booking stage.
 
     bookingSearch.style.display = "none";
     guestForm.style.display = "none";
@@ -635,7 +477,8 @@ bookAnotherRoom.addEventListener("click", () => {
     const nextDayString =
         `${nextDay.getFullYear()}-${String(nextDay.getMonth() + 1).padStart(2, "0")}-${String(nextDay.getDate()).padStart(2, "0")}`;
 
-    document.getElementById("checkOut").value = nextDayString;
+    document.getElementById("checkOut").value =
+        nextDayString;
 
     bookingSearch.style.display = "block";
     guestForm.style.display = "none";
@@ -686,10 +529,12 @@ editConfirmedBooking.addEventListener("click", () => {
 });
 
 
-// CLOSE CUSTOMER EDIT MODAL
+// CLOSE CUSTOMER EDIT BOOKING MODAL
 
 function closeConfirmedBookingEditor() {
+
     confirmedBookingEditModal.style.display = "none";
+
 }
 
 closeConfirmedEditModal.addEventListener(
@@ -837,7 +682,7 @@ confirmedBookingEditForm.addEventListener("submit", (event) => {
         JSON.stringify(reservations)
     );
 
-    // Refresh the success screen with the updated details.
+    // Refresh the success screen with updated details.
 
     document.getElementById("successGuest").textContent =
         firstName + " " + lastName;
@@ -845,9 +690,15 @@ confirmedBookingEditForm.addEventListener("submit", (event) => {
     document.getElementById("successRoom").textContent =
         room + " - Room " + availableRoom.number;
 
-    document.getElementById("successCheckIn").textContent = checkIn;
-    document.getElementById("successCheckOut").textContent = checkOut;
-    document.getElementById("successNights").textContent = nights;
+    document.getElementById("successCheckIn").textContent =
+        checkIn;
+
+    document.getElementById("successCheckOut").textContent =
+        checkOut;
+
+    document.getElementById("successNights").textContent =
+        nights;
+
     document.getElementById("successTotal").textContent =
         "$" + total.toFixed(2);
 
@@ -860,46 +711,67 @@ confirmedBookingEditForm.addEventListener("submit", (event) => {
 });
 
 
-// ROOM CARDS - BOOK NOW BUTTONS
+// ROOM CARD BOOK NOW BUTTONS
 
 const singleBook = document.getElementById("singleBook");
 const doubleBook = document.getElementById("doubleBook");
 const suiteBook = document.getElementById("suiteBook");
 
 singleBook.addEventListener("click", () => {
+
     roomDropDown.value = "single";
-    bookingBar.scrollIntoView({ behavior: "smooth" });
+
+    bookingBar.scrollIntoView({
+        behavior: "smooth"
+    });
+
 });
 
 doubleBook.addEventListener("click", () => {
+
     roomDropDown.value = "double";
-    bookingBar.scrollIntoView({ behavior: "smooth" });
+
+    bookingBar.scrollIntoView({
+        behavior: "smooth"
+    });
+
 });
 
 suiteBook.addEventListener("click", () => {
+
     roomDropDown.value = "suite";
-    bookingBar.scrollIntoView({ behavior: "smooth" });
+
+    bookingBar.scrollIntoView({
+        behavior: "smooth"
+    });
+
 });
 
-// END BOOKING WORKFLOW
 
-// FIND AN AVAILABLE ROOM
 
-function findAvailableRoom(roomType, checkIn, checkOut, excludedReservationId = null) {
+/* =========================================================
+   4. ROOM AVAILABILITY & DYNAMIC PRICING
+========================================================= */
 
-    // Find rooms matching the requested type
+
+// FIND AN AVAILABLE PHYSICAL ROOM
+
+function findAvailableRoom(
+    roomType,
+    checkIn,
+    checkOut,
+    excludedReservationId = null
+) {
 
     const matchingRooms = rooms.filter(
         room => room.type === roomType
     );
 
-    // Check each matching room
-
     for (const room of matchingRooms) {
 
         const roomIsOccupied = reservations.some(reservation => {
 
-            // Ignore the reservation currently being edited
+            // Ignore the reservation currently being edited.
 
             if (
                 excludedReservationId !== null &&
@@ -908,34 +780,32 @@ function findAvailableRoom(roomType, checkIn, checkOut, excludedReservationId = 
                 return false;
             }
 
-            // Cancelled reservations do not occupy rooms
+            // Cancelled reservations do not occupy rooms.
 
             if (reservation.status === "Cancelled") {
                 return false;
             }
 
-            // Ignore reservations assigned to other physical rooms
+            // Ignore reservations assigned to other physical rooms.
 
             if (Number(reservation.roomNumber) !== Number(room.number)) {
                 return false;
             }
 
-            // Check whether reservation dates overlap
-
             // Account for guests who checked in before their scheduled date.
 
-const occupiedFrom =
-    reservation.status === "Checked In" &&
-    reservation.checkIn > getTodayDateString()
-        ? getTodayDateString()
-        : reservation.checkIn;
+            const occupiedFrom =
+                reservation.status === "Checked In" &&
+                reservation.checkIn > getTodayDateString()
+                    ? getTodayDateString()
+                    : reservation.checkIn;
 
-// Check whether reservation dates overlap.
+            // Check whether reservation dates overlap.
 
-return (
-    checkIn < reservation.checkOut &&
-    checkOut > occupiedFrom
-);
+            return (
+                checkIn < reservation.checkOut &&
+                checkOut > occupiedFrom
+            );
 
         });
 
@@ -946,11 +816,18 @@ return (
     }
 
     return null;
+
 }
+
 
 // CHECK ROOM AVAILABILITY FOR SELECTED DATES
 
-function getRoomAvailability(roomType, checkIn, checkOut, excludedReservationId = null) {
+function getRoomAvailability(
+    roomType,
+    checkIn,
+    checkOut,
+    excludedReservationId = null
+) {
 
     const matchingRooms = rooms.filter(
         room => room.type === roomType
@@ -962,7 +839,7 @@ function getRoomAvailability(roomType, checkIn, checkOut, excludedReservationId 
 
         const roomIsOccupied = reservations.some(reservation => {
 
-            // Ignore the reservation currently being edited
+            // Ignore the reservation currently being edited.
 
             if (
                 excludedReservationId !== null &&
@@ -971,34 +848,32 @@ function getRoomAvailability(roomType, checkIn, checkOut, excludedReservationId 
                 return false;
             }
 
-            // Cancelled reservations do not occupy rooms
+            // Cancelled reservations do not occupy rooms.
 
             if (reservation.status === "Cancelled") {
                 return false;
             }
 
-            // Check physical room number
+            // Check physical room number.
 
             if (Number(reservation.roomNumber) !== Number(room.number)) {
                 return false;
             }
 
-            // Check whether reservation dates overlap
+            // Account for guests who checked in before their scheduled date.
 
-// Account for guests who checked in before their scheduled date.
+            const occupiedFrom =
+                reservation.status === "Checked In" &&
+                reservation.checkIn > getTodayDateString()
+                    ? getTodayDateString()
+                    : reservation.checkIn;
 
-const occupiedFrom =
-    reservation.status === "Checked In" &&
-    reservation.checkIn > getTodayDateString()
-        ? getTodayDateString()
-        : reservation.checkIn;
+            // Check whether reservation dates overlap.
 
-// Check whether reservation dates overlap.
-
-return (
-    checkIn < reservation.checkOut &&
-    checkOut > occupiedFrom
-);
+            return (
+                checkIn < reservation.checkOut &&
+                checkOut > occupiedFrom
+            );
 
         });
 
@@ -1018,7 +893,12 @@ return (
 
 // CALCULATE DYNAMIC ROOM PRICE
 
-function getDynamicRoomPrice(roomType, checkIn, checkOut, excludedReservationId = null) {
+function getDynamicRoomPrice(
+    roomType,
+    checkIn,
+    checkOut,
+    excludedReservationId = null
+) {
 
     const availability = getRoomAvailability(
         roomType,
@@ -1027,7 +907,7 @@ function getDynamicRoomPrice(roomType, checkIn, checkOut, excludedReservationId 
         excludedReservationId
     );
 
-    // No inventory or no available rooms
+    // No inventory or no available rooms.
 
     if (
         availability.totalRooms === 0 ||
@@ -1041,7 +921,7 @@ function getDynamicRoomPrice(roomType, checkIn, checkOut, excludedReservationId 
 
     let price = roomPrices[roomType];
 
-    // Apply pricing adjustments
+    // Apply pricing adjustments.
 
     if (availabilityPercentage >= 80) {
 
@@ -1049,7 +929,7 @@ function getDynamicRoomPrice(roomType, checkIn, checkOut, excludedReservationId 
 
     } else if (availabilityPercentage >= 50) {
 
-        // Base price remains unchanged
+        // Base price remains unchanged.
 
     } else if (availabilityPercentage >= 30) {
 
@@ -1061,13 +941,17 @@ function getDynamicRoomPrice(roomType, checkIn, checkOut, excludedReservationId 
 
     }
 
-    // Round to two decimal places
+    // Round to two decimal places.
 
     return Number(price.toFixed(2));
 
 }
 
-// Reservation Lookup
+
+
+/* =========================================================
+   5. RESERVATION LOOKUP
+========================================================= */
 
 
 const lookupButton = document.getElementById("lookupButton");
@@ -1082,116 +966,91 @@ const lookupCheckOut = document.getElementById("lookupCheckOut");
 const lookupNights = document.getElementById("lookupNights");
 const lookupTotal = document.getElementById("lookupTotal");
 
+
+// LOOK UP RESERVATION
+
 lookupButton.addEventListener("click", () => {
-const reservationNumber = Number(
-    document.getElementById("reservationLookup").value
-);
 
-// Make sure something was entered
-if (!reservationNumber) {
-    alert("Please enter a reservation number.");
-    return;
-}
-
-// Find reservation
-const reservation = reservations.find(
-    booking => Number(booking.reservationId) === reservationNumber
-);
-
-// Reservation doesn't exist
-if (!reservation) {
-    alert("Reservation not found.");
-    lookupResult.style.display = "none";
-    return;
-}
-
-// Display reservation
-lookupReservationId.textContent = reservation.reservationId;
-
-lookupGuest.textContent =
-    reservation.guest.firstName + " " + reservation.guest.lastName;
-
-lookupPhone.textContent = reservation.guest.phone;
-
-lookupRoom.textContent =
-    reservation.room + (reservation.roomNumber ? " - Room " + reservation.roomNumber : "");
-
-lookupCheckIn.textContent = reservation.actualCheckIn || reservation.checkIn;
-
-lookupCheckOut.textContent = reservation.checkOut;
-
-lookupNights.textContent = reservation.nights;
-
-lookupTotal.textContent =
-    "$" + reservation.total.toFixed(2);
-
-lookupResult.style.display = "block";
-
-lookupResult.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-});
-
-});
-
-// Delete All Reservations
-
-const deleteAllReservations = document.getElementById("deleteAllReservations");
-
-deleteAllReservations.addEventListener("click", () => {
-
-    const confirmDelete = confirm(
-        "Are you sure you want to delete ALL reservations?"
+    const reservationNumber = Number(
+        document.getElementById("reservationLookup").value
     );
 
-    if (!confirmDelete) {
+    if (!reservationNumber) {
+        alert("Please enter a reservation number.");
         return;
     }
 
-    reservations = [];
+    const reservation = reservations.find(
+        booking => Number(booking.reservationId) === reservationNumber
+    );
 
-    localStorage.removeItem("reservations");
-    localStorage.removeItem("currentBooking");
+    if (!reservation) {
+        alert("Reservation not found.");
+        lookupResult.style.display = "none";
+        return;
+    }
 
-    // Reset reservation numbering
-    localStorage.removeItem("reservationNumber");
+    // Display reservation details.
 
-    displayReservations();
+    lookupReservationId.textContent =
+        reservation.reservationId;
 
-    confirmationId.textContent = "";
+    lookupGuest.textContent =
+        reservation.guest.firstName + " " + reservation.guest.lastName;
 
-    alert("All reservations have been deleted. The next reservation will be #1000.");
+    lookupPhone.textContent =
+        reservation.guest.phone;
 
-    console.log("All reservations deleted.");
-    console.log("Reservation number reset to 1000.");
+    lookupRoom.textContent =
+        reservation.room +
+        (reservation.roomNumber ? " - Room " + reservation.roomNumber : "");
+
+    lookupCheckIn.textContent =
+        reservation.actualCheckIn || reservation.checkIn;
+
+    lookupCheckOut.textContent =
+        reservation.checkOut;
+
+    lookupNights.textContent =
+        reservation.nights;
+
+    lookupTotal.textContent =
+        "$" + reservation.total.toFixed(2);
+
+    lookupResult.style.display = "block";
+
+    lookupResult.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
 });
 
-// RESERVATIONS DASHBOARD
-const reservationsTableBody = document.getElementById("reservationsTableBody");
-const noReservations = document.getElementById("noReservations");
 
-// GET TODAY'S DATE IN LOCAL TIME
 
-function getTodayDateString() {
-    const date = new Date();
+/* =========================================================
+   6. RESERVATIONS DASHBOARD
+========================================================= */
 
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
 
-    return `${year}-${month}-${day}`;
-}
+const reservationsTableBody =
+    document.getElementById("reservationsTableBody");
+
+const noReservations =
+    document.getElementById("noReservations");
+
+const deleteAllReservations =
+    document.getElementById("deleteAllReservations");
 
 
 // DISPLAY RESERVATIONS
 
 function displayReservations() {
 
-
-    // Clear the table first
     reservationsTableBody.innerHTML = "";
 
-    // Check if there are any reservations
+    // Check if there are any reservations.
+
     if (reservations.length === 0) {
 
         noReservations.style.display = "block";
@@ -1201,7 +1060,8 @@ function displayReservations() {
 
     noReservations.style.display = "none";
 
-    // Create a row for each reservation
+    // Create a row for each reservation.
+
     reservations.forEach((reservation, index) => {
 
         const row = document.createElement("tr");
@@ -1225,7 +1085,7 @@ function displayReservations() {
             </td>
 
             <td>
-    ${reservation.actualCheckIn || reservation.checkIn}
+                ${reservation.actualCheckIn || reservation.checkIn}
             </td>
 
             <td>
@@ -1243,8 +1103,8 @@ function displayReservations() {
             <td>
                 ${reservation.status || "Reserved"}
             </td>
-            
-                    <td>
+
+            <td>
                 ${(reservation.status || "Reserved") !== "Cancelled" ? `
                     <button
                         class="edit-reservation"
@@ -1265,18 +1125,21 @@ function displayReservations() {
                     Delete
                 </button>
 
-                
-            ${(reservation.status || "Reserved") === "Reserved" ? `
-                <button class="check-in-btn" data-index="${index}">
-                Check In
-                </button>
-            ` : ""}
+                ${(reservation.status || "Reserved") === "Reserved" ? `
+                    <button
+                        class="check-in-btn"
+                        data-index="${index}">
+                        Check In
+                    </button>
+                ` : ""}
 
-            ${reservation.status === "Checked In" ? `
-                <button class="check-out-btn" data-index="${index}">
-                    Check Out
-                </button>
-            ` : ""}
+                ${reservation.status === "Checked In" ? `
+                    <button
+                        class="check-out-btn"
+                        data-index="${index}">
+                        Check Out
+                    </button>
+                ` : ""}
             </td>
         `;
 
@@ -1287,11 +1150,12 @@ function displayReservations() {
 }
 
 
-// Display reservations when page loads
+// DISPLAY RESERVATIONS WHEN PAGE LOADS
+
 displayReservations();
 
 
-// Delete individual reservation
+// DELETE INDIVIDUAL RESERVATION
 
 reservationsTableBody.addEventListener("click", (event) => {
 
@@ -1311,21 +1175,23 @@ reservationsTableBody.addEventListener("click", (event) => {
         return;
     }
 
-    // Remove reservation from array
+    // Remove reservation from array.
+
     reservations.splice(index, 1);
 
-    // Save updated array
+    // Save updated array.
+
     localStorage.setItem(
         "reservations",
         JSON.stringify(reservations)
     );
 
-    // Refresh table
     displayReservations();
 
 });
 
-// Cancel individual reservation
+
+// CANCEL INDIVIDUAL RESERVATION
 
 reservationsTableBody.addEventListener("click", (event) => {
 
@@ -1371,21 +1237,64 @@ reservationsTableBody.addEventListener("click", (event) => {
 });
 
 
- // EDIT RESERVATION MODAL
+// DELETE ALL RESERVATIONS
 
-const editReservationModal = document.getElementById("editReservationModal");
-const editReservationForm = document.getElementById("editReservationForm");
+deleteAllReservations.addEventListener("click", () => {
 
-const closeEditModal = document.getElementById("closeEditModal");
-const cancelEditModal = document.getElementById("cancelEditModal");
+    const confirmDelete = confirm(
+        "Are you sure you want to delete ALL reservations?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    reservations = [];
+
+    localStorage.removeItem("reservations");
+    localStorage.removeItem("currentBooking");
+
+    // Reset reservation numbering.
+
+    localStorage.removeItem("reservationNumber");
+
+    displayReservations();
+
+    confirmationId.textContent = "";
+
+    alert("All reservations have been deleted. The next reservation will be #1000.");
+
+    console.log("All reservations deleted.");
+    console.log("Reservation number reset to 1000.");
+
+});
+
+
+
+/* =========================================================
+   7. ADMIN RESERVATION EDITING
+========================================================= */
+
+
+const editReservationModal =
+    document.getElementById("editReservationModal");
+
+const editReservationForm =
+    document.getElementById("editReservationForm");
+
+const closeEditModal =
+    document.getElementById("closeEditModal");
+
+const cancelEditModal =
+    document.getElementById("cancelEditModal");
 
 let editingReservationIndex = null;
 
 
-// OPEN EDIT MODAL
-
+// OPEN EDIT RESERVATION MODAL
 
 reservationsTableBody.addEventListener("click", (event) => {
+
     const editButton = event.target.closest(".edit-reservation");
 
     if (!editButton) {
@@ -1400,8 +1309,7 @@ reservationsTableBody.addEventListener("click", (event) => {
         return;
     }
 
-
-    // Populate fields with existing reservation information
+    // Populate fields with existing reservation information.
 
     document.getElementById("editFirstName").value =
         reservation.guest.firstName;
@@ -1426,7 +1334,7 @@ reservationsTableBody.addEventListener("click", (event) => {
 });
 
 
-// CLOSE EDIT MODAL
+// CLOSE ADMIN EDIT RESERVATION MODAL
 
 function closeReservationEditor() {
 
@@ -1435,12 +1343,18 @@ function closeReservationEditor() {
 
 }
 
-closeEditModal.addEventListener("click", closeReservationEditor);
+closeEditModal.addEventListener(
+    "click",
+    closeReservationEditor
+);
 
-cancelEditModal.addEventListener("click", closeReservationEditor);
+cancelEditModal.addEventListener(
+    "click",
+    closeReservationEditor
+);
 
 
-// CLOSE WHEN CLICKING OUTSIDE MODAL
+// CLOSE MODAL WHEN CLICKING OUTSIDE
 
 editReservationModal.addEventListener("click", (event) => {
 
@@ -1451,12 +1365,14 @@ editReservationModal.addEventListener("click", (event) => {
 });
 
 
-
 // SAVE EDITED RESERVATION
 
 editReservationForm.addEventListener("submit", (event) => {
+
     event.preventDefault();
+
     const reservation = reservations[editingReservationIndex];
+
     if (!reservation) {
         return;
     }
@@ -1466,31 +1382,42 @@ editReservationForm.addEventListener("submit", (event) => {
         closeReservationEditor();
         return;
     }
-    // Get updated information
 
-    const firstName = document.getElementById("editFirstName").value.trim();
-    const lastName = document.getElementById("editLastName").value.trim();
-    const phone = document.getElementById("editPhone").value.trim();
-    const room = document.getElementById("editRoom").value;
+    // Get updated information.
 
-    const checkIn = document.getElementById("editCheckIn").value;
-    const checkOut = document.getElementById("editCheckOut").value;
+    const firstName =
+        document.getElementById("editFirstName").value.trim();
 
-    // Validate guest information
+    const lastName =
+        document.getElementById("editLastName").value.trim();
+
+    const phone =
+        document.getElementById("editPhone").value.trim();
+
+    const room =
+        document.getElementById("editRoom").value;
+
+    const checkIn =
+        document.getElementById("editCheckIn").value;
+
+    const checkOut =
+        document.getElementById("editCheckOut").value;
+
+    // Validate guest information.
 
     if (!firstName || !lastName || !phone || !room) {
         alert("Please complete all guest and room information.");
         return;
     }
 
-    // Validate dates
+    // Validate dates.
 
     if (!checkIn || !checkOut || checkOut <= checkIn) {
         alert("Check-out must be after check-in.");
         return;
     }
 
-    // Find an available physical room
+    // Find an available physical room.
 
     const availableRoom = findAvailableRoom(
         room,
@@ -1504,54 +1431,52 @@ editReservationForm.addEventListener("submit", (event) => {
         return;
     }
 
-    // Calculate nights
+    // Calculate nights.
 
     const startDate = new Date(checkIn + "T00:00:00Z");
     const endDate = new Date(checkOut + "T00:00:00Z");
 
-    const nights = (endDate - startDate) / (1000 * 60 * 60 * 24);
+    const nights =
+        (endDate - startDate) / (1000 * 60 * 60 * 24);
 
+    // Check whether room type or dates have changed.
 
-// Check whether room type or dates have changed
+    const bookingDetailsChanged =
+        room !== reservation.room ||
+        checkIn !== reservation.checkIn ||
+        checkOut !== reservation.checkOut;
 
-const bookingDetailsChanged =
-    room !== reservation.room ||
-    checkIn !== reservation.checkIn ||
-    checkOut !== reservation.checkOut;
+    // Calculate updated price.
 
+    let price;
 
-// Calculate updated price
+    if (bookingDetailsChanged) {
 
-let price;
+        price = getDynamicRoomPrice(
+            room,
+            checkIn,
+            checkOut,
+            reservation.reservationId
+        );
 
-if (bookingDetailsChanged) {
+        if (price === null) {
+            alert("Sorry, no rooms of this type are available for those dates.");
+            return;
+        }
 
-    price = getDynamicRoomPrice(
-        room,
-        checkIn,
-        checkOut,
-        reservation.reservationId
-    );
+    } else {
 
-    if (price === null) {
-        alert("Sorry, no rooms of this type are available for those dates.");
-        return;
+        // Keep the guest's original agreed price.
+
+        price = reservation.price ?? roomPrices[room];
+
     }
 
-} else {
+    const subtotal = Number((nights * price).toFixed(2));
+    const tax = 0;
+    const total = subtotal + tax;
 
-    // Keep the guest's original agreed price
-
-    price = reservation.price ?? roomPrices[room];
-
-}
-
-const subtotal = Number((nights * price).toFixed(2));
-const tax = 0;
-const total = subtotal + tax;
-
-
-    // Update reservation
+    // Update reservation.
 
     reservation.guest = {
         firstName: firstName,
@@ -1569,14 +1494,14 @@ const total = subtotal + tax;
     reservation.tax = tax;
     reservation.total = total;
 
-    // Save changes
+    // Save changes.
 
     localStorage.setItem(
         "reservations",
         JSON.stringify(reservations)
     );
 
-    // Refresh dashboard and close modal
+    // Refresh dashboard and close modal.
 
     displayReservations();
 
@@ -1588,17 +1513,21 @@ const total = subtotal + tax;
 
 
 
+/* =========================================================
+   8. GUEST CHECK-IN & CHECK-OUT
+========================================================= */
 
-// GUEST CHECK-IN AND CHECK-OUT
 
 reservationsTableBody.addEventListener("click", (event) => {
 
     const checkInButton = event.target.closest(".check-in-btn");
     const checkOutButton = event.target.closest(".check-out-btn");
 
+
     // CHECK IN
 
     if (checkInButton) {
+
         const index = Number(checkInButton.dataset.index);
         const reservation = reservations[index];
 
@@ -1676,13 +1605,14 @@ reservationsTableBody.addEventListener("click", (event) => {
         alert("Guest successfully checked in!");
 
         return;
+
     }
 
-    // CHECK OUT
 
     // CHECK OUT
 
     if (checkOutButton) {
+
         const index = Number(checkOutButton.dataset.index);
         const reservation = reservations[index];
 
@@ -1729,22 +1659,40 @@ reservationsTableBody.addEventListener("click", (event) => {
         displayReservations();
 
         alert("Guest successfully checked out!");
+
     }
 
 });
 
 
 
-// ROOM INVENTORY MANAGEMENT
+/* =========================================================
+   9. ROOM INVENTORY MANAGEMENT
+========================================================= */
 
 
-const roomNumberInput = document.getElementById("roomNumberInput");
-const roomTypeInput = document.getElementById("roomTypeInput");
-const saveRoomButton = document.getElementById("saveRoomButton");
-const cancelRoomEdit = document.getElementById("cancelRoomEdit");
-const roomInventoryTableBody = document.getElementById("roomInventoryTableBody");
-const noRoomsMessage = document.getElementById("noRoomsMessage");
-const roomFormTitle = document.getElementById("roomFormTitle");
+// ROOM INVENTORY ELEMENTS
+
+const roomNumberInput =
+    document.getElementById("roomNumberInput");
+
+const roomTypeInput =
+    document.getElementById("roomTypeInput");
+
+const saveRoomButton =
+    document.getElementById("saveRoomButton");
+
+const cancelRoomEdit =
+    document.getElementById("cancelRoomEdit");
+
+const roomInventoryTableBody =
+    document.getElementById("roomInventoryTableBody");
+
+const noRoomsMessage =
+    document.getElementById("noRoomsMessage");
+
+const roomFormTitle =
+    document.getElementById("roomFormTitle");
 
 let editingRoomNumber = null;
 
@@ -1771,11 +1719,14 @@ function roomHasActiveReservations(roomNumber) {
 }
 
 
-// SAVE ROOMS
+// SAVE ROOMS TO LOCAL STORAGE
 
 function saveRooms() {
 
-    localStorage.setItem("rooms", JSON.stringify(rooms));
+    localStorage.setItem(
+        "rooms",
+        JSON.stringify(rooms)
+    );
 
 }
 
@@ -1789,17 +1740,18 @@ function displayRooms() {
     if (rooms.length === 0) {
 
         noRoomsMessage.style.display = "block";
+
         return;
 
     }
 
     noRoomsMessage.style.display = "none";
 
-    // Sort rooms by room number
+    // Sort rooms by room number.
 
     rooms.sort((a, b) => a.number - b.number);
 
-    rooms.forEach((room) => {
+    rooms.forEach(room => {
 
         const row = document.createElement("tr");
 
@@ -1838,18 +1790,15 @@ saveRoomButton.addEventListener("click", () => {
     const roomType = roomTypeInput.value;
 
     if (!roomNumber || roomNumber < 1 || !Number.isInteger(roomNumber)) {
-
         alert("Please enter a valid room number.");
         return;
-
     }
 
     if (!roomType) {
-
         alert("Please select a room type.");
         return;
-
     }
+
 
     // ADD NEW ROOM
 
@@ -1860,10 +1809,8 @@ saveRoomButton.addEventListener("click", () => {
         );
 
         if (roomExists) {
-
             alert("That room number already exists.");
             return;
-
         }
 
         rooms.push({
@@ -1871,23 +1818,19 @@ saveRoomButton.addEventListener("click", () => {
             type: roomType
         });
 
-        // alert("Room added successfully!");
-
     } else {
 
-// UPDATE EXISTING ROOM
 
-if (roomHasActiveReservations(editingRoomNumber)) {
+        // UPDATE EXISTING ROOM
 
-    alert("This room cannot be edited because it has an active reservation.");
+        if (roomHasActiveReservations(editingRoomNumber)) {
+            alert("This room cannot be edited because it has an active reservation.");
+            return;
+        }
 
-    return;
-
-}
-
-const room = rooms.find(
-    room => Number(room.number) === Number(editingRoomNumber)
-);
+        const room = rooms.find(
+            room => Number(room.number) === Number(editingRoomNumber)
+        );
 
         if (!room) {
             return;
@@ -1900,16 +1843,12 @@ const room = rooms.find(
         );
 
         if (roomNumberExists) {
-
             alert("That room number already exists.");
             return;
-
         }
 
         room.number = roomNumber;
         room.type = roomType;
-
-        // alert("Room updated successfully!");
 
     }
 
@@ -1927,78 +1866,70 @@ roomInventoryTableBody.addEventListener("click", (event) => {
     const editButton = event.target.closest(".edit-room-btn");
     const deleteButton = event.target.closest(".delete-room-btn");
 
+
     // EDIT ROOM
 
-if (editButton) {
+    if (editButton) {
 
-    const roomNumber = Number(editButton.dataset.roomNumber);
+        const roomNumber = Number(editButton.dataset.roomNumber);
 
-    if (roomHasActiveReservations(roomNumber)) {
+        if (roomHasActiveReservations(roomNumber)) {
+            alert("This room cannot be edited because it has an active reservation.");
+            return;
+        }
 
-        alert("This room cannot be edited because it has an active reservation.");
+        const room = rooms.find(
+            room => Number(room.number) === roomNumber
+        );
+
+        if (!room) {
+            return;
+        }
+
+        editingRoomNumber = roomNumber;
+
+        roomNumberInput.value = room.number;
+        roomTypeInput.value = room.type;
+
+        roomFormTitle.textContent = "Edit Room";
+        saveRoomButton.textContent = "Save Changes";
+        cancelRoomEdit.style.display = "inline-block";
+
+        roomNumberInput.focus();
 
         return;
 
     }
 
-    const room = rooms.find(
-        room => Number(room.number) === roomNumber
-    );
-
-    if (!room) {
-        return;
-    }
-
-    editingRoomNumber = roomNumber;
-
-    roomNumberInput.value = room.number;
-    roomTypeInput.value = room.type;
-
-    roomFormTitle.textContent = "Edit Room";
-    saveRoomButton.textContent = "Save Changes";
-    cancelRoomEdit.style.display = "inline-block";
-
-    roomNumberInput.focus();
-
-    return;
-
-}
 
     // DELETE ROOM
 
-// DELETE ROOM
+    if (deleteButton) {
 
-if (deleteButton) {
+        const roomNumber = Number(deleteButton.dataset.roomNumber);
 
-    const roomNumber = Number(deleteButton.dataset.roomNumber);
+        if (roomHasActiveReservations(roomNumber)) {
+            alert("This room cannot be deleted because it has an active reservation.");
+            return;
+        }
 
-    if (roomHasActiveReservations(roomNumber)) {
+        const confirmDelete = confirm(
+            `Are you sure you want to delete Room ${roomNumber}?`
+        );
 
-        alert("This room cannot be deleted because it has an active reservation.");
+        if (!confirmDelete) {
+            return;
+        }
 
-        return;
+        rooms = rooms.filter(
+            room => Number(room.number) !== roomNumber
+        );
+
+        saveRooms();
+        displayRooms();
+        resetRoomForm();
 
     }
-
-    const confirmDelete = confirm(
-        `Are you sure you want to delete Room ${roomNumber}?`
-    );
-
-    if (!confirmDelete) {
-        return;
-    }
-
-    rooms = rooms.filter(
-        room => Number(room.number) !== roomNumber
-    );
-
-    saveRooms();
-    displayRooms();
-    resetRoomForm();
-
-    // alert("Room deleted successfully!");
-
-}
 
 });
 
@@ -2019,11 +1950,21 @@ function resetRoomForm() {
 
 }
 
-cancelRoomEdit.addEventListener("click", resetRoomForm);
+cancelRoomEdit.addEventListener(
+    "click",
+    resetRoomForm
+);
 
 
 // DISPLAY ROOMS WHEN PAGE LOADS
 
 displayRooms();
 
+
 // END ROOM INVENTORY MANAGEMENT
+
+
+/* =========================================================
+   END OF HOTEL MANAGER SCRIPT
+   Completed 11/17/2026 V1.0
+========================================================= */
